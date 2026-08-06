@@ -15,7 +15,7 @@ export function createSearchResultElement(
 ): HTMLAnchorElement {
   const link = document.createElement('a');
   link.className = 'dahlia-search-result dahlia-focus-ring block px-3 py-2.5 transition-colors';
-  link.dataset.dahliaSearchResult = '';
+  link.dataset.searchResult = '';
   link.href = item.href ?? '#';
   link.id = `dahlia-search-result-${index}`;
   link.setAttribute('role', 'option');

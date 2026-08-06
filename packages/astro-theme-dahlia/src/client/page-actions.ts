@@ -1,5 +1,5 @@
 async function getDahliaCopyText(root: HTMLElement): Promise<string> {
-  const markdownUrl = root.dataset.dahliaPageMarkdownUrl;
+  const markdownUrl = root.dataset.pageMarkdownUrl;
 
   if (!markdownUrl) {
     throw new Error('Markdown URL is not available.');
@@ -43,9 +43,9 @@ function getAbsoluteUrl(value: string | undefined, fallback: string): string {
 }
 
 function getPageActionValues(root: HTMLElement): Record<string, string> {
-  const title = root.dataset.dahliaPageTitle ?? document.title;
-  const url = getAbsoluteUrl(root.dataset.dahliaPageUrl, getCurrentPageUrl());
-  const markdownUrl = getAbsoluteUrl(root.dataset.dahliaPageMarkdownUrl, url);
+  const title = root.dataset.pageTitle ?? document.title;
+  const url = getAbsoluteUrl(root.dataset.pageUrl, getCurrentPageUrl());
+  const markdownUrl = getAbsoluteUrl(root.dataset.pageMarkdownUrl, url);
 
   return {
     title,
@@ -66,14 +66,14 @@ function interpolatePageActionHref(template: string, values: Record<string, stri
 
 function updateDahliaPageActionLinks(root: HTMLElement): void {
   const values = getPageActionValues(root);
-  const assistantPromptTemplate = root.dataset.dahliaPageAssistantPrompt || 'Read this documentation page: {url}';
+  const assistantPromptTemplate = root.dataset.pageAssistantPrompt || 'Read this documentation page: {url}';
   const assistantPrompt = interpolatePageActionHref(assistantPromptTemplate, values);
 
   root
-    .querySelectorAll<HTMLAnchorElement>('a[data-dahlia-page-action], a[data-dahlia-page-action-href-template]')
+    .querySelectorAll<HTMLAnchorElement>('a[data-page-action], a[data-page-action-href-template]')
     .forEach((link) => {
-      const type = link.dataset.dahliaPageAction;
-      const template = link.dataset.dahliaPageActionHrefTemplate;
+      const type = link.dataset.pageAction;
+      const template = link.dataset.pageActionHrefTemplate;
 
       if (template) {
         link.href = interpolatePageActionHref(template, values);
@@ -125,24 +125,24 @@ function restoreLabel(label: Element | null, text: string): void {
 }
 
 function initDahliaPageActions(): void {
-  document.querySelectorAll('[data-dahlia-page-actions]').forEach((root) => {
-    if (!(root instanceof HTMLElement) || root.dataset.dahliaPageActionsReady) {
+  document.querySelectorAll('[data-page-actions]').forEach((root) => {
+    if (!(root instanceof HTMLElement) || root.dataset.pageActionsReady) {
       return;
     }
 
-    root.dataset.dahliaPageActionsReady = 'true';
+    root.dataset.pageActionsReady = 'true';
     updateDahliaPageActionLinks(root);
 
-    root.querySelectorAll('[data-dahlia-copy-page]').forEach((button) => {
+    root.querySelectorAll('[data-copy-page]').forEach((button) => {
       if (!(button instanceof HTMLButtonElement)) {
         return;
       }
 
-      const label = button.querySelector('[data-dahlia-copy-label]');
-      const originalLabel = label?.textContent ?? root.dataset.dahliaPageCopyLabel ?? 'Copy page';
-      const copyingLabel = root.dataset.dahliaPageCopyingLabel ?? 'Copying...';
-      const copiedLabel = root.dataset.dahliaPageCopiedLabel ?? 'Copied';
-      const copyFailedLabel = root.dataset.dahliaPageCopyFailedLabel ?? 'Copy failed';
+      const label = button.querySelector('[data-copy-label]');
+      const originalLabel = label?.textContent ?? root.dataset.pageCopyLabel ?? 'Copy page';
+      const copyingLabel = root.dataset.pageCopyingLabel ?? 'Copying...';
+      const copiedLabel = root.dataset.pageCopiedLabel ?? 'Copied';
+      const copyFailedLabel = root.dataset.pageCopyFailedLabel ?? 'Copy failed';
 
       button.addEventListener('click', async () => {
         button.disabled = true;

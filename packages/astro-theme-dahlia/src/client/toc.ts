@@ -153,7 +153,7 @@ function initTableOfContents(): void {
     measureHeadings();
     updateActiveLink();
   });
-  document.querySelectorAll('[data-dahlia-mobile-toc-menu]').forEach((menu) => {
+  document.querySelectorAll('[data-mobile-toc-menu]').forEach((menu) => {
     menu.addEventListener('toggle', updateActiveLink);
   });
   measureHeadings();

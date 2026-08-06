@@ -119,7 +119,7 @@ function emitAppearanceChange(): void {
 }
 
 function updateAllAppearancePalettes(): void {
-  document.querySelectorAll('[data-dahlia-appearance-palette]').forEach((palette) => {
+  document.querySelectorAll('[data-appearance-palette]').forEach((palette) => {
     updateAppearanceButtons(palette);
   });
   emitAppearanceChange();
@@ -171,13 +171,13 @@ function initDahliaAppearancePalette(): void {
   applySavedAppearance();
   emitAppearanceChange();
 
-  document.querySelectorAll('[data-dahlia-appearance-palette]').forEach((palette) => {
-    if (!(palette instanceof HTMLElement) || palette.dataset.dahliaAppearancePaletteReady) {
+  document.querySelectorAll('[data-appearance-palette]').forEach((palette) => {
+    if (!(palette instanceof HTMLElement) || palette.dataset.appearancePaletteReady) {
       updateAppearanceButtons(palette);
       return;
     }
 
-    palette.dataset.dahliaAppearancePaletteReady = 'true';
+    palette.dataset.appearancePaletteReady = 'true';
     updateAppearanceButtons(palette);
 
     palette.querySelectorAll('[data-appearance-key][data-appearance-value]').forEach((button) => {

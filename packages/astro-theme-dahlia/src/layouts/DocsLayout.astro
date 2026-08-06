@@ -107,7 +107,7 @@ const activeSection = subnav.find((section) => section.active) ?? subnav[0];
                     ? 'bg-(--dahlia-accent-soft) font-medium text-(--dahlia-accent)'
                     : 'text-(--dahlia-text-muted) hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong)',
                 ]}
-                data-dahlia-dropdown-close
+                data-dropdown-close
                 href={section.href}
               >
                 {section.icon && <Icon aria-hidden="true" class="h-4 w-4" name={resolveIconName(section.icon)} />}

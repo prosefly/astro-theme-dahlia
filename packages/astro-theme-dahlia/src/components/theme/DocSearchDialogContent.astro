@@ -21,18 +21,18 @@ const searchParameters = searchConfig?.searchParameters
 {searchConfig && (
   <>
     <div
-      data-dahlia-docsearch
-      data-dahlia-docsearch-api-key={searchConfig.apiKey}
-      data-dahlia-docsearch-app-id={searchConfig.appId}
-      data-dahlia-docsearch-ask-ai={searchConfig.askAi}
-      data-dahlia-docsearch-css-url={searchConfig.cssUrl}
-      data-dahlia-docsearch-disable-user-personalization={searchConfig.disableUserPersonalization}
-      data-dahlia-docsearch-index-name={indexName}
-      data-dahlia-docsearch-insights={searchConfig.insights}
-      data-dahlia-docsearch-js-url={searchConfig.jsUrl}
-      data-dahlia-docsearch-max-results-per-group={searchConfig.maxResultsPerGroup}
-      data-dahlia-docsearch-placeholder={t('search.placeholder')}
-      data-dahlia-docsearch-search-parameters={searchParameters}
+      data-docsearch
+      data-docsearch-api-key={searchConfig.apiKey}
+      data-docsearch-app-id={searchConfig.appId}
+      data-docsearch-ask-ai={searchConfig.askAi}
+      data-docsearch-css-url={searchConfig.cssUrl}
+      data-docsearch-disable-user-personalization={searchConfig.disableUserPersonalization}
+      data-docsearch-index-name={indexName}
+      data-docsearch-insights={searchConfig.insights}
+      data-docsearch-js-url={searchConfig.jsUrl}
+      data-docsearch-max-results-per-group={searchConfig.maxResultsPerGroup}
+      data-docsearch-placeholder={t('search.placeholder')}
+      data-docsearch-search-parameters={searchParameters}
       hidden
     />
     <script>

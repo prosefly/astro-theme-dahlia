@@ -30,20 +30,20 @@ const algoliaApiKey = algoliaConfig?.apiKey;
   <dialog
     aria-label={t('search.label')}
     class="dahlia-search-dialog dahlia-border-muted w-[min(42rem,calc(100vw-2rem))] rounded-[min(var(--dahlia-radius-lg),1rem)] border bg-(--dahlia-background) p-0 text-(--dahlia-text) shadow-xl shadow-black/10"
-    data-dahlia-algolia-api-key={algoliaApiKey}
-    data-dahlia-algolia-app-id={algoliaAppId}
-    data-dahlia-algolia-index-name={algoliaIndexName}
-    data-dahlia-search-dialog
-    data-dahlia-search-index={searchIndexHref}
-    data-dahlia-search-loading={t('search.loading')}
-    data-dahlia-search-no-results={t('search.noResults')}
-    data-dahlia-pagefind-bundle={pagefindBundlePath}
-    data-dahlia-search-provider={searchProvider}
-    data-dahlia-search-type-to-search={t('search.typeToSearch')}
-    data-dahlia-search-unavailable={t('search.unavailable')}
+    data-algolia-api-key={algoliaApiKey}
+    data-algolia-app-id={algoliaAppId}
+    data-algolia-index-name={algoliaIndexName}
+    data-search-dialog
+    data-search-index={searchIndexHref}
+    data-search-loading={t('search.loading')}
+    data-search-no-results={t('search.noResults')}
+    data-pagefind-bundle={pagefindBundlePath}
+    data-search-provider={searchProvider}
+    data-search-type-to-search={t('search.typeToSearch')}
+    data-search-unavailable={t('search.unavailable')}
     id="dahlia-search-dialog"
   >
-  <form class="dahlia-border-subtle flex h-14 items-center gap-3 border-b px-4" data-dahlia-search-form>
+  <form class="dahlia-border-subtle flex h-14 items-center gap-3 border-b px-4" data-search-form>
     <svg aria-hidden="true" class="h-4 w-4 shrink-0 text-(--dahlia-text-muted)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
       <circle cx="11" cy="11" r="7" />
       <path d="m20 20-3.5-3.5" />
@@ -55,7 +55,7 @@ const algoliaApiKey = algoliaConfig?.apiKey;
       aria-label={t('search.label')}
       class="min-w-0 flex-1 bg-transparent text-base outline-none placeholder:text-(--dahlia-text-muted)"
       autocomplete="off"
-      data-dahlia-search-input
+      data-search-input
       placeholder={t('search.placeholder')}
       role="combobox"
       type="search"
@@ -63,7 +63,7 @@ const algoliaApiKey = algoliaConfig?.apiKey;
     <button
       aria-label={t('search.closeLabel')}
       class="dahlia-focus-ring inline-flex h-8 w-8 items-center justify-center rounded-(--dahlia-radius-md) text-(--dahlia-text-muted) transition-colors hover:text-(--dahlia-text-strong)"
-      data-dahlia-search-close
+      data-search-close
       type="button"
     >
       <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
@@ -74,7 +74,7 @@ const algoliaApiKey = algoliaConfig?.apiKey;
   </form>
   <div
     class="dahlia-scrollbar max-h-[min(30rem,calc(100dvh-10rem))] overflow-y-auto p-2"
-    data-dahlia-search-results
+    data-search-results
     id="dahlia-search-results"
     aria-label={t('search.label')}
     aria-live="polite"

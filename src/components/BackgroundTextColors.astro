@@ -248,7 +248,7 @@ ${lines.join('\n')}
   }
 
   function syncThemeSwitchControls(mode: ThemeMode) {
-    document.querySelectorAll<HTMLElement>('[data-dahlia-theme-switch]').forEach((switcher) => {
+    document.querySelectorAll<HTMLElement>('[data-theme-switch]').forEach((switcher) => {
       switcher.querySelectorAll('[data-theme-mode]').forEach((control) => {
         const active = control.getAttribute('data-theme-mode') === mode;
         control.setAttribute('aria-pressed', active ? 'true' : 'false');

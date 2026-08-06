@@ -204,7 +204,7 @@
   color: var(--dahlia-text-strong);
 }
 
-[data-dahlia-theme-switch] [data-active] {
+[data-theme-switch] [data-active] {
   background: var(--dahlia-accent-soft);
   color: var(--dahlia-text-strong);
 }

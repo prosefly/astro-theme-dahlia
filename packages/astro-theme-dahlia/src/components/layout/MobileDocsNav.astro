@@ -74,7 +74,7 @@ function getHeadingIndent(depth: number): string {
       aria-expanded="false"
       aria-label={t('mobileDocs.openMenu')}
       class="dahlia-focus-ring flex h-9 min-w-0 flex-1 items-center gap-3 rounded-(--dahlia-radius-md) text-start text-(--dahlia-text-muted) transition-colors hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong)"
-      data-dahlia-mobile-sidebar-open
+      data-mobile-sidebar-open
       type="button"
     >
       <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center">
@@ -115,7 +115,7 @@ function getHeadingIndent(depth: number): string {
                     getHeadingIndent(heading.depth),
                     'text-(--dahlia-text-muted) hover:text-(--dahlia-text-strong)',
                   ]}
-                  data-dahlia-dropdown-close
+                  data-dropdown-close
                   data-toc-link={heading.slug}
                   href={`#${heading.slug}`}
                 >
@@ -131,7 +131,7 @@ function getHeadingIndent(depth: number): string {
 
   <div
     class="dahlia-mobile-sidebar fixed h-screen inset-0 z-50 lg:hidden"
-    data-dahlia-mobile-sidebar
+    data-mobile-sidebar
     hidden
     id="dahlia-mobile-sidebar"
     inert
@@ -139,7 +139,7 @@ function getHeadingIndent(depth: number): string {
     <button
       aria-label={t('mobileDocs.closeMenu')}
       class="dahlia-mobile-sidebar-backdrop absolute inset-0 bg-black/30"
-      data-dahlia-mobile-sidebar-close
+      data-mobile-sidebar-close
       type="button"
     ></button>
     <aside
@@ -154,7 +154,7 @@ function getHeadingIndent(depth: number): string {
           <button
             aria-label={t('mobileDocs.closeMenu')}
             class="dahlia-focus-ring inline-flex h-9 w-9 items-center justify-center rounded-(--dahlia-radius-md) text-(--dahlia-text-muted) transition-colors hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong)"
-            data-dahlia-mobile-sidebar-close
+            data-mobile-sidebar-close
             type="button"
           >
             <Icon aria-hidden="true" class="h-5 w-5" name="lucide:x" />
@@ -184,14 +184,14 @@ function getHeadingIndent(depth: number): string {
 
       {displayMode === 'subnav' && <div class="shrink-0 p-4">
         {activeSection ? (
-          <details class="group/dahlia-section-switch relative" data-dahlia-section-switch>
+          <details class="group/dahlia-section-switch relative" data-section-switch>
         <summary class="dahlia-focus-ring dahlia-border-muted flex min-h-12 cursor-pointer list-none items-center gap-3 rounded-(--dahlia-radius-md) border bg-(--dahlia-surface) px-3 py-2 text-(--dahlia-text-strong) marker:hidden transition-colors hover:border-(--dahlia-accent) hover:bg-(--dahlia-accent-soft)">
               <span class="relative h-5 w-5 shrink-0">
                 {sections.map((section) => (
                   section.icon && (
                     <span
                       class="absolute inset-0"
-                      data-dahlia-section-summary-icon={section.slug}
+                      data-section-summary-icon={section.slug}
                       hidden={section.slug !== activeSectionSlug}
                     >
                       <Icon
@@ -204,10 +204,10 @@ function getHeadingIndent(depth: number): string {
                 ))}
               </span>
               <span class="min-w-0 flex-1">
-                <span class="block truncate text-base font-semibold" data-dahlia-section-summary-label>
+                <span class="block truncate text-base font-semibold" data-section-summary-label>
                   {activeSection.label}
                 </span>
-                <span class="block truncate text-xs text-(--dahlia-text-muted)" data-dahlia-section-summary-count>
+                <span class="block truncate text-xs text-(--dahlia-text-muted)" data-section-summary-count>
                   {formatPageCountLabel(activeSection.items.length)}
                 </span>
               </span>
@@ -223,9 +223,9 @@ function getHeadingIndent(depth: number): string {
                   aria-current={section.slug === activeSectionSlug ? 'page' : undefined}
                   class="dahlia-focus-ring dahlia-mobile-section-option flex min-h-14 w-full items-center gap-3 rounded-(--dahlia-radius-md) px-3 py-2 text-start transition-colors"
                   data-active={section.slug === activeSectionSlug ? '' : undefined}
-                  data-dahlia-section-count={formatPageCountLabel(section.items.length)}
-                  data-dahlia-section-label={section.label}
-                  data-dahlia-section-option={section.slug}
+                  data-section-count={formatPageCountLabel(section.items.length)}
+                  data-section-label={section.label}
+                  data-section-option={section.slug}
                   type="button"
                 >
                   {section.icon && (
@@ -267,7 +267,7 @@ function getHeadingIndent(depth: number): string {
             return sectionSidebar && (
               <div
                 class="dahlia-mobile-section-panel min-h-0 flex-1"
-                data-dahlia-section-panel={section.slug}
+                data-section-panel={section.slug}
                 hidden={section.slug !== activeSectionSlug}
               >
                 <Sidebar currentPath={currentPath} maxHeight="100%" sidebar={sectionSidebar} />

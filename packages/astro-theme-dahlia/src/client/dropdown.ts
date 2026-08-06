@@ -1,14 +1,14 @@
 let dahliaDropdownContentId = 0;
 
 function initDahliaDropdowns(): void {
-  document.querySelectorAll('[data-dahlia-dropdown]').forEach((details) => {
-    if (!(details instanceof HTMLDetailsElement) || details.dataset.dahliaDropdownReady) {
+  document.querySelectorAll('[data-dropdown]').forEach((details) => {
+    if (!(details instanceof HTMLDetailsElement) || details.dataset.dropdownReady) {
       return;
     }
 
-    details.dataset.dahliaDropdownReady = 'true';
+    details.dataset.dropdownReady = 'true';
     const summary = details.querySelector('summary');
-    const content = details.querySelector<HTMLElement>('[data-dahlia-dropdown-content]');
+    const content = details.querySelector<HTMLElement>('[data-dropdown-content]');
 
     if (summary && content) {
       if (!content.id) {
@@ -32,7 +32,7 @@ function initDahliaDropdowns(): void {
         return;
       }
 
-      document.querySelectorAll('[data-dahlia-dropdown][open]').forEach((otherDetails) => {
+      document.querySelectorAll('[data-dropdown][open]').forEach((otherDetails) => {
         if (otherDetails !== details && otherDetails instanceof HTMLDetailsElement) {
           otherDetails.open = false;
         }
@@ -56,7 +56,7 @@ function initDahliaDropdowns(): void {
       details.querySelector('summary')?.focus();
     });
 
-    details.querySelectorAll('[data-dahlia-dropdown-close]').forEach((trigger) => {
+    details.querySelectorAll('[data-dropdown-close]').forEach((trigger) => {
       trigger.addEventListener('click', () => {
         details.open = false;
       });

@@ -100,30 +100,30 @@ const primaryAction =
 {primaryAction && resolvedActions.length > 0 && (
   <div
     class="relative inline-flex items-center rounded-(--dahlia-radius-md) border dahlia-border-muted bg-(--dahlia-background) text-sm"
-    data-dahlia-page-actions
-    data-dahlia-page-assistant-prompt={createAssistantPrompt('{url}')}
-    data-dahlia-page-copied-label={t('pageActions.copied')}
-    data-dahlia-page-copy-failed-label={t('pageActions.copyFailed')}
-    data-dahlia-page-copying-label={t('pageActions.copying')}
-    data-dahlia-page-markdown-url={markdownUrl}
-    data-dahlia-page-title={title}
-    data-dahlia-page-url={pageUrl}
+    data-page-actions
+    data-page-assistant-prompt={createAssistantPrompt('{url}')}
+    data-page-copied-label={t('pageActions.copied')}
+    data-page-copy-failed-label={t('pageActions.copyFailed')}
+    data-page-copying-label={t('pageActions.copying')}
+    data-page-markdown-url={markdownUrl}
+    data-page-title={title}
+    data-page-url={pageUrl}
   >
     {primaryAction.isCopy ? (
       <button
         class="dahlia-focus-ring inline-flex h-8 items-center gap-1.5 rounded-s-(--dahlia-radius-md) px-2.5 font-medium text-(--dahlia-text-strong) transition-colors hover:bg-(--dahlia-surface) disabled:pointer-events-none disabled:opacity-70"
-        data-dahlia-copy-page
+        data-copy-page
         type="button"
       >
         <Icon aria-hidden="true" class="h-3.5 w-3.5" name={primaryAction.icon} />
-        <span aria-live="polite" data-dahlia-copy-label>{primaryAction.label}</span>
+        <span aria-live="polite" data-copy-label>{primaryAction.label}</span>
       </button>
     ) : (
       <a
         class="dahlia-focus-ring inline-flex h-8 items-center gap-1.5 rounded-s-(--dahlia-radius-md) px-2.5 font-medium text-(--dahlia-text-strong) transition-colors hover:bg-(--dahlia-surface)"
         href={primaryAction.href}
-        data-dahlia-page-action={primaryAction.type}
-        data-dahlia-page-action-href-template={primaryAction.hrefTemplate}
+        data-page-action={primaryAction.type}
+        data-page-action-href-template={primaryAction.hrefTemplate}
         rel={primaryAction.external ? 'noreferrer' : undefined}
         target={primaryAction.external ? '_blank' : undefined}
       >
@@ -148,19 +148,19 @@ const primaryAction =
         action.isCopy ? (
           <button
             class="dahlia-focus-ring flex w-full items-center gap-1.5 rounded-(--dahlia-radius-md) px-2.5 py-1.5 text-start text-sm text-(--dahlia-text) transition-colors hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong) disabled:pointer-events-none disabled:opacity-70"
-            data-dahlia-copy-page
-            data-dahlia-dropdown-close
+            data-copy-page
+            data-dropdown-close
             type="button"
           >
             <Icon aria-hidden="true" class="h-3.5 w-3.5 text-(--dahlia-text-muted)" name={action.icon} />
-            <span aria-live="polite" data-dahlia-copy-label>{action.label}</span>
+            <span aria-live="polite" data-copy-label>{action.label}</span>
           </button>
         ) : (
           <a
             class="dahlia-focus-ring flex items-center gap-1.5 rounded-(--dahlia-radius-md) px-2.5 py-1.5 text-sm text-(--dahlia-text) transition-colors hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong)"
-            data-dahlia-dropdown-close
-            data-dahlia-page-action={action.type}
-            data-dahlia-page-action-href-template={action.hrefTemplate}
+            data-dropdown-close
+            data-page-action={action.type}
+            data-page-action-href-template={action.hrefTemplate}
             href={action.href}
             rel={action.external ? 'noreferrer' : undefined}
             target={action.external ? '_blank' : undefined}

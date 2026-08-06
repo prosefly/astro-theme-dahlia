@@ -1,21 +1,21 @@
 function initMobileDocsNav(): void {
-  const drawer = document.querySelector<HTMLElement>('[data-dahlia-mobile-sidebar]');
-  const openButtons = Array.from(document.querySelectorAll('[data-dahlia-mobile-sidebar-open]'));
+  const drawer = document.querySelector<HTMLElement>('[data-mobile-sidebar]');
+  const openButtons = Array.from(document.querySelectorAll('[data-mobile-sidebar-open]'));
   const closeButtons = drawer
-    ? Array.from(drawer.querySelectorAll('[data-dahlia-mobile-sidebar-close]'))
+    ? Array.from(drawer.querySelectorAll('[data-mobile-sidebar-close]'))
     : [];
-  const sectionSwitch = document.querySelector<HTMLDetailsElement>('[data-dahlia-section-switch]');
-  const sectionOptions = Array.from(document.querySelectorAll<HTMLElement>('[data-dahlia-section-option]'));
-  const sectionPanels = Array.from(document.querySelectorAll<HTMLElement>('[data-dahlia-section-panel]'));
-  const summaryLabel = document.querySelector('[data-dahlia-section-summary-label]');
-  const summaryCount = document.querySelector('[data-dahlia-section-summary-count]');
-  const summaryIcons = Array.from(document.querySelectorAll<HTMLElement>('[data-dahlia-section-summary-icon]'));
+  const sectionSwitch = document.querySelector<HTMLDetailsElement>('[data-section-switch]');
+  const sectionOptions = Array.from(document.querySelectorAll<HTMLElement>('[data-section-option]'));
+  const sectionPanels = Array.from(document.querySelectorAll<HTMLElement>('[data-section-panel]'));
+  const summaryLabel = document.querySelector('[data-section-summary-label]');
+  const summaryCount = document.querySelector('[data-section-summary-count]');
+  const summaryIcons = Array.from(document.querySelectorAll<HTMLElement>('[data-section-summary-icon]'));
 
-  if (!drawer || !openButtons.length || drawer.dataset.dahliaMobileDocsNavReady) {
+  if (!drawer || !openButtons.length || drawer.dataset.mobileDocsNavReady) {
     return;
   }
 
-  drawer.dataset.dahliaMobileDocsNavReady = 'true';
+  drawer.dataset.mobileDocsNavReady = 'true';
 
   let closeTimer: number | undefined;
   let previousOverflow = '';
@@ -76,14 +76,14 @@ function initMobileDocsNav(): void {
 
   sectionOptions.forEach((option) => {
     option.addEventListener('click', () => {
-      const slug = option.getAttribute('data-dahlia-section-option');
+      const slug = option.getAttribute('data-section-option');
 
       if (!slug) {
         return;
       }
 
       sectionOptions.forEach((item) => {
-        const active = item.getAttribute('data-dahlia-section-option') === slug;
+        const active = item.getAttribute('data-section-option') === slug;
         item.toggleAttribute('data-active', active);
 
         if (active) {
@@ -94,20 +94,20 @@ function initMobileDocsNav(): void {
       });
 
       sectionPanels.forEach((panel) => {
-        panel.hidden = panel.getAttribute('data-dahlia-section-panel') !== slug;
+        panel.hidden = panel.getAttribute('data-section-panel') !== slug;
       });
       window.dispatchEvent(new Event('resize'));
 
       summaryIcons.forEach((icon) => {
-        icon.hidden = icon.getAttribute('data-dahlia-section-summary-icon') !== slug;
+        icon.hidden = icon.getAttribute('data-section-summary-icon') !== slug;
       });
 
       if (summaryLabel) {
-        summaryLabel.textContent = option.getAttribute('data-dahlia-section-label') ?? '';
+        summaryLabel.textContent = option.getAttribute('data-section-label') ?? '';
       }
 
       if (summaryCount) {
-        summaryCount.textContent = option.getAttribute('data-dahlia-section-count') ?? '';
+        summaryCount.textContent = option.getAttribute('data-section-count') ?? '';
       }
 
       sectionSwitch?.removeAttribute('open');

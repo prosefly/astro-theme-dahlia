@@ -1,16 +1,16 @@
 function initDahliaSidebarScroll(): void {
-  const containers = Array.from(document.querySelectorAll('[data-dahlia-sidebar-scroll]'));
+  const containers = Array.from(document.querySelectorAll('[data-sidebar-scroll]'));
 
   for (const container of containers) {
-    if (!(container instanceof HTMLElement) || container.dataset.dahliaSidebarReady) {
+    if (!(container instanceof HTMLElement) || container.dataset.sidebarReady) {
       continue;
     }
 
-    container.dataset.dahliaSidebarReady = 'true';
+    container.dataset.sidebarReady = 'true';
 
-    const scrollArea = container.querySelector<HTMLElement>('[data-dahlia-sidebar-scroll-area]');
-    const topFade = container.querySelector<HTMLElement>('[data-dahlia-sidebar-fade-top]');
-    const bottomFade = container.querySelector<HTMLElement>('[data-dahlia-sidebar-fade-bottom]');
+    const scrollArea = container.querySelector<HTMLElement>('[data-sidebar-scroll-area]');
+    const topFade = container.querySelector<HTMLElement>('[data-sidebar-fade-top]');
+    const bottomFade = container.querySelector<HTMLElement>('[data-sidebar-fade-bottom]');
 
     if (!scrollArea || !topFade || !bottomFade) {
       continue;
