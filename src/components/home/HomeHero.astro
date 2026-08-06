@@ -1,0 +1,107 @@
+---
+import { Icon } from '@prosefly/astro-components';
+import { PageSection } from '@prosefly/astro-theme-dahlia/layouts';
+import DahliaDocsPreview from './HomeDocsPreview.astro';
+---
+
+<PageSection class="home-hero" padding="none" size="xl">
+  <div class="mx-auto flex max-w-4xl flex-col items-center px-5 py-20 text-center sm:px-6 sm:py-24 lg:py-28">
+    <img
+      alt=""
+      class="h-16 w-16"
+      decoding="async"
+      fetchpriority="high"
+      height="128"
+      src="/images/dahlia-mark.svg"
+      width="128"
+    />
+    <p class="mt-7 font-mono text-xs font-medium uppercase tracking-[0.24em] text-(--dahlia-accent)">
+      Astro documentation theme
+    </p>
+    <h1 class="home-hero__title mt-6 max-w-3xl text-(--dahlia-text-strong)">
+      A calmer way<br class="hidden sm:block" /> to build docs
+    </h1>
+    <p class="mt-6 max-w-2xl text-base leading-8 text-(--dahlia-text-muted) sm:text-lg">
+      Dahlia is a minimal, content-first documentation theme for Astro.
+      Thoughtful by default. Focused on clarity, reading, and pace.
+    </p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a class="home-button home-button--primary" href="/docs/overview/">
+        Read the docs <Icon name="lucide:arrow-right" />
+      </a>
+      <a class="home-button home-button--secondary" href="https://github.com/prosefly/astro-theme-dahlia" rel="noreferrer" target="_blank">
+        View on GitHub <Icon name="simple-icons:github" />
+      </a>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-6xl px-5 pb-20 sm:px-6 sm:pb-24 lg:pb-28">
+    <DahliaDocsPreview />
+  </div>
+</PageSection>
+
+<style>
+  .home-hero {
+    border-bottom: 1px solid var(--dahlia-border-subtle);
+    background: var(--dahlia-background);
+  }
+
+  .home-hero__title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(3.25rem, 8vw, 6.5rem);
+    font-weight: 400;
+    letter-spacing: -0.065em;
+    line-height: 0.94;
+  }
+
+  .home-button {
+    align-items: center;
+    border-radius: var(--dahlia-radius-md);
+    display: inline-flex;
+    font-size: 0.875rem;
+    font-weight: 600;
+    gap: 0.5rem;
+    height: 2.75rem;
+    justify-content: center;
+    padding-inline: 1.125rem;
+    transition: border-color 160ms ease, opacity 160ms ease, transform 160ms ease;
+  }
+
+  .home-button:hover {
+    transform: translateY(-1px);
+  }
+
+  .home-button:focus-visible {
+    outline: 2px solid var(--dahlia-accent);
+    outline-offset: 3px;
+  }
+
+  .home-button--primary {
+    background: var(--dahlia-accent);
+    color: var(--dahlia-accent-contrast);
+  }
+
+  .home-button--primary:hover {
+    opacity: 0.9;
+  }
+
+  .home-button--secondary {
+    border: 1px solid var(--dahlia-border-muted);
+    color: var(--dahlia-text-strong);
+  }
+
+  .home-button--secondary:hover {
+    border-color: var(--dahlia-accent);
+  }
+
+  .home-button :global(.pf-icon) {
+    height: 1rem;
+    width: 1rem;
+  }
+
+  @media (max-width: 639px) {
+    .home-hero__title {
+      font-size: clamp(3rem, 15vw, 4.25rem);
+    }
+  }
+</style>

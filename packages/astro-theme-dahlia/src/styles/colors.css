@@ -1,0 +1,378 @@
+@theme static {
+  --dahlia-color-slate-50: var(--color-slate-50);
+  --dahlia-color-slate-100: var(--color-slate-100);
+  --dahlia-color-slate-200: var(--color-slate-200);
+  --dahlia-color-slate-300: var(--color-slate-300);
+  --dahlia-color-slate-400: var(--color-slate-400);
+  --dahlia-color-slate-500: var(--color-slate-500);
+  --dahlia-color-slate-600: var(--color-slate-600);
+  --dahlia-color-slate-700: var(--color-slate-700);
+  --dahlia-color-slate-800: var(--color-slate-800);
+  --dahlia-color-slate-900: var(--color-slate-900);
+  --dahlia-color-slate-950: var(--color-slate-950);
+  --dahlia-color-zinc-50: var(--color-zinc-50);
+  --dahlia-color-zinc-100: var(--color-zinc-100);
+  --dahlia-color-zinc-200: var(--color-zinc-200);
+  --dahlia-color-zinc-300: var(--color-zinc-300);
+  --dahlia-color-zinc-400: var(--color-zinc-400);
+  --dahlia-color-zinc-500: var(--color-zinc-500);
+  --dahlia-color-zinc-600: var(--color-zinc-600);
+  --dahlia-color-zinc-700: var(--color-zinc-700);
+  --dahlia-color-zinc-800: var(--color-zinc-800);
+  --dahlia-color-zinc-900: var(--color-zinc-900);
+  --dahlia-color-zinc-950: var(--color-zinc-950);
+  --dahlia-color-neutral-50: var(--color-neutral-50);
+  --dahlia-color-neutral-100: var(--color-neutral-100);
+  --dahlia-color-neutral-200: var(--color-neutral-200);
+  --dahlia-color-neutral-300: var(--color-neutral-300);
+  --dahlia-color-neutral-400: var(--color-neutral-400);
+  --dahlia-color-neutral-500: var(--color-neutral-500);
+  --dahlia-color-neutral-600: var(--color-neutral-600);
+  --dahlia-color-neutral-700: var(--color-neutral-700);
+  --dahlia-color-neutral-800: var(--color-neutral-800);
+  --dahlia-color-neutral-900: var(--color-neutral-900);
+  --dahlia-color-neutral-950: var(--color-neutral-950);
+  --dahlia-color-stone-50: var(--color-stone-50);
+  --dahlia-color-stone-100: var(--color-stone-100);
+  --dahlia-color-stone-200: var(--color-stone-200);
+  --dahlia-color-stone-300: var(--color-stone-300);
+  --dahlia-color-stone-400: var(--color-stone-400);
+  --dahlia-color-stone-500: var(--color-stone-500);
+  --dahlia-color-stone-600: var(--color-stone-600);
+  --dahlia-color-stone-700: var(--color-stone-700);
+  --dahlia-color-stone-800: var(--color-stone-800);
+  --dahlia-color-stone-900: var(--color-stone-900);
+  --dahlia-color-stone-950: var(--color-stone-950);
+  --dahlia-color-red-400: var(--color-red-400);
+  --dahlia-color-red-600: var(--color-red-600);
+  --dahlia-color-orange-400: var(--color-orange-400);
+  --dahlia-color-orange-600: var(--color-orange-600);
+  --dahlia-color-amber-400: var(--color-amber-400);
+  --dahlia-color-amber-600: var(--color-amber-600);
+  --dahlia-color-yellow-400: var(--color-yellow-400);
+  --dahlia-color-yellow-600: var(--color-yellow-600);
+  --dahlia-color-lime-400: var(--color-lime-400);
+  --dahlia-color-lime-600: var(--color-lime-600);
+  --dahlia-color-green-400: var(--color-green-400);
+  --dahlia-color-green-600: var(--color-green-600);
+  --dahlia-color-emerald-400: var(--color-emerald-400);
+  --dahlia-color-emerald-600: var(--color-emerald-600);
+  --dahlia-color-teal-400: var(--color-teal-400);
+  --dahlia-color-teal-600: var(--color-teal-600);
+  --dahlia-color-cyan-400: var(--color-cyan-400);
+  --dahlia-color-cyan-600: var(--color-cyan-600);
+  --dahlia-color-sky-400: var(--color-sky-400);
+  --dahlia-color-sky-600: var(--color-sky-600);
+  --dahlia-color-blue-400: var(--color-blue-400);
+  --dahlia-color-blue-600: var(--color-blue-600);
+  --dahlia-color-indigo-400: var(--color-indigo-400);
+  --dahlia-color-indigo-600: var(--color-indigo-600);
+  --dahlia-color-violet-400: var(--color-violet-400);
+  --dahlia-color-violet-600: var(--color-violet-600);
+  --dahlia-color-purple-400: var(--color-purple-400);
+  --dahlia-color-purple-600: var(--color-purple-600);
+  --dahlia-color-fuchsia-400: var(--color-fuchsia-400);
+  --dahlia-color-fuchsia-600: var(--color-fuchsia-600);
+  --dahlia-color-pink-400: var(--color-pink-400);
+  --dahlia-color-pink-600: var(--color-pink-600);
+  --dahlia-color-rose-400: var(--color-rose-400);
+  --dahlia-color-rose-600: var(--color-rose-600);
+}
+
+:root {
+  color-scheme: light;
+
+  --dahlia-gray-50: oklch(0.985 0 0);
+  --dahlia-gray-100: oklch(0.967 0.001 286.375);
+  --dahlia-gray-200: oklch(0.92 0.004 286.32);
+  --dahlia-gray-300: oklch(0.871 0.006 286.286);
+  --dahlia-gray-400: oklch(0.705 0.015 286.067);
+  --dahlia-gray-500: oklch(0.552 0.016 285.938);
+  --dahlia-gray-600: oklch(0.442 0.017 285.786);
+  --dahlia-gray-700: oklch(0.37 0.013 285.805);
+  --dahlia-gray-800: oklch(0.274 0.006 286.033);
+  --dahlia-gray-900: oklch(0.21 0.006 285.885);
+  --dahlia-gray-950: oklch(0.141 0.005 285.823);
+  --dahlia-accent-light: #B83F6F;
+  --dahlia-accent-dark: #E58AAA;
+
+  --dahlia-background: oklch(1 0 0);
+  --dahlia-text-strong: var(--dahlia-gray-900);
+  --dahlia-text: var(--dahlia-gray-700);
+  --dahlia-text-muted: var(--dahlia-gray-600);
+  --dahlia-text-subtle: var(--dahlia-gray-500);
+  --dahlia-border-muted: color-mix(in oklab, var(--dahlia-gray-400) 32%, transparent);
+  --dahlia-border-subtle: color-mix(in oklab, var(--dahlia-gray-400) 20%, transparent);
+  --dahlia-border-hover: color-mix(in oklab, var(--dahlia-gray-400) 54%, transparent);
+  --dahlia-surface: var(--dahlia-gray-50);
+  --dahlia-code-background: var(--dahlia-surface);
+  --dahlia-code-border: color-mix(in oklab, var(--dahlia-gray-400) 24%, transparent);
+  --dahlia-accent: var(--dahlia-accent-light);
+  --dahlia-accent-soft: color-mix(in oklab, var(--dahlia-accent) 12%, var(--dahlia-background));
+  --dahlia-accent-contrast: oklch(1 0 0);
+  --dahlia-info: var(--dahlia-color-blue-600, oklch(0.546 0.245 262.881));
+  --dahlia-info-ink: color-mix(in oklab, var(--dahlia-info) 82%, var(--dahlia-text-strong));
+  --dahlia-info-soft: color-mix(in oklab, var(--dahlia-info) 10%, var(--dahlia-background));
+  --dahlia-info-contrast: oklch(1 0 0);
+  --dahlia-success: var(--dahlia-color-emerald-600, oklch(0.596 0.145 163.225));
+  --dahlia-success-ink: color-mix(in oklab, var(--dahlia-success) 82%, var(--dahlia-text-strong));
+  --dahlia-success-soft: color-mix(in oklab, var(--dahlia-success) 10%, var(--dahlia-background));
+  --dahlia-success-contrast: oklch(1 0 0);
+  --dahlia-warning: var(--dahlia-color-amber-600, oklch(0.666 0.179 58.318));
+  --dahlia-warning-ink: color-mix(in oklab, var(--dahlia-warning) 78%, var(--dahlia-text-strong));
+  --dahlia-warning-soft: color-mix(in oklab, var(--dahlia-warning) 12%, var(--dahlia-background));
+  --dahlia-warning-contrast: oklch(0.18 0.04 80);
+  --dahlia-danger: var(--dahlia-color-red-600, oklch(0.577 0.245 27.325));
+  --dahlia-danger-ink: color-mix(in oklab, var(--dahlia-danger) 82%, var(--dahlia-text-strong));
+  --dahlia-danger-soft: color-mix(in oklab, var(--dahlia-danger) 10%, var(--dahlia-background));
+  --dahlia-danger-contrast: oklch(1 0 0);
+
+  --pf-text-strong: var(--dahlia-text-strong);
+  --pf-text: var(--dahlia-text);
+  --pf-text-muted: var(--dahlia-text-muted);
+  --pf-background: var(--dahlia-background);
+  --pf-surface: var(--dahlia-surface);
+  --pf-border-muted: var(--dahlia-border-muted);
+  --pf-border-subtle: var(--dahlia-border-subtle);
+  --pf-border-hover: var(--dahlia-border-hover);
+  --pf-accent: var(--dahlia-accent);
+  --pf-accent-soft: var(--dahlia-accent-soft);
+  --pf-accent-contrast: var(--dahlia-accent-contrast);
+  --pf-info: var(--dahlia-info);
+  --pf-info-ink: var(--dahlia-info-ink);
+  --pf-info-soft: var(--dahlia-info-soft);
+  --pf-info-contrast: var(--dahlia-info-contrast);
+  --pf-success: var(--dahlia-success);
+  --pf-success-ink: var(--dahlia-success-ink);
+  --pf-success-soft: var(--dahlia-success-soft);
+  --pf-success-contrast: var(--dahlia-success-contrast);
+  --pf-warning: var(--dahlia-warning);
+  --pf-warning-ink: var(--dahlia-warning-ink);
+  --pf-warning-soft: var(--dahlia-warning-soft);
+  --pf-warning-contrast: var(--dahlia-warning-contrast);
+  --pf-danger: var(--dahlia-danger);
+  --pf-danger-ink: var(--dahlia-danger-ink);
+  --pf-danger-soft: var(--dahlia-danger-soft);
+  --pf-danger-contrast: var(--dahlia-danger-contrast);
+}
+
+[data-gray="slate"] {
+  --dahlia-gray-50: var(--color-slate-50, oklch(0.984 0.003 247.858));
+  --dahlia-gray-100: var(--color-slate-100, oklch(0.968 0.007 247.896));
+  --dahlia-gray-200: var(--color-slate-200, oklch(0.929 0.013 255.508));
+  --dahlia-gray-300: var(--color-slate-300, oklch(0.869 0.022 252.894));
+  --dahlia-gray-400: var(--color-slate-400, oklch(0.704 0.04 256.788));
+  --dahlia-gray-500: var(--color-slate-500, oklch(0.554 0.046 257.417));
+  --dahlia-gray-600: var(--color-slate-600, oklch(0.446 0.043 257.281));
+  --dahlia-gray-700: var(--color-slate-700, oklch(0.372 0.044 257.287));
+  --dahlia-gray-800: var(--color-slate-800, oklch(0.279 0.041 260.031));
+  --dahlia-gray-900: var(--color-slate-900, oklch(0.208 0.042 265.755));
+  --dahlia-gray-950: var(--color-slate-950, oklch(0.129 0.042 264.695));
+}
+
+[data-gray="zinc"] {
+  --dahlia-gray-50: var(--color-zinc-50, oklch(0.985 0 0));
+  --dahlia-gray-100: var(--color-zinc-100, oklch(0.967 0.001 286.375));
+  --dahlia-gray-200: var(--color-zinc-200, oklch(0.92 0.004 286.32));
+  --dahlia-gray-300: var(--color-zinc-300, oklch(0.871 0.006 286.286));
+  --dahlia-gray-400: var(--color-zinc-400, oklch(0.705 0.015 286.067));
+  --dahlia-gray-500: var(--color-zinc-500, oklch(0.552 0.016 285.938));
+  --dahlia-gray-600: var(--color-zinc-600, oklch(0.442 0.017 285.786));
+  --dahlia-gray-700: var(--color-zinc-700, oklch(0.37 0.013 285.805));
+  --dahlia-gray-800: var(--color-zinc-800, oklch(0.274 0.006 286.033));
+  --dahlia-gray-900: var(--color-zinc-900, oklch(0.21 0.006 285.885));
+  --dahlia-gray-950: var(--color-zinc-950, oklch(0.141 0.005 285.823));
+}
+
+[data-gray="neutral"] {
+  --dahlia-gray-50: var(--color-neutral-50, oklch(0.985 0 0));
+  --dahlia-gray-100: var(--color-neutral-100, oklch(0.97 0 0));
+  --dahlia-gray-200: var(--color-neutral-200, oklch(0.922 0 0));
+  --dahlia-gray-300: var(--color-neutral-300, oklch(0.87 0 0));
+  --dahlia-gray-400: var(--color-neutral-400, oklch(0.708 0 0));
+  --dahlia-gray-500: var(--color-neutral-500, oklch(0.556 0 0));
+  --dahlia-gray-600: var(--color-neutral-600, oklch(0.439 0 0));
+  --dahlia-gray-700: var(--color-neutral-700, oklch(0.371 0 0));
+  --dahlia-gray-800: var(--color-neutral-800, oklch(0.269 0 0));
+  --dahlia-gray-900: var(--color-neutral-900, oklch(0.205 0 0));
+  --dahlia-gray-950: var(--color-neutral-950, oklch(0.145 0 0));
+}
+
+[data-gray="stone"] {
+  --dahlia-gray-50: var(--color-stone-50, oklch(0.985 0.001 106.423));
+  --dahlia-gray-100: var(--color-stone-100, oklch(0.97 0.001 106.424));
+  --dahlia-gray-200: var(--color-stone-200, oklch(0.923 0.003 48.717));
+  --dahlia-gray-300: var(--color-stone-300, oklch(0.869 0.005 56.366));
+  --dahlia-gray-400: var(--color-stone-400, oklch(0.709 0.01 56.259));
+  --dahlia-gray-500: var(--color-stone-500, oklch(0.553 0.013 58.071));
+  --dahlia-gray-600: var(--color-stone-600, oklch(0.444 0.011 73.639));
+  --dahlia-gray-700: var(--color-stone-700, oklch(0.374 0.01 67.558));
+  --dahlia-gray-800: var(--color-stone-800, oklch(0.268 0.007 34.298));
+  --dahlia-gray-900: var(--color-stone-900, oklch(0.216 0.006 56.043));
+  --dahlia-gray-950: var(--color-stone-950, oklch(0.147 0.004 49.25));
+}
+
+[data-accent="red"] {
+  --dahlia-accent-light: var(--dahlia-color-red-600, oklch(57.7% 0.245 27.325));
+  --dahlia-accent-dark: var(--dahlia-color-red-400, oklch(70.4% 0.191 22.216));
+}
+
+[data-accent="orange"] {
+  --dahlia-accent-light: var(--dahlia-color-orange-600, oklch(64.6% 0.222 41.116));
+  --dahlia-accent-dark: var(--dahlia-color-orange-400, oklch(75% 0.183 55.934));
+}
+
+[data-accent="amber"] {
+  --dahlia-accent-light: var(--dahlia-color-amber-600, oklch(66.6% 0.179 58.318));
+  --dahlia-accent-dark: var(--dahlia-color-amber-400, oklch(82.8% 0.189 84.429));
+}
+
+[data-accent="yellow"] {
+  --dahlia-accent-light: var(--dahlia-color-yellow-600, oklch(68.1% 0.162 75.834));
+  --dahlia-accent-dark: var(--dahlia-color-yellow-400, oklch(85.2% 0.199 91.936));
+}
+
+[data-accent="lime"] {
+  --dahlia-accent-light: var(--dahlia-color-lime-600, oklch(64.8% 0.2 131.684));
+  --dahlia-accent-dark: var(--dahlia-color-lime-400, oklch(84.1% 0.238 128.85));
+}
+
+[data-accent="green"] {
+  --dahlia-accent-light: var(--dahlia-color-green-600, oklch(62.7% 0.194 149.214));
+  --dahlia-accent-dark: var(--dahlia-color-green-400, oklch(79.2% 0.209 151.711));
+}
+
+[data-accent="emerald"] {
+  --dahlia-accent-light: var(--dahlia-color-emerald-600, oklch(59.6% 0.145 163.225));
+  --dahlia-accent-dark: var(--dahlia-color-emerald-400, oklch(76.5% 0.177 163.223));
+}
+
+[data-accent="teal"] {
+  --dahlia-accent-light: var(--dahlia-color-teal-600, oklch(60% 0.118 184.704));
+  --dahlia-accent-dark: var(--dahlia-color-teal-400, oklch(77.7% 0.152 181.912));
+}
+
+[data-accent="cyan"] {
+  --dahlia-accent-light: var(--dahlia-color-cyan-600, oklch(60.9% 0.126 221.723));
+  --dahlia-accent-dark: var(--dahlia-color-cyan-400, oklch(78.9% 0.154 211.53));
+}
+
+[data-accent="sky"] {
+  --dahlia-accent-light: var(--dahlia-color-sky-600, oklch(58.8% 0.158 241.966));
+  --dahlia-accent-dark: var(--dahlia-color-sky-400, oklch(74.6% 0.16 232.661));
+}
+
+[data-accent="blue"] {
+  --dahlia-accent-light: var(--dahlia-color-blue-600, oklch(54.6% 0.245 262.881));
+  --dahlia-accent-dark: var(--dahlia-color-blue-400, oklch(70.7% 0.165 254.624));
+}
+
+[data-accent="indigo"] {
+  --dahlia-accent-light: var(--dahlia-color-indigo-600, oklch(51.1% 0.262 276.966));
+  --dahlia-accent-dark: var(--dahlia-color-indigo-400, oklch(67.3% 0.182 276.935));
+}
+
+[data-accent="violet"] {
+  --dahlia-accent-light: var(--dahlia-color-violet-600, oklch(54.1% 0.281 293.009));
+  --dahlia-accent-dark: var(--dahlia-color-violet-400, oklch(70.2% 0.183 293.541));
+}
+
+[data-accent="purple"] {
+  --dahlia-accent-light: var(--dahlia-color-purple-600, oklch(55.8% 0.288 302.321));
+  --dahlia-accent-dark: var(--dahlia-color-purple-400, oklch(71.4% 0.203 305.504));
+}
+
+[data-accent="fuchsia"] {
+  --dahlia-accent-light: var(--dahlia-color-fuchsia-600, oklch(59.1% 0.293 322.896));
+  --dahlia-accent-dark: var(--dahlia-color-fuchsia-400, oklch(74% 0.238 322.16));
+}
+
+[data-accent="pink"] {
+  --dahlia-accent-light: var(--dahlia-color-pink-600, oklch(59.2% 0.249 0.584));
+  --dahlia-accent-dark: var(--dahlia-color-pink-400, oklch(71.8% 0.202 349.761));
+}
+
+[data-accent="rose"] {
+  --dahlia-accent-light: var(--dahlia-color-rose-600, oklch(58.6% 0.253 17.585));
+  --dahlia-accent-dark: var(--dahlia-color-rose-400, oklch(71.2% 0.194 13.428));
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --dahlia-background: var(--dahlia-gray-950);
+  --dahlia-text-strong: var(--dahlia-gray-50);
+  --dahlia-text: var(--dahlia-gray-200);
+  --dahlia-text-muted: var(--dahlia-gray-400);
+  --dahlia-border-muted: color-mix(in oklab, var(--dahlia-gray-500) 32%, transparent);
+  --dahlia-border-subtle: color-mix(in oklab, var(--dahlia-gray-500) 20%, transparent);
+  --dahlia-border-hover: color-mix(in oklab, var(--dahlia-gray-500) 54%, transparent);
+  --dahlia-surface: color-mix(in oklab, var(--dahlia-gray-900) 65%, var(--dahlia-background));
+  --dahlia-code-background: var(--dahlia-surface);
+  --dahlia-code-border: color-mix(in oklab, var(--dahlia-gray-500) 28%, transparent);
+  --dahlia-accent: var(--dahlia-accent-dark);
+  --dahlia-accent-soft: color-mix(in oklab, var(--dahlia-accent) 16%, var(--dahlia-background));
+  --dahlia-accent-contrast: var(--dahlia-gray-950);
+  --dahlia-info: var(--dahlia-color-blue-400, oklch(0.707 0.165 254.624));
+  --dahlia-info-ink: color-mix(in oklab, var(--dahlia-info) 72%, var(--dahlia-text-strong));
+  --dahlia-info-soft: color-mix(in oklab, var(--dahlia-info) 16%, var(--dahlia-background));
+  --dahlia-info-contrast: var(--dahlia-gray-950);
+  --dahlia-success: var(--dahlia-color-emerald-400, oklch(0.765 0.177 163.223));
+  --dahlia-success-ink: color-mix(in oklab, var(--dahlia-success) 72%, var(--dahlia-text-strong));
+  --dahlia-success-soft: color-mix(in oklab, var(--dahlia-success) 16%, var(--dahlia-background));
+  --dahlia-success-contrast: var(--dahlia-gray-950);
+  --dahlia-warning: var(--dahlia-color-amber-400, oklch(0.828 0.189 84.429));
+  --dahlia-warning-ink: color-mix(in oklab, var(--dahlia-warning) 74%, var(--dahlia-text-strong));
+  --dahlia-warning-soft: color-mix(in oklab, var(--dahlia-warning) 18%, var(--dahlia-background));
+  --dahlia-warning-contrast: var(--dahlia-gray-950);
+  --dahlia-danger: var(--dahlia-color-red-400, oklch(0.704 0.191 22.216));
+  --dahlia-danger-ink: color-mix(in oklab, var(--dahlia-danger) 72%, var(--dahlia-text-strong));
+  --dahlia-danger-soft: color-mix(in oklab, var(--dahlia-danger) 16%, var(--dahlia-background));
+  --dahlia-danger-contrast: var(--dahlia-gray-950);
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-theme="system"] {
+    color-scheme: dark;
+
+    --dahlia-background: var(--dahlia-gray-950);
+    --dahlia-text-strong: var(--dahlia-gray-50);
+    --dahlia-text: var(--dahlia-gray-200);
+    --dahlia-text-muted: var(--dahlia-gray-400);
+    --dahlia-border-muted: color-mix(in oklab, var(--dahlia-gray-500) 32%, transparent);
+    --dahlia-border-subtle: color-mix(in oklab, var(--dahlia-gray-500) 20%, transparent);
+    --dahlia-border-hover: color-mix(in oklab, var(--dahlia-gray-500) 54%, transparent);
+    --dahlia-surface: color-mix(in oklab, var(--dahlia-gray-900) 65%, var(--dahlia-background));
+    --dahlia-code-background: var(--dahlia-surface);
+    --dahlia-code-border: color-mix(in oklab, var(--dahlia-gray-500) 28%, transparent);
+    --dahlia-accent: var(--dahlia-accent-dark);
+    --dahlia-accent-soft: color-mix(in oklab, var(--dahlia-accent) 16%, var(--dahlia-background));
+    --dahlia-accent-contrast: var(--dahlia-gray-950);
+    --dahlia-info: var(--dahlia-color-blue-400, oklch(0.707 0.165 254.624));
+    --dahlia-info-ink: color-mix(in oklab, var(--dahlia-info) 72%, var(--dahlia-text-strong));
+    --dahlia-info-soft: color-mix(in oklab, var(--dahlia-info) 16%, var(--dahlia-background));
+    --dahlia-info-contrast: var(--dahlia-gray-950);
+    --dahlia-success: var(--dahlia-color-emerald-400, oklch(0.765 0.177 163.223));
+    --dahlia-success-ink: color-mix(in oklab, var(--dahlia-success) 72%, var(--dahlia-text-strong));
+    --dahlia-success-soft: color-mix(in oklab, var(--dahlia-success) 16%, var(--dahlia-background));
+    --dahlia-success-contrast: var(--dahlia-gray-950);
+    --dahlia-warning: var(--dahlia-color-amber-400, oklch(0.828 0.189 84.429));
+    --dahlia-warning-ink: color-mix(in oklab, var(--dahlia-warning) 74%, var(--dahlia-text-strong));
+    --dahlia-warning-soft: color-mix(in oklab, var(--dahlia-warning) 18%, var(--dahlia-background));
+    --dahlia-warning-contrast: var(--dahlia-gray-950);
+    --dahlia-danger: var(--dahlia-color-red-400, oklch(0.704 0.191 22.216));
+    --dahlia-danger-ink: color-mix(in oklab, var(--dahlia-danger) 72%, var(--dahlia-text-strong));
+    --dahlia-danger-soft: color-mix(in oklab, var(--dahlia-danger) 16%, var(--dahlia-background));
+    --dahlia-danger-contrast: var(--dahlia-gray-950);
+  }
+}
+
+html {
+  background: var(--dahlia-background);
+  color: var(--dahlia-text);
+}
+
+body {
+  background: var(--dahlia-background);
+  color: var(--dahlia-text);
+}

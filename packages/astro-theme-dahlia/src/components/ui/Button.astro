@@ -1,0 +1,79 @@
+---
+import { Icon } from '@prosefly/astro-components';
+import { resolveIconName } from '../../lib/icons';
+
+type ButtonVariant = 'text' | 'soft' | 'outline' | 'solid' | 'ghost';
+type ButtonColor = 'neutral' | 'accent';
+
+interface Props {
+  href?: string;
+  external?: boolean;
+  variant?: ButtonVariant;
+  color?: ButtonColor;
+  trailingIcon?: string;
+  block?: boolean;
+  class?: string;
+  type?: 'button' | 'submit' | 'reset';
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  external = false,
+  variant = 'soft',
+  color = 'neutral',
+  trailingIcon,
+  block = false,
+  class: className,
+  type = 'button',
+  ...attrs
+} = Astro.props;
+const trailingIconName = trailingIcon ? resolveIconName(trailingIcon) : undefined;
+const baseClasses = [
+  'dahlia-focus-ring items-center gap-2 rounded-(--dahlia-radius-md) text-sm font-medium transition-colors',
+  block ? 'flex w-full justify-start' : 'inline-flex justify-center',
+  variant === 'text' ? '' : 'h-9 px-3',
+];
+const variantClasses = {
+  text:
+    color === 'accent'
+      ? 'text-(--dahlia-accent) hover:text-(--dahlia-accent)'
+      : 'text-(--dahlia-text-muted) hover:text-(--dahlia-text-strong)',
+  solid:
+    color === 'accent'
+      ? 'bg-(--dahlia-accent) text-(--dahlia-accent-contrast) hover:opacity-90'
+      : 'bg-(--dahlia-text-strong) text-(--dahlia-background) hover:opacity-90',
+  outline:
+    color === 'accent'
+      ? 'dahlia-border-muted border text-(--dahlia-accent) hover:border-(--dahlia-accent) hover:bg-(--dahlia-accent-soft)'
+      : 'dahlia-border-muted border text-(--dahlia-text-strong) hover:bg-(--dahlia-surface)',
+  soft:
+    color === 'accent'
+      ? 'bg-(--dahlia-accent-soft) text-(--dahlia-accent) hover:opacity-90'
+      : 'bg-(--dahlia-surface) text-(--dahlia-text-strong) hover:bg-(--dahlia-accent-soft)',
+  ghost:
+    color === 'accent'
+      ? 'text-(--dahlia-accent) hover:bg-(--dahlia-accent-soft)'
+      : 'text-(--dahlia-text-strong) hover:bg-(--dahlia-surface)',
+}[variant];
+---
+
+{
+  href ? (
+    <a
+      class:list={[baseClasses, variantClasses, className]}
+      href={href}
+      rel={external ? 'noreferrer' : undefined}
+      target={external ? '_blank' : undefined}
+      {...attrs}
+    >
+      <slot />
+      {trailingIconName && <Icon aria-hidden="true" class="h-4 w-4" name={trailingIconName} />}
+    </a>
+  ) : (
+    <button class:list={[baseClasses, variantClasses, className]} type={type} {...attrs}>
+      <slot />
+      {trailingIconName && <Icon aria-hidden="true" class="h-4 w-4" name={trailingIconName} />}
+    </button>
+  )
+}

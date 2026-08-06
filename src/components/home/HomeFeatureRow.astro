@@ -1,0 +1,62 @@
+---
+import { Icon } from '@prosefly/astro-components';
+import { PageSection } from '@prosefly/astro-theme-dahlia/layouts';
+
+const features = [
+  {
+    icon: 'ph:book-open-thin',
+    title: 'Content-first by design',
+    description: 'Clean layouts, readable typography, and generous spacing help your content take center stage.',
+  },
+  {
+    icon: 'lucide:flower-2',
+    title: 'Simple to start',
+    description: 'Get up and running in minutes with sensible defaults and minimal configuration.',
+  },
+  {
+    icon: 'ph:sliders-horizontal-thin',
+    title: 'Easy to make your own',
+    description: 'Extend Dahlia with components, styles, and content collections built to be adaptable.',
+  },
+];
+---
+
+<PageSection class="home-features" padding="lg" size="xl">
+  <div class="grid divide-y divide-(--dahlia-border-subtle) md:grid-cols-3 md:divide-x md:divide-y-0">
+    {features.map((feature) => (
+      <article class="home-feature px-0 py-8 text-center md:px-8 md:py-3 first:pt-0 last:pb-0 md:first:ps-0 md:last:pe-0 md:first:pt-3 md:last:pb-3">
+        <Icon aria-hidden="true" class="home-feature__icon mx-auto text-(--dahlia-accent)" name={feature.icon} />
+        <h2>{feature.title}</h2>
+        <p>{feature.description}</p>
+      </article>
+    ))}
+  </div>
+</PageSection>
+
+<style>
+  .home-features {
+    border-bottom: 1px solid var(--dahlia-border-subtle);
+  }
+
+  .home-feature__icon {
+    height: 2rem;
+    width: 2rem;
+  }
+
+  .home-feature h2 {
+    color: var(--dahlia-text-strong);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    margin-top: 1.2rem;
+  }
+
+  .home-feature p {
+    color: var(--dahlia-text-muted);
+    font-size: 0.875rem;
+    line-height: 1.7;
+    margin: 0.65rem auto 0;
+    max-width: 18rem;
+  }
+</style>

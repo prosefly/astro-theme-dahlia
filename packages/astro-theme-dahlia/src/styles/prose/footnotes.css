@@ -1,0 +1,89 @@
+.dahlia-prose :where(sup) {
+  line-height: 0;
+}
+
+.dahlia-prose :where(a[data-footnote-ref]) {
+  background: var(--dahlia-accent-soft);
+  border-radius: var(--dahlia-radius-sm);
+  color: var(--dahlia-accent);
+  display: inline-block;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  margin-inline: 0.125em;
+  min-width: 1.35em;
+  padding: 0.2em 0.35em;
+  scroll-margin-top: calc(var(--dahlia-docs-chrome-height) + 1rem);
+  text-align: center;
+  text-decoration: none;
+  vertical-align: super;
+}
+
+.dahlia-prose :where(a[data-footnote-ref]:hover) {
+  background: color-mix(in oklab, var(--dahlia-accent) 16%, var(--dahlia-background));
+  text-decoration: none;
+}
+
+.dahlia-prose :where(a[data-footnote-ref]:focus-visible) {
+  outline-offset: 0.15em;
+}
+
+.dahlia-prose :where(section[data-footnotes]) {
+  border-block-start: 1px solid var(--dahlia-prose-border);
+  color: var(--dahlia-text-muted);
+  font-size: 0.875em;
+  line-height: 1.7142857;
+  margin-block-start: 3em;
+  padding-block-start: 1.25em;
+}
+
+.dahlia-prose :where(section[data-footnotes] ol) {
+  margin-block-start: 0;
+  padding-inline-start: 1.5em;
+}
+
+.dahlia-prose :where(section[data-footnotes] li) {
+  color: inherit;
+  padding-inline-start: 0.375em;
+  scroll-margin-top: calc(var(--dahlia-docs-chrome-height) + 1rem);
+}
+
+.dahlia-prose :where(section[data-footnotes] li::marker) {
+  color: var(--dahlia-accent);
+  font-weight: 600;
+}
+
+.dahlia-prose :where(section[data-footnotes] li:target) {
+  background: var(--dahlia-accent-soft);
+  border-radius: var(--dahlia-radius-md);
+  color: var(--dahlia-text);
+  margin-inline-start: -0.5em;
+  padding: 0.375em 0.625em 0.375em 0.875em;
+}
+
+.dahlia-prose :where(section[data-footnotes] li > p) {
+  color: inherit;
+  margin: 0;
+}
+
+.dahlia-prose :where(section[data-footnotes] li + li) {
+  margin-block-start: 0.75em;
+}
+
+.dahlia-prose :where(a[data-footnote-backref]) {
+  border-radius: var(--dahlia-radius-sm);
+  color: var(--dahlia-text-muted);
+  display: inline-flex;
+  font-size: 0.875em;
+  font-weight: 600;
+  line-height: 1;
+  margin-inline-start: 0.35em;
+  padding: 0.15em;
+  text-decoration: none;
+  vertical-align: baseline;
+}
+
+.dahlia-prose :where(a[data-footnote-backref]:hover) {
+  color: var(--dahlia-accent);
+  text-decoration: none;
+}

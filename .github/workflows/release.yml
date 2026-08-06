@@ -1,0 +1,100 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "*.*.*"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish @prosefly/astro-theme-dahlia
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 11.9.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify tag version
+        if: github.event_name == 'push'
+        run: |
+          PACKAGE_VERSION=$(node -p "require('./packages/astro-theme-dahlia/package.json').version")
+          TAG_VERSION="$GITHUB_REF_NAME"
+          if ! [[ "$TAG_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Release tags must use bare semver, for example: 0.1.0"
+            exit 1
+          fi
+          test "$PACKAGE_VERSION" = "$TAG_VERSION"
+
+      - name: Check package
+        run: pnpm check
+
+      - name: Test package
+        run: pnpm test
+
+      - name: Build package
+        run: pnpm build
+
+      - name: Dry run publish to npm
+        if: github.event_name == 'workflow_dispatch'
+        working-directory: packages/astro-theme-dahlia
+        run: npx npm@latest publish --access public --dry-run
+
+      - name: Publish package to npm
+        if: github.event_name == 'push'
+        working-directory: packages/astro-theme-dahlia
+        run: npx npm@latest publish --access public
+
+      - name: Setup Node.js for GitHub Packages
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          registry-url: https://npm.pkg.github.com
+          scope: "@prosefly"
+
+      - name: Dry run publish to GitHub Packages
+        if: github.event_name == 'workflow_dispatch'
+        working-directory: packages/astro-theme-dahlia
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
+        run: npx npm@latest publish --dry-run --registry https://npm.pkg.github.com
+
+      - name: Publish package to GitHub Packages
+        if: github.event_name == 'push'
+        working-directory: packages/astro-theme-dahlia
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
+        run: npx npm@latest publish --registry https://npm.pkg.github.com
+
+      - name: Create GitHub release
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --generate-notes \
+            --title "$GITHUB_REF_NAME" \
+            --verify-tag

@@ -1,0 +1,64 @@
+---
+interface Props {
+  class?: string;
+  idPrefix?: string;
+}
+
+const { class: className = 'h-8 w-8', idPrefix = 'dahlia-mark' } = Astro.props;
+const outerRotations = Array.from({ length: 12 }, (_, index) => index * 30);
+const middleRotations = Array.from({ length: 12 }, (_, index) => index * 30 + 15);
+const innerRotations = Array.from({ length: 10 }, (_, index) => index * 36);
+---
+
+<svg
+  aria-hidden="true"
+  class={className}
+  focusable="false"
+  viewBox="0 0 64 64"
+>
+  <defs>
+    <linearGradient id={`${idPrefix}-outer`} x1="32" x2="32" y1="6" y2="33" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E9A0B8" />
+      <stop offset="0.58" stop-color="#D2678D" />
+      <stop offset="1" stop-color="#B83F6F" />
+    </linearGradient>
+    <linearGradient id={`${idPrefix}-middle`} x1="32" x2="32" y1="14" y2="34" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFD2D8" />
+      <stop offset="0.62" stop-color="#E58AAA" />
+      <stop offset="1" stop-color="#C6537B" />
+    </linearGradient>
+    <linearGradient id={`${idPrefix}-inner`} x1="32" x2="32" y1="23" y2="36" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFE0D6" />
+      <stop offset="0.62" stop-color="#F19AAD" />
+      <stop offset="1" stop-color="#D45D83" />
+    </linearGradient>
+    <radialGradient id={`${idPrefix}-center`} cx="40%" cy="35%" r="68%">
+      <stop offset="0" stop-color="#FFE58A" />
+      <stop offset="0.58" stop-color="#F3B52F" />
+      <stop offset="1" stop-color="#C87A0C" />
+    </radialGradient>
+    <path id={`${idPrefix}-outer-petal`} d="M32 30c-3.8-3.4-6.8-8.1-6.7-13.5C25.4 11 29 5.4 32 1c3 4.4 6.6 10 6.7 15.5.1 5.4-2.9 10.1-6.7 13.5Z" />
+    <path id={`${idPrefix}-middle-petal`} d="M32 32c-3.4-3-5.5-6.8-5.5-11 0-4.9 3-9.6 5.5-13.1 2.5 3.5 5.5 8.2 5.5 13.1 0 4.2-2.1 8-5.5 11Z" />
+    <path id={`${idPrefix}-inner-petal`} d="M32 34c-2.8-2.5-4.2-5.3-4.2-8.2 0-3.5 2.2-6.8 4.2-9.8 2 3 4.2 6.3 4.2 9.8 0 2.9-1.4 5.7-4.2 8.2Z" />
+  </defs>
+
+  <g fill={`url(#${idPrefix}-outer)`} stroke="#B83F6F" stroke-width="0.45" stroke-linejoin="round">
+    {outerRotations.map((rotation) => (
+      <use href={`#${idPrefix}-outer-petal`} transform={`rotate(${rotation} 32 32)`} />
+    ))}
+  </g>
+  <g fill={`url(#${idPrefix}-middle)`} stroke="#B83F6F" stroke-opacity="0.54" stroke-width="0.35" stroke-linejoin="round">
+    {middleRotations.map((rotation) => (
+      <use href={`#${idPrefix}-middle-petal`} transform={`rotate(${rotation} 32 32)`} />
+    ))}
+  </g>
+  <g fill={`url(#${idPrefix}-inner)`} stroke="#B83F6F" stroke-opacity="0.42" stroke-width="0.3" stroke-linejoin="round">
+    {innerRotations.map((rotation) => (
+      <use href={`#${idPrefix}-inner-petal`} transform={`rotate(${rotation} 32 32)`} />
+    ))}
+  </g>
+
+  <circle cx="32" cy="32" r="7" fill={`url(#${idPrefix}-center)`} stroke="#B86C0B" stroke-width="0.4" />
+  <circle cx="32" cy="32" r="5.7" fill="#F7C64A" opacity="0.76" />
+  <circle cx="30.9" cy="30.8" r="1.2" fill="#FFF0A4" opacity="0.9" />
+</svg>

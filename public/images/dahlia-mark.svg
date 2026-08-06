@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="dahlia-title dahlia-description">
+  <title id="dahlia-title">Dahlia</title>
+  <desc id="dahlia-description">A layered dahlia flower with pointed berry-pink petals and a golden center.</desc>
+
+  <defs>
+    <radialGradient id="dahlia-outer" cx="50%" cy="18%" r="86%">
+      <stop offset="0" stop-color="#F2B7C8"/>
+      <stop offset="0.58" stop-color="#D66B91"/>
+      <stop offset="1" stop-color="#B83F6F"/>
+    </radialGradient>
+    <radialGradient id="dahlia-mid" cx="50%" cy="16%" r="88%">
+      <stop offset="0" stop-color="#FFD0D7"/>
+      <stop offset="0.55" stop-color="#E58AAA"/>
+      <stop offset="1" stop-color="#C2537B"/>
+    </radialGradient>
+    <radialGradient id="dahlia-inner" cx="50%" cy="12%" r="90%">
+      <stop offset="0" stop-color="#FFE0D6"/>
+      <stop offset="0.54" stop-color="#F19AAD"/>
+      <stop offset="1" stop-color="#D45D83"/>
+    </radialGradient>
+    <radialGradient id="dahlia-center" cx="42%" cy="35%" r="68%">
+      <stop offset="0" stop-color="#FFE58A"/>
+      <stop offset="0.52" stop-color="#F3B52F"/>
+      <stop offset="1" stop-color="#C87A0C"/>
+    </radialGradient>
+
+    <path id="dahlia-outer-petal" d="M64 57C58.5 52 53 45 52.8 36.2 52.6 26.3 58.7 15.7 64 7c5.3 8.7 11.4 19.3 11.2 29.2C75 45 69.5 52 64 57Z"/>
+    <path id="dahlia-mid-petal" d="M64 58.5C58.8 53.8 54.2 47.7 54.2 40.5c0-8.7 5.1-17.2 9.8-24.2 4.7 7 9.8 15.5 9.8 24.2 0 7.2-4.6 13.3-9.8 18Z"/>
+    <path id="dahlia-inner-petal" d="M64 60.5c-4.5-4.2-8.1-9-8.1-14.8 0-7.1 4-13.8 8.1-19.4 4.1 5.6 8.1 12.3 8.1 19.4 0 5.8-3.6 10.6-8.1 14.8Z"/>
+    <path id="dahlia-core-petal" d="M64 62.5c-3.6-3.4-6.1-7.2-6.1-11.6 0-5.1 3-9.8 6.1-13.9 3.1 4.1 6.1 8.8 6.1 13.9 0 4.4-2.5 8.2-6.1 11.6Z"/>
+
+    <pattern id="dahlia-seeds" width="5" height="5" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.1" fill="#FFF0A4"/>
+      <circle cx="4" cy="3.7" r="1.15" fill="#B86C0B"/>
+    </pattern>
+  </defs>
+
+  <!-- Outer, deeper petals: the broad silhouette of the flower head. -->
+  <g fill="url(#dahlia-outer)" stroke="#B83F6F" stroke-width="0.8" stroke-linejoin="round">
+    <use href="#dahlia-outer-petal"/>
+    <use href="#dahlia-outer-petal" transform="rotate(22.5 64 64)"/>
+    <use href="#dahlia-outer-petal" transform="rotate(45 64 64)"/>
+    <use href="#dahlia-outer-petal" transform="rotate(67.5 64 64)"/>
+    <use href="#dahlia-outer-petal" transform="rotate(90 64 64)"/>
+    <use href="#dahlia-outer-petal" transform="rotate(112.5 64 64)"/>
+    <use href="#dahlia-outer-petal" transform="rotate(135 64 64)"/>
+    <use href="#dahlia-outer-petal" transform="rotate(157.5 64 64)"/>
+    <use href="#dahlia-outer-petal" transform="rotate(180 64 64)"/>
+    <use href="#dahlia-outer-petal" transform="rotate(202.5 64 64)"/>
+    <use href="#dahlia-outer-petal" transform="rotate(225 64 64)"/>
+    <use href="#dahlia-outer-petal" transform="rotate(247.5 64 64)"/>
+    <use href="#dahlia-outer-petal" transform="rotate(270 64 64)"/>
+    <use href="#dahlia-outer-petal" transform="rotate(292.5 64 64)"/>
+    <use href="#dahlia-outer-petal" transform="rotate(315 64 64)"/>
+    <use href="#dahlia-outer-petal" transform="rotate(337.5 64 64)"/>
+  </g>
+
+  <!-- Second ring, rotated to create the layered, folded look of a dahlia. -->
+  <g fill="url(#dahlia-mid)" stroke="#B83F6F" stroke-opacity="0.58" stroke-width="0.7" stroke-linejoin="round">
+    <use href="#dahlia-mid-petal" transform="rotate(11.25 64 64)"/>
+    <use href="#dahlia-mid-petal" transform="rotate(33.75 64 64)"/>
+    <use href="#dahlia-mid-petal" transform="rotate(56.25 64 64)"/>
+    <use href="#dahlia-mid-petal" transform="rotate(78.75 64 64)"/>
+    <use href="#dahlia-mid-petal" transform="rotate(101.25 64 64)"/>
+    <use href="#dahlia-mid-petal" transform="rotate(123.75 64 64)"/>
+    <use href="#dahlia-mid-petal" transform="rotate(146.25 64 64)"/>
+    <use href="#dahlia-mid-petal" transform="rotate(168.75 64 64)"/>
+    <use href="#dahlia-mid-petal" transform="rotate(191.25 64 64)"/>
+    <use href="#dahlia-mid-petal" transform="rotate(213.75 64 64)"/>
+    <use href="#dahlia-mid-petal" transform="rotate(236.25 64 64)"/>
+    <use href="#dahlia-mid-petal" transform="rotate(258.75 64 64)"/>
+    <use href="#dahlia-mid-petal" transform="rotate(281.25 64 64)"/>
+    <use href="#dahlia-mid-petal" transform="rotate(303.75 64 64)"/>
+    <use href="#dahlia-mid-petal" transform="rotate(326.25 64 64)"/>
+    <use href="#dahlia-mid-petal" transform="rotate(348.75 64 64)"/>
+  </g>
+
+  <!-- Inner rings become shorter and more pointed toward the seed head. -->
+  <g fill="url(#dahlia-inner)" stroke="#B83F6F" stroke-opacity="0.42" stroke-width="0.55" stroke-linejoin="round">
+    <use href="#dahlia-inner-petal" transform="rotate(0 64 64)"/>
+    <use href="#dahlia-inner-petal" transform="rotate(30 64 64)"/>
+    <use href="#dahlia-inner-petal" transform="rotate(60 64 64)"/>
+    <use href="#dahlia-inner-petal" transform="rotate(90 64 64)"/>
+    <use href="#dahlia-inner-petal" transform="rotate(120 64 64)"/>
+    <use href="#dahlia-inner-petal" transform="rotate(150 64 64)"/>
+    <use href="#dahlia-inner-petal" transform="rotate(180 64 64)"/>
+    <use href="#dahlia-inner-petal" transform="rotate(210 64 64)"/>
+    <use href="#dahlia-inner-petal" transform="rotate(240 64 64)"/>
+    <use href="#dahlia-inner-petal" transform="rotate(270 64 64)"/>
+    <use href="#dahlia-inner-petal" transform="rotate(300 64 64)"/>
+    <use href="#dahlia-inner-petal" transform="rotate(330 64 64)"/>
+  </g>
+
+  <g fill="url(#dahlia-inner)" stroke="#B83F6F" stroke-opacity="0.5" stroke-width="0.5">
+    <use href="#dahlia-core-petal" transform="rotate(15 64 64)"/>
+    <use href="#dahlia-core-petal" transform="rotate(45 64 64)"/>
+    <use href="#dahlia-core-petal" transform="rotate(75 64 64)"/>
+    <use href="#dahlia-core-petal" transform="rotate(105 64 64)"/>
+    <use href="#dahlia-core-petal" transform="rotate(135 64 64)"/>
+    <use href="#dahlia-core-petal" transform="rotate(165 64 64)"/>
+    <use href="#dahlia-core-petal" transform="rotate(195 64 64)"/>
+    <use href="#dahlia-core-petal" transform="rotate(225 64 64)"/>
+    <use href="#dahlia-core-petal" transform="rotate(255 64 64)"/>
+    <use href="#dahlia-core-petal" transform="rotate(285 64 64)"/>
+    <use href="#dahlia-core-petal" transform="rotate(315 64 64)"/>
+    <use href="#dahlia-core-petal" transform="rotate(345 64 64)"/>
+  </g>
+
+  <!-- Dahlia's characteristic golden, densely textured center. -->
+  <circle cx="64" cy="64" r="13.5" fill="url(#dahlia-center)" stroke="#B86C0B" stroke-width="0.7"/>
+  <circle cx="64" cy="64" r="12.2" fill="url(#dahlia-seeds)" opacity="0.86"/>
+  <circle cx="64" cy="64" r="3.2" fill="#8A7B32" opacity="0.78"/>
+  <circle cx="62.9" cy="62.8" r="1.1" fill="#FFF0A4" opacity="0.85"/>
+</svg>

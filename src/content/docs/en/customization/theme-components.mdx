@@ -1,0 +1,190 @@
+---
+title: Theme Components
+description: Reuse public Dahlia theme components inside local overrides.
+
+---
+
+import { CodeBlock } from '@prosefly/astro-theme-dahlia/components';
+
+Dahlia exports composable theme components from
+`@prosefly/astro-theme-dahlia/components`. Use them when an override should wrap
+or rearrange the default behavior instead of replacing it from scratch.
+
+These exports come from Dahlia's `components/theme` layer. They are reusable
+building blocks, not the internal page chrome. Dahlia does not export
+`components/layout`, `components/defaults`, or `components/ui`.
+
+For custom Astro pages that need a full page shell, use
+`@prosefly/astro-theme-dahlia/layouts` instead. See [Page Layouts](/docs/customization/page-layouts/).
+
+An override slot and a public component can have different names. For example,
+the shell slot is `HeaderNavbar`, while the reusable public component is
+`NavbarLinks`.
+
+## Public Exports
+
+| Export | Purpose |
+| --- | --- |
+| `AppearancePalette` | Complete appearance palette control. |
+| `AppearancePaletteContent` | Palette popover content without the trigger wrapper. |
+| `Assistant` | Hosted assistant widget loader. |
+| `AssistantTrigger` | Ask AI trigger button shown near search. |
+| `CodeBlock` | Static Shiki-highlighted code block for custom pages. |
+| `Contributors` | Contributors block below docs content. |
+| `Credits` | Built with Dahlia footer credit. |
+| `EditThisPage` | Edit link used by the page aside. |
+| `FooterLinks` | Footer link sections rendered from `footer.sections`. |
+| `LanguageSelect` | Locale selector for configured locales. |
+| `DahliaMark` | Built-in Dahlia logo mark. |
+| `NavbarLinks` | Header navbar links and action buttons. |
+| `PageActions` | Copy, Markdown, and assistant page actions. |
+| `PageAside` | Right sidebar content with table of contents and edit link. |
+| `PageHeader` | Page title area with description and actions. |
+| `PageMeta` | Last updated and contributors area below docs content. |
+| `PageNavigation` | Previous and next page links. |
+| `SearchDialog` | Complete search trigger and dialog. |
+| `SearchDialogContent` | Search dialog body and client behavior. |
+| `SearchDialogTrigger` | Search trigger buttons. |
+| `SiteBrand` | Brand logo link. |
+| `SocialIcons` | Social icon list. |
+| `ThemeModeButton` | Icon button for cycling or selecting theme mode. |
+| `ThemeModeSegmentedControl` | Segmented light, dark, and system control. |
+| `ThemeModeSelect` | Select control for theme mode. |
+| `ThemeModeSwitch` | Two-option light/dark theme control for custom placements. |
+
+These exports are package-level building blocks. The theme shell imports
+override points through internal virtual modules, so importing public components
+inside an override does not recursively import the override file.
+
+Use the public export when you want the package implementation:
+
+```astro
+---
+import { NavbarLinks } from '@prosefly/astro-theme-dahlia/components';
+---
+
+<NavbarLinks {...Astro.props} />
+```
+
+Use the virtual module only when one override needs to call another override
+slot and preserve the user's configured replacement:
+
+```astro
+---
+import PageActions from 'virtual:prosefly/dahlia/components/PageActions';
+---
+
+<PageActions {...Astro.props} />
+```
+
+## Wrapping Search
+
+```astro
+---
+import { SearchDialog } from '@prosefly/astro-theme-dahlia/components';
+---
+
+<div class="rounded-(--dahlia-radius-md) border border-(--dahlia-border-muted) p-1">
+  <SearchDialog />
+</div>
+```
+
+Use the smaller search components when the trigger and dialog content need to
+live in different places:
+
+```astro
+---
+import {
+  SearchDialogContent,
+  SearchDialogTrigger,
+} from '@prosefly/astro-theme-dahlia/components';
+---
+
+<SearchDialogTrigger />
+<SearchDialogContent />
+```
+
+## Wrapping Page Actions
+
+```astro
+---
+import { PageActions } from '@prosefly/astro-theme-dahlia/components';
+---
+
+<div class="rounded-(--dahlia-radius-md) bg-(--dahlia-surface) p-1">
+  <PageActions {...Astro.props} />
+</div>
+```
+
+Use this pattern when a project wants a different container or placement while
+keeping the default copy, Markdown, ChatGPT, and Claude behavior.
+
+## Highlighting Code
+
+Use `CodeBlock` on custom Astro pages that are not rendered from Markdown.
+Markdown fenced code blocks still use the configured Markdown and Expressive
+Code pipeline.
+
+<CodeBlock
+  lang="ts"
+  title="astro.config.mjs"
+  code={`import dahlia from '@prosefly/astro-theme-dahlia';
+
+export default {
+  integrations: [dahlia()],
+};`}
+/>
+
+```astro
+---
+import { CodeBlock } from '@prosefly/astro-theme-dahlia/components';
+---
+
+<CodeBlock
+  lang="ts"
+  title="astro.config.mjs"
+  code={`import dahlia from '@prosefly/astro-theme-dahlia';
+
+export default {
+  integrations: [dahlia()],
+};`}
+/>
+```
+
+## Reusing Theme Mode Controls
+
+```astro
+---
+import {
+  ThemeModeButton,
+  ThemeModeSegmentedControl,
+  ThemeModeSelect,
+  ThemeModeSwitch,
+} from '@prosefly/astro-theme-dahlia/components';
+---
+
+<ThemeModeSegmentedControl />
+```
+
+All theme mode controls use the same `dahlia-theme` local storage key and update
+the document `data-theme` attribute.
+
+## Pair With Overrides
+
+Use the `components` configuration to replace shell-owned slots:
+
+```ts title="astro.config.ts"
+dahlia({
+  components: {
+    PageActions: './src/components/dahlia/PageActions.astro',
+    SearchDialog: './src/components/dahlia/SearchDialog.astro',
+  },
+})
+```
+
+Slot names are configured with names like `HeaderNavbar` and
+`HeaderSocialIcons`. Public imports use names like `NavbarLinks` and
+`SocialIcons`.
+
+See [Overriding Components](/docs/customization/overriding-components/) for the
+complete override list and path resolution rules.

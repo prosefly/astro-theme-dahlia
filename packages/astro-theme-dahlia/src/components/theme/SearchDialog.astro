@@ -1,0 +1,33 @@
+---
+import rawThemeConfig from 'virtual:prosefly/dahlia/config';
+import AssistantTrigger from './AssistantTrigger.astro';
+import SearchDialogContent from './SearchDialogContent.astro';
+import SearchDialogTrigger from './SearchDialogTrigger.astro';
+import type { DahliaThemeConfig } from '../../lib/theme';
+
+const themeConfig = rawThemeConfig as DahliaThemeConfig;
+const searchEnabled = themeConfig.search !== false;
+const assistantEnabled = Boolean(themeConfig.assistant);
+
+interface Props {
+  variant?: 'default' | 'rail';
+}
+
+const { variant = 'default' } = Astro.props;
+---
+
+{(searchEnabled || assistantEnabled) && (
+  <>
+    <div
+      class:list={[
+        variant === 'rail'
+          ? 'flex w-full min-w-0 items-center gap-1'
+          : 'ms-auto flex min-w-0 items-center gap-1 lg:ms-0',
+      ]}
+    >
+      {searchEnabled && <SearchDialogTrigger hasAssistant={assistantEnabled} variant={variant} />}
+      {assistantEnabled && variant === 'default' && <AssistantTrigger />}
+    </div>
+    {searchEnabled && <SearchDialogContent />}
+  </>
+)}

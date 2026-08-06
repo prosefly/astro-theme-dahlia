@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1200, initial-scale=1" />
+    <title>Dahlia Open Graph Image</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+      }
+
+      body {
+        color: #211b20;
+        background:
+          linear-gradient(90deg, rgb(184 63 111 / 0.038) 1px, transparent 1px),
+          linear-gradient(180deg, rgb(184 63 111 / 0.034) 1px, transparent 1px),
+          radial-gradient(circle at 54% -6%, rgb(0 0 0 / 0.18), transparent 28%),
+          linear-gradient(90deg, #fff2f7 0%, #fffafd 42%, #f5d1de 100%);
+        background-size: 48px 48px, 48px 48px, auto, auto;
+        font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+      }
+
+      .stage {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        padding: 36px;
+      }
+
+      .card {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border: 1px solid rgb(184 63 111 / 0.16);
+        border-radius: 34px;
+        background: rgb(255 252 253 / 0.95);
+        box-shadow: 0 34px 90px rgb(28 18 24 / 0.22);
+      }
+
+      .flower {
+        position: absolute;
+        top: -28px;
+        right: -72px;
+        width: 344px;
+        height: 492px;
+        background: url("../../public/images/dahlia-home-flower.png") center / contain no-repeat;
+        opacity: 0.3;
+        filter: saturate(1.25);
+      }
+
+      .brand {
+        position: absolute;
+        top: 34px;
+        left: 36px;
+        display: flex;
+        align-items: center;
+        gap: 17px;
+        font-size: 28px;
+        font-weight: 650;
+        letter-spacing: -0.035em;
+      }
+
+      .brand img {
+        width: 46px;
+        height: 46px;
+      }
+
+      .headline {
+        position: absolute;
+        top: 136px;
+        left: 36px;
+        margin: 0;
+        max-width: 370px;
+        color: #211b20;
+        font-family: Georgia, "Times New Roman", ui-serif, serif;
+        font-size: 61px;
+        font-weight: 700;
+        letter-spacing: -0.074em;
+        line-height: 1.01;
+      }
+
+      .headline .accent {
+        color: #B83F6F;
+        display: block;
+      }
+
+      .lede {
+        position: absolute;
+        top: 346px;
+        left: 37px;
+        margin: 0;
+        max-width: 355px;
+        color: #746d73;
+        font-size: 22px;
+        letter-spacing: -0.035em;
+        line-height: 1.45;
+      }
+
+      .chips {
+        position: absolute;
+        bottom: 52px;
+        left: 36px;
+        display: flex;
+        gap: 10px;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        height: 32px;
+        padding: 0 12px;
+        border: 1px solid rgb(184 63 111 / 0.22);
+        border-radius: 999px;
+        color: #8d7e87;
+        background: rgb(255 255 255 / 0.46);
+        font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 15px;
+        letter-spacing: 0.04em;
+      }
+
+      .preview {
+        position: absolute;
+        top: 76px;
+        right: 50px;
+        width: 600px;
+        height: 386px;
+      }
+
+      .light-doc {
+        position: absolute;
+        top: 28px;
+        right: 0;
+        width: 510px;
+        height: 344px;
+        overflow: hidden;
+        border: 1px solid rgb(184 63 111 / 0.14);
+        border-radius: 18px;
+        background: rgb(255 255 255 / 0.82);
+        box-shadow: 0 26px 58px rgb(118 69 90 / 0.15);
+      }
+
+      .light-doc::before {
+        position: absolute;
+        top: 44px;
+        right: 0;
+        left: 0;
+        height: 1px;
+        background: rgb(184 63 111 / 0.14);
+        content: "";
+      }
+
+      .light-sidebar {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 132px;
+        border-right: 1px solid rgb(184 63 111 / 0.14);
+        background: rgb(255 248 251 / 0.92);
+      }
+
+      .window-dots {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .dot {
+        width: 16px;
+        height: 16px;
+        border: 1px solid rgb(184 63 111 / 0.38);
+        border-radius: 999px;
+        background: #ffb8d0;
+      }
+
+      .bar {
+        width: 58px;
+        height: 15px;
+        border-radius: 5px;
+        background: #2a242b;
+      }
+
+      .sidebar-list {
+        position: absolute;
+        top: 96px;
+        left: 16px;
+        right: 16px;
+        display: grid;
+        gap: 14px;
+        color: #686168;
+        font-size: 15px;
+      }
+
+      .sidebar-pill {
+        height: 22px;
+        padding: 1px 10px;
+        border-radius: 7px;
+        color: #c54376;
+        background: rgb(248 222 232 / 0.86);
+      }
+
+      .sidebar-active {
+        height: 20px;
+        padding: 1px 10px;
+        border-radius: 7px;
+        color: #c54376;
+        background: rgb(248 222 232 / 0.86);
+      }
+
+      .article {
+        position: absolute;
+        top: 100px;
+        left: 172px;
+        width: 220px;
+        color: #746d73;
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .article-kicker {
+        margin-bottom: 14px;
+        color: #c54376;
+        font-size: 15px;
+        font-weight: 650;
+      }
+
+      .article h2 {
+        margin: 0 0 10px;
+        color: #211b20;
+        font-family: Georgia, "Times New Roman", ui-serif, serif;
+        font-size: 32px;
+        line-height: 1;
+      }
+
+      .article-line {
+        width: 100%;
+        height: 12px;
+        margin-top: 10px;
+        border-radius: 999px;
+        background: rgb(116 109 115 / 0.16);
+      }
+
+      .article-line.short {
+        width: 72%;
+      }
+
+      .divider {
+        height: 1px;
+        margin: 24px 0 20px;
+        background: rgb(184 63 111 / 0.18);
+      }
+
+      .code {
+        position: relative;
+        width: 240px;
+        height: 44px;
+        margin-top: 20px;
+        border: 1px solid rgb(184 63 111 / 0.16);
+        border-radius: 8px;
+        background: #fff7fa;
+      }
+
+      .code::before,
+      .code::after {
+        position: absolute;
+        left: 16px;
+        height: 8px;
+        border-radius: 999px;
+        content: "";
+      }
+
+      .code::before {
+        top: 12px;
+        width: 166px;
+        background: rgb(66 106 157 / 0.28);
+      }
+
+      .code::after {
+        top: 26px;
+        width: 118px;
+        background: rgb(184 63 111 / 0.22);
+      }
+
+      .toc {
+        position: absolute;
+        top: 96px;
+        right: 18px;
+        width: 94px;
+        padding-left: 14px;
+        border-left: 1px solid rgb(184 63 111 / 0.14);
+        color: #746d73;
+        font-size: 12px;
+        line-height: 1.55;
+      }
+
+      .toc strong {
+        display: block;
+        margin-bottom: 8px;
+        color: #211b20;
+        font-size: 13px;
+      }
+
+      .toc-line {
+        width: 74px;
+        height: 8px;
+        margin-top: 12px;
+        border-radius: 999px;
+        background: rgb(116 109 115 / 0.18);
+      }
+
+      .toc-line.short {
+        width: 54px;
+      }
+
+      .dark-doc {
+        position: absolute;
+        top: 226px;
+        left: 0;
+        width: 350px;
+        height: 215px;
+        overflow: hidden;
+        border: 1px solid rgb(255 255 255 / 0.08);
+        border-radius: 18px;
+        background: rgb(18 16 19 / 0.96);
+        box-shadow: 0 24px 58px rgb(25 16 21 / 0.24);
+      }
+
+      .dark-doc::before {
+        position: absolute;
+        top: 36px;
+        right: 0;
+        left: 0;
+        height: 1px;
+        background: rgb(255 255 255 / 0.1);
+        content: "";
+      }
+
+      .dark-sidebar {
+        position: absolute;
+        top: 60px;
+        left: 14px;
+        width: 78px;
+        height: 16px;
+        border-radius: 5px;
+        background: rgb(184 63 111 / 0.42);
+        color: #e7a2bd;
+        font-size: 12px;
+        line-height: 16px;
+        text-align: center;
+      }
+
+      .dark-title {
+        position: absolute;
+        top: 62px;
+        left: 122px;
+        color: #f7edf2;
+        font-family: Georgia, "Times New Roman", ui-serif, serif;
+        font-size: 28px;
+        line-height: 1;
+      }
+
+      .skeleton {
+        position: absolute;
+        left: 122px;
+        width: 192px;
+        height: 16px;
+        border-radius: 4px;
+        background: rgb(255 255 255 / 0.1);
+      }
+
+      .skeleton.one {
+        top: 100px;
+      }
+
+      .skeleton.two {
+        top: 126px;
+      }
+
+      .skeleton.three {
+        top: 152px;
+      }
+
+      .skeleton.four {
+        top: 178px;
+      }
+
+      .shadow-block {
+        position: absolute;
+        right: 18px;
+        bottom: 20px;
+        width: 288px;
+        height: 34px;
+        background: rgb(89 57 73 / 0.26);
+      }
+
+      .domain {
+        position: absolute;
+        right: 232px;
+        bottom: 40px;
+        color: #a98090;
+        font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 16px;
+        letter-spacing: 0.08em;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="stage">
+      <section class="card">
+        <div class="flower" aria-hidden="true"></div>
+
+        <div class="brand">
+          <img src="../../public/images/dahlia-mark.svg" alt="" />
+          <span>Dahlia</span>
+        </div>
+
+        <h1 class="headline">
+          Astro docs,<br />
+          designed for
+          <span class="accent">calm reading.</span>
+        </h1>
+
+        <p class="lede">
+          A minimal documentation theme with left navigation, centered content,
+          sticky TOC, search, and MDX.
+        </p>
+
+        <div class="chips" aria-label="Technology stack">
+          <span class="chip">Astro v7</span>
+          <span class="chip">Tailwind CSS v4</span>
+          <span class="chip">MDX</span>
+        </div>
+
+        <div class="preview" aria-hidden="true">
+          <div class="light-doc">
+            <div class="light-sidebar">
+              <div class="window-dots">
+                <span class="dot"></span>
+                <span class="bar"></span>
+              </div>
+              <div class="sidebar-list">
+                <div class="sidebar-pill">Guides</div>
+                <div>Overview</div>
+                <div class="sidebar-active">Installation</div>
+                <div>Configuration</div>
+                <div>Deployment</div>
+              </div>
+            </div>
+            <div class="article">
+              <div class="article-kicker">Getting Started</div>
+              <h2>Installation</h2>
+              <div class="article-line"></div>
+              <div class="article-line"></div>
+              <div class="article-line short"></div>
+              <div class="divider"></div>
+              <h2 style="font-size: 24px">Starter Template</h2>
+              <div class="code"></div>
+            </div>
+            <div class="toc">
+              <strong>On this page</strong>
+              <div class="toc-line"></div>
+              <div class="toc-line"></div>
+              <div class="toc-line short"></div>
+            </div>
+          </div>
+
+          <div class="shadow-block"></div>
+          <div class="dark-doc">
+            <div class="dark-sidebar">Guides</div>
+            <div class="dark-title">Overview</div>
+            <div class="skeleton one"></div>
+            <div class="skeleton two"></div>
+            <div class="skeleton three"></div>
+            <div class="skeleton four"></div>
+          </div>
+        </div>
+
+        <div class="domain">astro-theme-dahlia.prosefly.dev</div>
+      </section>
+    </main>
+  </body>
+</html>

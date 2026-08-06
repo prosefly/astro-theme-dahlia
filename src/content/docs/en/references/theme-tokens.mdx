@@ -1,0 +1,243 @@
+---
+title: Theme Tokens
+description: Reference the CSS tokens exposed by Dahlia and Prosefly components.
+
+---
+
+Dahlia exposes CSS tokens for theme colors, typography, shape, layout, prose, and
+the Prosefly component bridge. Use these tokens when a project needs deeper
+styling control than `appearance` provides.
+
+## Color Palettes
+
+Tailwind colors are exposed through `@theme static` aliases so they are
+available even when no utility class references them directly.
+
+| Token pattern | Purpose |
+| --- | --- |
+| `--dahlia-color-slate-50` ... `--dahlia-color-slate-950` | Slate neutral palette. |
+| `--dahlia-color-zinc-50` ... `--dahlia-color-zinc-950` | Zinc neutral palette. |
+| `--dahlia-color-neutral-50` ... `--dahlia-color-neutral-950` | Neutral palette. |
+| `--dahlia-color-stone-50` ... `--dahlia-color-stone-950` | Stone neutral palette. |
+| `--dahlia-color-red-400`, `--dahlia-color-red-600` | Red accent steps. |
+| `--dahlia-color-orange-400`, `--dahlia-color-orange-600` | Orange accent steps. |
+| `--dahlia-color-amber-400`, `--dahlia-color-amber-600` | Amber accent steps. |
+| `--dahlia-color-yellow-400`, `--dahlia-color-yellow-600` | Yellow accent steps. |
+| `--dahlia-color-lime-400`, `--dahlia-color-lime-600` | Lime accent steps. |
+| `--dahlia-color-green-400`, `--dahlia-color-green-600` | Green accent steps. |
+| `--dahlia-color-emerald-400`, `--dahlia-color-emerald-600` | Emerald accent steps. |
+| `--dahlia-color-teal-400`, `--dahlia-color-teal-600` | Teal accent steps. |
+| `--dahlia-color-cyan-400`, `--dahlia-color-cyan-600` | Cyan accent steps. |
+| `--dahlia-color-sky-400`, `--dahlia-color-sky-600` | Sky accent steps. |
+| `--dahlia-color-blue-400`, `--dahlia-color-blue-600` | Blue accent steps. |
+| `--dahlia-color-indigo-400`, `--dahlia-color-indigo-600` | Indigo accent steps. |
+| `--dahlia-color-violet-400`, `--dahlia-color-violet-600` | Violet accent steps. |
+| `--dahlia-color-purple-400`, `--dahlia-color-purple-600` | Purple accent steps. |
+| `--dahlia-color-fuchsia-400`, `--dahlia-color-fuchsia-600` | Fuchsia accent steps. |
+| `--dahlia-color-pink-400`, `--dahlia-color-pink-600` | Pink accent steps. |
+| `--dahlia-color-rose-400`, `--dahlia-color-rose-600` | Rose accent steps. |
+
+## Gray Scale
+
+`appearance.gray` maps one neutral palette into the shared `--dahlia-gray-*`
+scale.
+
+| Token | Purpose |
+| --- | --- |
+| `--dahlia-gray-50` ... `--dahlia-gray-950` | Active neutral scale for the current gray setting. |
+
+Supported gray settings are `slate`, `zinc`, `neutral`, and `stone`.
+
+## Semantic Colors
+
+These are the main tokens components should use.
+
+| Token | Purpose |
+| --- | --- |
+| `--dahlia-background` | Page and shell background. |
+| `--dahlia-surface` | Subtle panels, hover backgrounds, and neutral soft UI. |
+| `--dahlia-text-strong` | Headings, labels, active text, and high-emphasis UI. |
+| `--dahlia-text` | Body copy and default foreground. |
+| `--dahlia-text-muted` | Secondary text, inactive navigation, captions, and helper copy. |
+| `--dahlia-border-muted` | Default component borders. |
+| `--dahlia-border-subtle` | Low-emphasis dividers and sticky chrome borders. |
+| `--dahlia-border-hover` | Stronger border state for hoverable controls. |
+| `--dahlia-code-background` | Inline code and compact code preview background. |
+| `--dahlia-code-border` | Plain code block border. |
+
+Light mode derives text from darker gray steps. Dark mode switches these tokens
+to lighter gray steps and darker surfaces.
+
+## Accent Colors
+
+| Token | Purpose |
+| --- | --- |
+| `--dahlia-accent-light` | Accent value used in light mode. |
+| `--dahlia-accent-dark` | Accent value used in dark mode. |
+| `--dahlia-accent` | Active accent for the current mode. |
+| `--dahlia-accent-soft` | Low-emphasis active and hover background. |
+| `--dahlia-accent-contrast` | Text on solid accent backgrounds. |
+
+Built-in accents use Tailwind `600` in light mode and `400` in dark mode.
+Custom hex accents are converted to light and dark OKLCH values.
+
+## Radius
+
+| Token | Purpose |
+| --- | --- |
+| `--dahlia-radius-sm` | Inline code, small focus targets, and compact controls. |
+| `--dahlia-radius-md` | Buttons, nav items, sidebar items, and form-like controls. |
+| `--dahlia-radius-lg` | Cards, callouts, dropdowns, and larger surfaces. |
+| `--dahlia-radius-full` | Badges, circular buttons, and round markers. |
+
+`data-radius` controls these values. Supported settings are `none`, `small`,
+`medium`, `large`, and `full`.
+
+## Typography
+
+| Token | Purpose |
+| --- | --- |
+| `--dahlia-system-sans` | Built-in system sans fallback stack. |
+| `--dahlia-system-mono` | Built-in system mono fallback stack. |
+| `--dahlia-font-sans` | Active sans font stack. |
+| `--dahlia-font-mono` | Active mono font stack. |
+| `--default-font-family` | Tailwind default font family bridge. |
+| `--default-mono-font-family` | Tailwind default mono font family bridge. |
+| `--default-font-feature-settings` | Default sans feature settings. |
+| `--default-mono-font-feature-settings` | Default mono feature settings. |
+
+Dahlia does not load web fonts by default. Override `--dahlia-font-sans` and
+`--dahlia-font-mono` after loading project fonts.
+
+```css
+:root {
+  --dahlia-font-sans: "Inter", var(--dahlia-system-sans);
+  --dahlia-font-mono: "JetBrains Mono", var(--dahlia-system-mono);
+}
+```
+
+## Layout
+
+| Token | Purpose |
+| --- | --- |
+| `--dahlia-header-height` | Main header height. |
+| `--dahlia-subnav-height` | Docs subnav height. |
+| `--dahlia-docs-chrome-height` | Combined sticky header and subnav offset. |
+| `--dahlia-sidebar-width` | Desktop sidebar column width. |
+| `--dahlia-toc-width` | Desktop table-of-contents column width. |
+| `--dahlia-content-width` | Main content column max width. |
+
+These tokens are used by sticky offsets, responsive grid columns, sidebar
+scrolling, and table-of-contents positioning.
+
+## Prose
+
+`.dahlia-prose` defines extra tokens for Markdown content.
+
+| Token | Purpose |
+| --- | --- |
+| `--dahlia-prose-font-body` | Body font inside prose. |
+| `--dahlia-prose-font-heading` | Heading font inside prose. |
+| `--dahlia-prose-font-mono` | Mono font inside prose. |
+| `--dahlia-prose-surface-radius` | Radius for code blocks, images, and media. |
+| `--dahlia-prose-size` | Base prose font size. |
+| `--dahlia-prose-leading` | Body line height. |
+| `--dahlia-prose-flow` | Default vertical spacing between prose blocks. |
+| `--dahlia-prose-heading-leading` | Heading line height. |
+| `--dahlia-prose-border` | Blockquote, table, rule, and footnote borders. |
+| `--dahlia-prose-marker` | List marker color. |
+| `--dahlia-prose-row-background` | Reserved row surface color for dense content. |
+
+## Expressive Code
+
+Dahlia maps Expressive Code UI values to theme tokens through the integration
+config and prose CSS.
+
+| Token or value | Dahlia source |
+| --- | --- |
+| `borderRadius` | `var(--dahlia-radius-lg)` |
+| `borderColor` | `var(--dahlia-code-border)` |
+| `codeBackground` | `var(--dahlia-background)` |
+| `codeForeground` | `var(--dahlia-text)` |
+| `codeFontFamily` | `var(--dahlia-font-mono)` |
+| `uiFontFamily` | `var(--dahlia-font-sans)` |
+| `focusBorder` | `var(--dahlia-accent)` |
+| `--ec-brdRad` | `var(--dahlia-prose-surface-radius)` |
+| `--ec-frm-frameBoxShdCssVal` | `none` |
+| `--ec-frm-inlBtnBg` | `var(--dahlia-surface)` |
+| `--ec-frm-inlBtnBrd` | `var(--dahlia-border-muted)` |
+| `--ec-frm-inlBtnFg` | `var(--dahlia-text-muted)` |
+
+## Prosefly Bridge
+
+Shared MDX components from `@prosefly/astro-components` read `--pf-*` tokens.
+Dahlia maps those tokens to its semantic layer.
+
+| Prosefly token | Dahlia mapping |
+| --- | --- |
+| `--pf-background` | `--dahlia-background` |
+| `--pf-surface` | `--dahlia-surface` |
+| `--pf-text-strong` | `--dahlia-text-strong` |
+| `--pf-text` | `--dahlia-text` |
+| `--pf-text-muted` | `--dahlia-text-muted` |
+| `--pf-border-muted` | `--dahlia-border-muted` |
+| `--pf-border-subtle` | `--dahlia-border-subtle` |
+| `--pf-border-hover` | `--dahlia-border-hover` |
+| `--pf-accent` | `--dahlia-accent` |
+| `--pf-accent-soft` | `--dahlia-accent-soft` |
+| `--pf-accent-contrast` | `--dahlia-accent-contrast` |
+| `--pf-info` | `--dahlia-info` |
+| `--pf-info-ink` | `--dahlia-info-ink` |
+| `--pf-info-soft` | `--dahlia-info-soft` |
+| `--pf-info-contrast` | `--dahlia-info-contrast` |
+| `--pf-success` | `--dahlia-success` |
+| `--pf-success-ink` | `--dahlia-success-ink` |
+| `--pf-success-soft` | `--dahlia-success-soft` |
+| `--pf-success-contrast` | `--dahlia-success-contrast` |
+| `--pf-warning` | `--dahlia-warning` |
+| `--pf-warning-ink` | `--dahlia-warning-ink` |
+| `--pf-warning-soft` | `--dahlia-warning-soft` |
+| `--pf-warning-contrast` | `--dahlia-warning-contrast` |
+| `--pf-danger` | `--dahlia-danger` |
+| `--pf-danger-ink` | `--dahlia-danger-ink` |
+| `--pf-danger-soft` | `--dahlia-danger-soft` |
+| `--pf-danger-contrast` | `--dahlia-danger-contrast` |
+| `--pf-radius-sm` | `--dahlia-radius-sm` |
+| `--pf-radius-md` | `--dahlia-radius-md` |
+| `--pf-radius-lg` | `--dahlia-radius-lg` |
+| `--pf-radius-full` | `--dahlia-radius-full` |
+
+## Component-Local Tokens
+
+Some MDX components define local tokens for their internal layout.
+
+| Token | Owner | Purpose |
+| --- | --- | --- |
+| `--pf-steps-start` | `Steps` | Counter start offset. |
+| `--pf-steps-bullet-size` | `Steps` | Marker size. |
+| `--pf-steps-bullet-margin` | `Steps` | Gap below each marker before the connector line. |
+| `--pf-steps-line` | `Steps` | Connector line color. |
+| `--pf-steps-marker-background` | `Steps` | Marker background. |
+| `--pf-steps-marker-foreground` | `Steps` | Marker text color. |
+| `--pf-badge-radius` | `Badge` | Badge corner radius. |
+| `--pf-file-tree-border` | `FileTree` | File tree outer border color. |
+| `--pf-file-tree-line` | `FileTree` | Nested guide line color. |
+
+Component-local tokens are implementation details. Prefer the semantic tokens
+above unless a component explicitly documents an override.
+
+## Overriding Tokens
+
+Override tokens in project CSS when `appearance` is not enough.
+
+```css
+:root {
+  --dahlia-background: oklch(0.99 0.01 260);
+  --dahlia-text: oklch(0.32 0.03 260);
+  --dahlia-surface: oklch(0.96 0.015 260);
+  --dahlia-border-muted: color-mix(in oklab, var(--dahlia-text-muted) 24%, transparent);
+}
+```
+
+Update related tokens together. Background, surface, text, muted text, borders,
+and code colors should be treated as a set.

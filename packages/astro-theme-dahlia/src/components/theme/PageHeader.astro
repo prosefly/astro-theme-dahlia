@@ -1,0 +1,65 @@
+---
+import PageActions from 'virtual:prosefly/dahlia/components/PageActions';
+import rawThemeConfig from 'virtual:prosefly/dahlia/config';
+import { isPagefindSearchEnabled } from '../../lib/search';
+import type { PageActionConfig } from '../../lib/theme';
+import type { DahliaThemeConfig } from '../../lib/theme';
+
+interface Props {
+  title: string;
+  description?: string;
+  sectionTitle?: string;
+  pageActions?: PageActionConfig[];
+  pageUrl: string;
+  markdownUrl: string;
+}
+
+const {
+  title,
+  description,
+  sectionTitle,
+  pageActions = [],
+  pageUrl,
+  markdownUrl,
+} = Astro.props;
+const themeConfig = rawThemeConfig as DahliaThemeConfig;
+const pagefindIgnoreAttrs = isPagefindSearchEnabled(themeConfig)
+  ? { 'data-pagefind-ignore': true }
+  : {};
+---
+
+<header class="dahlia-page-header dahlia-border-subtle border-b pb-8">
+  <div class="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+    <div class="min-w-0">
+      {sectionTitle && (
+        <p class="text-sm font-medium text-(--dahlia-accent)">{sectionTitle}</p>
+      )}
+      <h1 class="mt-3 text-3xl font-semibold leading-tight text-(--dahlia-text-strong) sm:text-4xl">
+        {title}
+      </h1>
+      {description && (
+        <p class="mt-4 max-w-3xl text-base leading-7 text-(--dahlia-text-subtle) sm:text-lg">
+          {description}
+        </p>
+      )}
+    </div>
+    {pageActions.length > 0 && (
+      <div class="shrink-0 sm:pt-1" {...pagefindIgnoreAttrs}>
+        <PageActions
+          actions={pageActions}
+          markdownUrl={markdownUrl}
+          pageUrl={pageUrl}
+          title={title}
+        />
+      </div>
+    )}
+  </div>
+</header>
+
+<style>
+  .dahlia-page-header h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+  }
+</style>

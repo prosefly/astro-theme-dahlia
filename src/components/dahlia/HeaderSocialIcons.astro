@@ -1,0 +1,13 @@
+---
+import {
+  AppearancePalette,
+  SocialIcons,
+} from '@prosefly/astro-theme-dahlia/components';
+
+const props = Astro.props as any;
+---
+
+<SocialIcons {...props} />
+<span class="hidden lg:inline-block">
+  <AppearancePalette />
+</span>

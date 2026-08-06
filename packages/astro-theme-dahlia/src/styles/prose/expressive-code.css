@@ -1,0 +1,166 @@
+.dahlia-prose .expressive-code {
+  --ec-brdRad: var(--dahlia-prose-surface-radius);
+  --ec-frm-edActTabBg: var(--dahlia-surface);
+  --ec-frm-edActTabIndBtmCol: var(--dahlia-surface);
+  --ec-frm-edTabBrdRad: var(--dahlia-prose-surface-radius);
+  --ec-frm-edTabBarBg: var(--dahlia-surface);
+  --ec-frm-edTabBarBrdBtmCol: var(--dahlia-border-subtle);
+  --ec-frm-frameBoxShdCssVal: none;
+  --ec-frm-inlBtnBg: var(--dahlia-surface);
+  --ec-frm-inlBtnBrd: var(--dahlia-border-muted);
+  --ec-frm-inlBtnFg: var(--dahlia-text-muted);
+  --ec-frm-trmBg: var(--dahlia-background);
+  --ec-frm-trmTtbBg: var(--dahlia-surface);
+  --ec-frm-trmTtbBrdBtmCol: var(--dahlia-border-subtle);
+}
+
+.dahlia-prose .expressive-code .frame {
+  --button-spacing: calc((var(--dahlia-code-header-height) - 2rem) / 2);
+
+  border-radius: var(--dahlia-prose-surface-radius);
+  box-shadow: none;
+}
+
+.dahlia-prose .expressive-code pre {
+  border-radius: var(--dahlia-prose-surface-radius);
+}
+
+.dahlia-prose .expressive-code .frame .header {
+  align-items: center;
+  background: var(--dahlia-surface);
+  block-size: var(--dahlia-code-header-height);
+  border-radius: var(--dahlia-prose-surface-radius) var(--dahlia-prose-surface-radius) 0 0;
+  box-sizing: border-box;
+  display: flex;
+  min-block-size: var(--dahlia-code-header-height);
+  padding-block: 0;
+}
+
+.dahlia-prose .expressive-code .frame:not(.is-terminal) .header,
+.dahlia-prose .expressive-code .frame.has-title:not(.is-terminal) .header {
+  background: var(--dahlia-surface);
+  padding-inline-start: var(--ec-uiPadInl);
+  padding-inline-end: calc(var(--ec-uiPadInl) + 2rem);
+}
+
+.dahlia-prose .expressive-code .frame:not(.is-terminal) .header::before {
+  border: var(--ec-brdWd) solid var(--dahlia-code-border);
+  border-bottom: none;
+  border-radius: inherit;
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.dahlia-prose .expressive-code .frame:not(.is-terminal) .header::after {
+  background: var(--dahlia-border-subtle);
+  block-size: var(--ec-brdWd);
+  content: "";
+  inset-block-end: 0;
+  inset-inline: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.dahlia-prose .expressive-code .frame:not(.is-terminal) pre,
+.dahlia-prose .expressive-code .frame:not(.is-terminal) code {
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.dahlia-prose .expressive-code .frame.has-title:not(.is-terminal),
+.dahlia-prose .expressive-code .frame.is-terminal {
+  --button-spacing: calc((var(--dahlia-code-header-height) - 2rem) / 2);
+}
+
+.dahlia-prose .expressive-code .frame .pf-code-header-language,
+.dahlia-prose .expressive-code .frame.has-title:not(.is-terminal) .title {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: var(--dahlia-text-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  margin: 0;
+  overflow: visible;
+  padding: 0;
+}
+
+.dahlia-prose .expressive-code .frame.has-title:not(.is-terminal) .title::after {
+  content: none;
+}
+
+.dahlia-prose .expressive-code .frame.is-terminal .header {
+  background: var(--dahlia-surface);
+  padding-block: 0;
+  padding-inline-end: calc(var(--ec-uiPadInl) + 2rem);
+}
+
+.dahlia-prose .expressive-code .copy {
+  inset-block-start: calc(var(--ec-brdWd) + (var(--dahlia-code-header-height) - 2rem) / 2);
+}
+
+.dahlia-prose .expressive-code .copy button {
+  background: transparent;
+  border-radius: var(--dahlia-radius-md);
+  height: 2rem;
+  width: 2rem;
+}
+
+.dahlia-prose .expressive-code .copy button div {
+  background: var(--dahlia-surface);
+  opacity: 0;
+}
+
+.dahlia-prose .expressive-code .copy button::before {
+  border-color: transparent;
+  opacity: 0;
+}
+
+.dahlia-prose .expressive-code .copy button::after {
+  background-color: var(--dahlia-text-muted);
+  margin: 0.5rem;
+}
+
+.dahlia-prose .expressive-code .copy button:hover,
+.dahlia-prose .expressive-code .copy button:focus-visible {
+  opacity: 1;
+}
+
+.dahlia-prose .expressive-code .copy button:hover div,
+.dahlia-prose .expressive-code .copy button:focus-visible div {
+  opacity: 1;
+}
+
+.dahlia-prose .expressive-code .copy button:hover::after,
+.dahlia-prose .expressive-code .copy button:focus-visible::after {
+  background-color: var(--dahlia-text-strong);
+}
+
+.dahlia-prose .expressive-code .copy button:focus-visible {
+  outline: 2px solid var(--dahlia-accent);
+  outline-offset: 2px;
+}
+
+.dahlia-prose .expressive-code .copy .feedback {
+  --tooltip-bg: var(--dahlia-text-strong);
+
+  background-color: var(--dahlia-text-strong);
+  border-radius: var(--dahlia-radius-md);
+  color: var(--dahlia-background);
+}
+
+@media (hover: hover) {
+  .dahlia-prose .expressive-code .copy button {
+    opacity: 0;
+  }
+
+  .dahlia-prose .expressive-code .frame:hover .copy button:not(:hover),
+  .dahlia-prose .expressive-code .frame:focus-within .copy button,
+  .dahlia-prose .expressive-code .frame .copy .feedback.show ~ button:not(:hover) {
+    opacity: 1;
+  }
+}

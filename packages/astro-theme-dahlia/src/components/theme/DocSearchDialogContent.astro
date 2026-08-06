@@ -1,0 +1,42 @@
+---
+import rawThemeConfig from 'virtual:prosefly/dahlia/config';
+import type { DahliaThemeConfig } from '../../lib/theme';
+
+const themeConfig = rawThemeConfig as DahliaThemeConfig;
+const t = Astro.locals.t;
+const currentLocale = t.locale();
+const searchConfig = themeConfig.search !== false && themeConfig.search.provider === 'docsearch'
+  ? themeConfig.search
+  : undefined;
+const indexName = searchConfig
+  ? typeof searchConfig.indexName === 'string'
+    ? searchConfig.indexName
+    : searchConfig.indexName[currentLocale.key] ?? searchConfig.indexName[currentLocale.lang]
+  : undefined;
+const searchParameters = searchConfig?.searchParameters
+  ? JSON.stringify(searchConfig.searchParameters)
+  : undefined;
+---
+
+{searchConfig && (
+  <>
+    <div
+      data-dahlia-docsearch
+      data-dahlia-docsearch-api-key={searchConfig.apiKey}
+      data-dahlia-docsearch-app-id={searchConfig.appId}
+      data-dahlia-docsearch-ask-ai={searchConfig.askAi}
+      data-dahlia-docsearch-css-url={searchConfig.cssUrl}
+      data-dahlia-docsearch-disable-user-personalization={searchConfig.disableUserPersonalization}
+      data-dahlia-docsearch-index-name={indexName}
+      data-dahlia-docsearch-insights={searchConfig.insights}
+      data-dahlia-docsearch-js-url={searchConfig.jsUrl}
+      data-dahlia-docsearch-max-results-per-group={searchConfig.maxResultsPerGroup}
+      data-dahlia-docsearch-placeholder={t('search.placeholder')}
+      data-dahlia-docsearch-search-parameters={searchParameters}
+      hidden
+    />
+    <script>
+      import '../../client/search/docsearch';
+    </script>
+  </>
+)}

@@ -1,0 +1,127 @@
+---
+import { codeToHtml } from 'shiki';
+
+interface Props {
+  code: string;
+  lang?: string;
+  title?: string;
+  class?: string;
+  trim?: boolean;
+}
+
+const {
+  code,
+  lang = 'text',
+  title,
+  class: className,
+  trim = true,
+} = Astro.props;
+const highlightedCode = trim ? code.trim() : code;
+
+async function highlightCode(source: string, language: string): Promise<string> {
+  try {
+    return await codeToHtml(source, {
+      lang: language,
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
+    });
+  } catch (error) {
+    if (language === 'text') {
+      throw error;
+    }
+
+    return codeToHtml(source, {
+      lang: 'text',
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
+    });
+  }
+}
+
+const html = await highlightCode(highlightedCode, lang);
+---
+
+<figure class:list={['dahlia-code-block', title && 'dahlia-code-block--framed', className]}>
+  {title && <figcaption class="dahlia-code-block__header">{title}</figcaption>}
+  <div class="dahlia-code-block__body" set:html={html} />
+</figure>
+
+<style is:global>
+  .dahlia-code-block {
+    background: var(--dahlia-background);
+    border: 1px solid var(--dahlia-code-border);
+    border-radius: min(var(--dahlia-radius-lg), 1rem);
+    color: var(--dahlia-text);
+    margin: 0;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .dahlia-code-block__header {
+    align-items: center;
+    background: var(--dahlia-surface);
+    border-block-end: 1px solid var(--dahlia-code-border);
+    block-size: var(--dahlia-code-header-height);
+    box-sizing: border-box;
+    color: var(--dahlia-text-muted);
+    display: flex;
+    font-family: var(--dahlia-font-sans);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    min-block-size: var(--dahlia-code-header-height);
+    margin: 0;
+    padding-block: 0;
+    padding-inline: 1rem;
+  }
+
+  .dahlia-code-block__body {
+    background: var(--dahlia-background);
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .dahlia-code-block__body > pre {
+    border: none;
+    border-radius: 0;
+  }
+
+  .dahlia-code-block .shiki {
+    background: transparent !important;
+    color: var(--dahlia-text);
+    font-family: var(--dahlia-font-mono);
+    font-feature-settings: var(--default-mono-font-feature-settings);
+    font-size: 0.875rem;
+    line-height: 1.7142857;
+    margin: 0;
+    overflow: visible;
+    padding: 0.8571429rem 1rem;
+  }
+
+  .dahlia-code-block .shiki code {
+    display: block;
+    min-width: max-content;
+  }
+
+  :root[data-theme="dark"] .dahlia-code-block .shiki,
+  :root[data-theme="dark"] .dahlia-code-block .shiki span {
+    color: var(--shiki-dark) !important;
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root[data-theme="system"] .dahlia-code-block .shiki,
+    :root[data-theme="system"] .dahlia-code-block .shiki span {
+      color: var(--shiki-dark) !important;
+      font-style: var(--shiki-dark-font-style) !important;
+      font-weight: var(--shiki-dark-font-weight) !important;
+      text-decoration: var(--shiki-dark-text-decoration) !important;
+    }
+  }
+</style>

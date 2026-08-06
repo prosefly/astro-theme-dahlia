@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/layout/Footer.astro';
+import SiteHeader from '../components/layout/SiteHeader.astro';
+import rawThemeConfig from 'virtual:prosefly/dahlia/config';
+import { normalizeDocsBasePath } from '../lib/config';
+import type { DahliaThemeConfig } from '../lib/theme';
+
+const themeConfig = rawThemeConfig as DahliaThemeConfig;
+const docsBasePath = normalizeDocsBasePath(themeConfig.docsBase);
+const docsHref = docsBasePath === '/' ? '/' : `${docsBasePath}/`;
+const t = Astro.locals.t;
+const currentLocale = t.locale();
+
+Astro.response.status = 404;
+---
+
+<BaseLayout
+  title={t('404.heading')}
+  description={t('404.description', { site: themeConfig.name })}
+  head={[{ tag: 'meta', attrs: { name: 'robots', content: 'noindex, nofollow' } }]}
+  locale={currentLocale}
+>
+  <SiteHeader surface />
+
+  <main class="mx-auto flex min-h-[calc(100vh-var(--dahlia-header-height)-16rem)] max-w-screen-2xl items-center justify-center px-4 py-20 text-center sm:px-6">
+    <div class="max-w-xl">
+      <p class="mb-4 text-sm font-semibold text-(--dahlia-accent)">404</p>
+      <h1 class="text-4xl font-semibold tracking-normal text-(--dahlia-text-strong)">
+        {t('404.heading')}
+      </h1>
+      <p class="mt-4 text-base leading-7 text-(--dahlia-text-muted)">
+        {t('404.text')}
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a
+          class="dahlia-focus-ring inline-flex h-10 items-center justify-center rounded-(--dahlia-radius-md) bg-(--dahlia-accent) px-4 text-sm font-medium text-(--dahlia-accent-contrast) transition-opacity hover:opacity-90"
+          href={docsHref}
+        >
+          {t('404.openDocs')}
+        </a>
+        <a
+          class="dahlia-focus-ring inline-flex h-10 items-center justify-center rounded-(--dahlia-radius-md) bg-(--dahlia-surface) px-4 text-sm font-medium text-(--dahlia-text-strong) transition-colors hover:bg-(--dahlia-accent-soft)"
+          href="/"
+        >
+          {t('404.backHome')}
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

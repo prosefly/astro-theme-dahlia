@@ -1,0 +1,506 @@
+---
+import { Icon } from '@prosefly/astro-components';
+---
+
+<figure aria-label="Dahlia documentation preview" class="home-docs-preview">
+  <div class="home-docs-preview__shell">
+    <aside class="home-docs-preview__sidebar" aria-hidden="true">
+      <div class="home-docs-preview__brand">
+        <img alt="" height="28" src="/images/dahlia-mark.svg" width="28" />
+        <span>Dahlia</span>
+      </div>
+
+      <div class="home-docs-preview__search">
+        <Icon name="lucide:search" />
+        <span>Search docs</span>
+      </div>
+
+      <div class="home-docs-preview__section-switch">
+        <Icon name="lucide:rocket" />
+        <span>Guides</span>
+        <Icon name="lucide:chevrons-up-down" />
+      </div>
+
+      <nav class="home-docs-preview__nav">
+        <p class="home-docs-preview__group-label">Getting started</p>
+        <span class="home-docs-preview__item home-docs-preview__item--active">Introduction</span>
+        <span class="home-docs-preview__item">Installation</span>
+        <span class="home-docs-preview__item">Project setup</span>
+        <span class="home-docs-preview__item">Configuration <Icon name="lucide:chevron-right" /></span>
+        <p class="home-docs-preview__group-label">Theme guide</p>
+        <span class="home-docs-preview__item">Navigation</span>
+        <span class="home-docs-preview__item">Components</span>
+        <span class="home-docs-preview__item">Content styles</span>
+        <span class="home-docs-preview__item">Search</span>
+        <p class="home-docs-preview__group-label">Reference</p>
+        <span class="home-docs-preview__item">Configuration</span>
+        <span class="home-docs-preview__item">Components API</span>
+      </nav>
+
+      <div class="home-docs-preview__controls">
+        <span><Icon name="lucide:languages" /> English <Icon name="lucide:chevron-down" /></span>
+        <span class="home-docs-preview__theme-control"><Icon name="lucide:monitor" /><Icon name="lucide:sun" /><Icon name="lucide:moon" /></span>
+      </div>
+    </aside>
+
+    <div class="home-docs-preview__content">
+      <header class="home-docs-preview__header" aria-hidden="true">
+        <nav>
+          <span>Docs</span>
+          <span>Pricing</span>
+          <span>Sponsors</span>
+          <span class="home-docs-preview__source">Source <Icon name="lucide:chevron-right" /></span>
+        </nav>
+        <div class="home-docs-preview__socials">
+          <Icon name="simple-icons:github" />
+          <Icon name="simple-icons:x" />
+          <Icon name="lucide:palette" />
+        </div>
+      </header>
+
+      <div class="home-docs-preview__body">
+        <article class="home-docs-preview__article" aria-hidden="true">
+          <div class="home-docs-preview__article-head">
+            <div>
+              <div class="home-docs-preview__breadcrumb">Introduction</div>
+              <h2>Welcome to Dahlia</h2>
+            </div>
+            <span class="home-docs-preview__copy"><Icon name="lucide:copy" /> Copy page <Icon name="lucide:chevron-down" /></span>
+          </div>
+          <p class="home-docs-preview__lead">
+            Dahlia is an Astro documentation theme designed for calm, focused
+            reading and effortless authoring.
+          </p>
+          <span class="home-docs-preview__rule"></span>
+          <p>
+            It comes with sensible defaults, beautiful typography, and carefully
+            crafted components so you can spend more time writing and less time
+            configuring.
+          </p>
+          <div class="home-docs-preview__code">
+            <div class="home-docs-preview__code-header">
+              <span>astro.config.mjs</span>
+              <Icon name="lucide:copy" />
+            </div>
+            <pre><code>import &#123; defineConfig &#125; from 'astro/config';
+import dahlia from '@prosefly/astro-theme-dahlia';
+
+export default defineConfig(&#123;
+  integrations: [dahlia()],
+&#125;);</code></pre>
+          </div>
+          <div class="home-docs-preview__note">
+            <Icon name="lucide:flower-2" />
+            <span>Dahlia is built with performance and accessibility in mind.</span>
+          </div>
+        </article>
+
+        <aside class="home-docs-preview__toc" aria-hidden="true">
+          <strong>On this page</strong>
+          <span class="home-docs-preview__toc-active">Welcome to Dahlia</span>
+          <span>Why Dahlia?</span>
+          <span>Core principles</span>
+          <span>What's included?</span>
+          <span>Next steps</span>
+          <span class="home-docs-preview__rule"></span>
+          <span class="home-docs-preview__edit"><Icon name="lucide:pencil" /> Edit this page</span>
+        </aside>
+      </div>
+    </div>
+  </div>
+</figure>
+
+<style>
+  .home-docs-preview {
+    border: 1px solid var(--dahlia-border-subtle);
+    border-radius: min(var(--dahlia-radius-lg), 1rem);
+    background: var(--dahlia-background);
+    box-shadow: 0 20px 60px color-mix(in oklab, var(--dahlia-accent) 8%, transparent);
+    overflow: hidden;
+  }
+
+  .home-docs-preview__shell {
+    display: grid;
+    grid-template-columns: 14rem minmax(0, 1fr);
+    min-height: 31rem;
+  }
+
+  .home-docs-preview__sidebar {
+    background: color-mix(in oklab, var(--dahlia-surface) 34%, var(--dahlia-background));
+    border-inline-end: 1px solid var(--dahlia-border-subtle);
+    color: var(--dahlia-text-muted);
+    display: flex;
+    flex-direction: column;
+    font-size: 0.75rem;
+    min-height: 31rem;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .home-docs-preview__brand {
+    align-items: center;
+    color: var(--dahlia-text-strong);
+    display: flex;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1rem;
+    gap: 0.5rem;
+    height: 3.25rem;
+    margin: 0;
+    padding: 0 1rem;
+    border-bottom: 1px solid var(--dahlia-border-subtle);
+  }
+
+  .home-docs-preview__brand img {
+    height: 1.75rem;
+    width: 1.75rem;
+  }
+
+  .home-docs-preview__search,
+  .home-docs-preview__section-switch {
+    align-items: center;
+    border: 1px solid var(--dahlia-border-muted);
+    border-radius: var(--dahlia-radius-md);
+    display: flex;
+    gap: 0.45rem;
+    min-height: 2rem;
+    padding: 0.35rem 0.55rem;
+  }
+
+  .home-docs-preview__search {
+    color: var(--dahlia-text-muted);
+    margin: 0.75rem 0.75rem 0;
+  }
+
+  .home-docs-preview__section-switch {
+    background: var(--dahlia-surface);
+    color: var(--dahlia-text-strong);
+    font-weight: 600;
+    margin: 0.75rem 0.75rem 0;
+  }
+
+  .home-docs-preview__section-switch :last-child {
+    color: var(--dahlia-text-muted);
+    margin-inline-start: auto;
+  }
+
+  .home-docs-preview__search :global(.pf-icon),
+  .home-docs-preview__section-switch :global(.pf-icon),
+  .home-docs-preview__controls :global(.pf-icon),
+  .home-docs-preview__nav :global(.pf-icon) {
+    height: 0.8rem;
+    width: 0.8rem;
+  }
+
+  .home-docs-preview__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0.75rem 0.75rem 0;
+  }
+
+  .home-docs-preview__group-label {
+    color: var(--dahlia-text-subtle);
+    font-size: 0.5625rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    margin: 0.8rem 0 0.2rem 0.25rem;
+    text-transform: uppercase;
+  }
+
+  .home-docs-preview__item {
+    align-items: center;
+    border-radius: var(--dahlia-radius-sm);
+    display: flex;
+    justify-content: space-between;
+    min-height: 1.65rem;
+    padding: 0.25rem 0.45rem;
+  }
+
+  .home-docs-preview__item--discussion {
+    gap: 0.4rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .home-docs-preview__item--nested :last-child {
+    color: var(--dahlia-text-muted);
+  }
+
+  .home-docs-preview__item--active {
+    background: var(--dahlia-accent-soft);
+    color: var(--dahlia-accent);
+    font-weight: 600;
+  }
+
+  .home-docs-preview__controls {
+    align-items: center;
+    border-top: 1px solid var(--dahlia-border-subtle);
+    display: flex;
+    font-size: 0.625rem;
+    gap: 0.5rem;
+    justify-content: space-between;
+    margin-top: auto;
+    padding: 0.7rem 0.75rem;
+  }
+
+  .home-docs-preview__controls span {
+    align-items: center;
+    display: flex;
+    gap: 0.25rem;
+    white-space: nowrap;
+  }
+
+  .home-docs-preview__theme-control {
+    border: 1px solid var(--dahlia-border-muted);
+    border-radius: var(--dahlia-radius-md);
+    padding: 0.2rem;
+  }
+
+  .home-docs-preview__theme-control :nth-child(2) {
+    background: var(--dahlia-accent-soft);
+    border-radius: var(--dahlia-radius-sm);
+    color: var(--dahlia-accent);
+    padding: 0.2rem;
+  }
+
+  .home-docs-preview__content {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .home-docs-preview__header {
+    align-items: center;
+    border-bottom: 1px solid var(--dahlia-border-subtle);
+    color: var(--dahlia-text-muted);
+    display: flex;
+    font-size: 0.6875rem;
+    gap: 0.9rem;
+    height: 3.25rem;
+    justify-content: flex-end;
+    padding: 0 1rem;
+  }
+
+  .home-docs-preview__header nav,
+  .home-docs-preview__socials,
+  .home-docs-preview__source,
+  .home-docs-preview__copy,
+  .home-docs-preview__edit {
+    align-items: center;
+    display: flex;
+    gap: 0.55rem;
+  }
+
+  .home-docs-preview__source {
+    background: var(--dahlia-text-strong);
+    border-radius: var(--dahlia-radius-md);
+    color: var(--dahlia-background);
+    gap: 0.2rem;
+    padding: 0.35rem 0.5rem;
+  }
+
+  .home-docs-preview__body {
+    display: grid;
+    flex: 1;
+    grid-template-columns: minmax(0, 1fr) 10rem;
+    min-width: 0;
+  }
+
+  .home-docs-preview__article {
+    color: var(--dahlia-text);
+    font-size: 0.875rem;
+    line-height: 1.65;
+    margin: 0 auto;
+    max-width: 46rem;
+    min-width: 0;
+    padding: 2.1rem clamp(1.25rem, 5vw, 3rem) 2.4rem;
+    width: 100%;
+  }
+
+  .home-docs-preview__article-head {
+    align-items: flex-start;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+  }
+
+  .home-docs-preview__breadcrumb {
+    color: var(--dahlia-accent);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    margin-bottom: 0.85rem;
+  }
+
+  .home-docs-preview__article h2,
+  .home-docs-preview__article h3 {
+    color: var(--dahlia-text-strong);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 400;
+    letter-spacing: -0.05em;
+  }
+
+  .home-docs-preview__article h2 {
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1;
+    margin: 0;
+  }
+
+  .home-docs-preview__article h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 1.65rem 0 0.65rem;
+  }
+
+  .home-docs-preview__copy {
+    border: 1px solid var(--dahlia-border-muted);
+    border-radius: var(--dahlia-radius-md);
+    color: var(--dahlia-text-strong);
+    flex: 0 0 auto;
+    font-size: 0.6875rem;
+    padding: 0.45rem 0.55rem;
+  }
+
+  .home-docs-preview__article p {
+    margin: 1rem 0 0;
+  }
+
+  .home-docs-preview__lead {
+    color: var(--dahlia-text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    max-width: 42rem;
+  }
+
+  .home-docs-preview__rule {
+    background: var(--dahlia-border-subtle);
+    display: block;
+    height: 1px;
+    margin: 1.45rem 0;
+    width: 100%;
+  }
+
+  .home-docs-preview__code {
+    border: 1px solid var(--dahlia-border-subtle);
+    border-radius: var(--dahlia-radius-md);
+    margin-top: 1.6rem;
+    overflow: hidden;
+  }
+
+  .home-docs-preview__code-header {
+    align-items: center;
+    background: var(--dahlia-surface);
+    border-bottom: 1px solid var(--dahlia-border-subtle);
+    color: var(--dahlia-text-subtle);
+    display: flex;
+    font-size: 0.6875rem;
+    justify-content: space-between;
+    padding: 0.6rem 0.8rem;
+  }
+
+  .home-docs-preview__code-header :global(.pf-icon) {
+    height: 0.8rem;
+    width: 0.8rem;
+  }
+
+  .home-docs-preview__code pre {
+    background: var(--dahlia-background);
+    color: var(--dahlia-text-strong);
+    margin: 0;
+    overflow-x: auto;
+    padding: 1rem;
+  }
+
+  .home-docs-preview__code code {
+    font-size: 0.6875rem;
+    line-height: 1.7;
+  }
+
+  .home-docs-preview__note {
+    align-items: center;
+    background: color-mix(in oklab, var(--dahlia-accent-soft) 22%, var(--dahlia-background));
+    border: 1px solid var(--dahlia-border-subtle);
+    border-radius: var(--dahlia-radius-md);
+    color: var(--dahlia-text-muted);
+    display: flex;
+    font-size: 0.75rem;
+    gap: 0.6rem;
+    margin-top: 1rem;
+    padding: 0.75rem;
+  }
+
+  .home-docs-preview__note :global(.pf-icon) {
+    color: var(--dahlia-accent);
+    flex: 0 0 auto;
+    height: 1.2rem;
+    width: 1.2rem;
+  }
+
+  .home-docs-preview__toc {
+    color: var(--dahlia-text-muted);
+    display: flex;
+    flex-direction: column;
+    font-size: 0.6875rem;
+    gap: 0.65rem;
+    padding: 1rem 0.8rem;
+  }
+
+  .home-docs-preview__toc strong {
+    color: var(--dahlia-text-strong);
+    font-size: 0.6875rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .home-docs-preview__edit {
+    color: var(--dahlia-text);
+    margin-top: 0.15rem;
+  }
+
+  @media (max-width: 1023px) {
+    .home-docs-preview__shell {
+      grid-template-columns: 12rem minmax(0, 1fr);
+    }
+
+    .home-docs-preview__toc {
+      display: none;
+    }
+
+    .home-docs-preview__body {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 639px) {
+    .home-docs-preview__shell {
+      display: block;
+      min-height: 0;
+    }
+
+    .home-docs-preview__sidebar {
+      display: none;
+    }
+
+    .home-docs-preview__header {
+      height: 3rem;
+      padding-inline: 0.7rem;
+    }
+
+    .home-docs-preview__header nav span:nth-child(2),
+    .home-docs-preview__header nav span:nth-child(3) {
+      display: none;
+    }
+
+    .home-docs-preview__article {
+      padding: 1.35rem 1.1rem 1.5rem;
+    }
+
+    .home-docs-preview__article h2 {
+      font-size: 2.15rem;
+    }
+
+    .home-docs-preview__copy {
+      display: none;
+    }
+  }
+</style>

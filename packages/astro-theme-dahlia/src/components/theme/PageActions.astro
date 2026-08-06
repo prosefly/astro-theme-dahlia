@@ -1,0 +1,179 @@
+---
+import { Icon } from '@prosefly/astro-components';
+import { resolveIconName } from '../../lib/icons';
+import type { PageActionConfig, PageActionType } from '../../lib/theme';
+import Dropdown from '../ui/Dropdown.astro';
+
+interface ResolvedPageAction {
+  type?: string;
+  label: string;
+  icon: string;
+  href?: string;
+  hrefTemplate?: string;
+  external: boolean;
+  isCopy: boolean;
+}
+
+interface Props {
+  actions?: PageActionConfig[];
+  title: string;
+  pageUrl: string;
+  markdownUrl: string;
+}
+
+const { actions = [], title, pageUrl, markdownUrl } = Astro.props;
+const t = Astro.locals.t;
+
+const defaultActionMeta: Record<PageActionType, { label: string; icon: string }> = {
+  'copy-page': { label: t('pageActions.copyPage'), icon: 'lucide:copy' },
+  'view-markdown': { label: t('pageActions.viewMarkdown'), icon: 'lucide:file-text' },
+  'open-chatgpt': { label: t('pageActions.openChatGPT'), icon: 'simple-icons:openai' },
+  'open-claude': { label: t('pageActions.openClaude'), icon: 'simple-icons:claude' },
+};
+
+function isKnownAction(type?: string): type is PageActionType {
+  return Boolean(type && type in defaultActionMeta);
+}
+
+function createAssistantPrompt(targetUrl: string): string {
+  return t('pageActions.assistantPrompt', { url: targetUrl });
+}
+
+function interpolateHref(template: string): string {
+  const replacements: Record<string, string> = {
+    title,
+    url: pageUrl,
+    markdownUrl,
+    encodedTitle: encodeURIComponent(title),
+    encodedUrl: encodeURIComponent(pageUrl),
+    encodedMarkdownUrl: encodeURIComponent(markdownUrl),
+  };
+
+  return template.replace(
+    /\{(title|url|markdownUrl|encodedTitle|encodedUrl|encodedMarkdownUrl)\}/g,
+    (_, key: keyof typeof replacements) => replacements[key],
+  );
+}
+
+function getDefaultHref(type?: string): string | undefined {
+  if (type === 'view-markdown') {
+    return markdownUrl;
+  }
+
+  if (type === 'open-chatgpt') {
+    return `https://chatgpt.com/?q=${encodeURIComponent(createAssistantPrompt(pageUrl))}`;
+  }
+
+  if (type === 'open-claude') {
+    return `https://claude.ai/new?q=${encodeURIComponent(createAssistantPrompt(pageUrl))}`;
+  }
+
+  return undefined;
+}
+
+function resolveAction(action: PageActionConfig): ResolvedPageAction | undefined {
+  const meta = isKnownAction(action.type) ? defaultActionMeta[action.type] : undefined;
+  const href = action.href ? interpolateHref(action.href) : getDefaultHref(action.type);
+  const isCopy = action.type === 'copy-page';
+
+  if (!isCopy && !href) {
+    return undefined;
+  }
+
+  return {
+    type: action.type,
+    label: action.label ?? meta?.label ?? t('pageActions.openLink'),
+    icon: resolveIconName(action.icon ?? meta?.icon),
+    href,
+    hrefTemplate: action.href,
+    external: action.external ?? Boolean(href && /^[a-z][a-z\d+.-]*:/i.test(href)),
+    isCopy,
+  };
+}
+
+const resolvedActions = actions.map(resolveAction).filter((action): action is ResolvedPageAction => Boolean(action));
+const primaryAction =
+  resolvedActions.find((action) => action.isCopy) ??
+  resolvedActions[0];
+---
+
+{primaryAction && resolvedActions.length > 0 && (
+  <div
+    class="relative inline-flex items-center rounded-(--dahlia-radius-md) border dahlia-border-muted bg-(--dahlia-background) text-sm"
+    data-dahlia-page-actions
+    data-dahlia-page-assistant-prompt={createAssistantPrompt('{url}')}
+    data-dahlia-page-copied-label={t('pageActions.copied')}
+    data-dahlia-page-copy-failed-label={t('pageActions.copyFailed')}
+    data-dahlia-page-copying-label={t('pageActions.copying')}
+    data-dahlia-page-markdown-url={markdownUrl}
+    data-dahlia-page-title={title}
+    data-dahlia-page-url={pageUrl}
+  >
+    {primaryAction.isCopy ? (
+      <button
+        class="dahlia-focus-ring inline-flex h-8 items-center gap-1.5 rounded-s-(--dahlia-radius-md) px-2.5 font-medium text-(--dahlia-text-strong) transition-colors hover:bg-(--dahlia-surface) disabled:pointer-events-none disabled:opacity-70"
+        data-dahlia-copy-page
+        type="button"
+      >
+        <Icon aria-hidden="true" class="h-3.5 w-3.5" name={primaryAction.icon} />
+        <span aria-live="polite" data-dahlia-copy-label>{primaryAction.label}</span>
+      </button>
+    ) : (
+      <a
+        class="dahlia-focus-ring inline-flex h-8 items-center gap-1.5 rounded-s-(--dahlia-radius-md) px-2.5 font-medium text-(--dahlia-text-strong) transition-colors hover:bg-(--dahlia-surface)"
+        href={primaryAction.href}
+        data-dahlia-page-action={primaryAction.type}
+        data-dahlia-page-action-href-template={primaryAction.hrefTemplate}
+        rel={primaryAction.external ? 'noreferrer' : undefined}
+        target={primaryAction.external ? '_blank' : undefined}
+      >
+        <Icon aria-hidden="true" class="h-3.5 w-3.5" name={primaryAction.icon} />
+        <span>{primaryAction.label}</span>
+      </a>
+    )}
+    <Dropdown
+      class="static"
+      contentClass="absolute start-0 top-[calc(100%+0.5rem)] z-50 w-[min(14rem,calc(100vw-2.5rem))] overflow-hidden rounded-[min(var(--dahlia-radius-lg),1rem)] border dahlia-border-muted bg-(--dahlia-background) p-1 shadow-lg shadow-black/5 sm:start-auto sm:end-0 sm:w-56"
+      triggerClass="dahlia-focus-ring flex h-8 w-8 cursor-pointer items-center justify-center rounded-e-(--dahlia-radius-md) border-s dahlia-border-muted text-(--dahlia-text-muted) transition-colors hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong)"
+      triggerLabel={t('pageActions.show')}
+    >
+      <Fragment slot="trigger">
+        <Icon
+          aria-hidden="true"
+          class="h-3.5 w-3.5 transition-transform group-open/dropdown:rotate-180"
+          name="lucide:chevron-down"
+        />
+      </Fragment>
+      {resolvedActions.map((action) => (
+        action.isCopy ? (
+          <button
+            class="dahlia-focus-ring flex w-full items-center gap-1.5 rounded-(--dahlia-radius-md) px-2.5 py-1.5 text-start text-sm text-(--dahlia-text) transition-colors hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong) disabled:pointer-events-none disabled:opacity-70"
+            data-dahlia-copy-page
+            data-dahlia-dropdown-close
+            type="button"
+          >
+            <Icon aria-hidden="true" class="h-3.5 w-3.5 text-(--dahlia-text-muted)" name={action.icon} />
+            <span aria-live="polite" data-dahlia-copy-label>{action.label}</span>
+          </button>
+        ) : (
+          <a
+            class="dahlia-focus-ring flex items-center gap-1.5 rounded-(--dahlia-radius-md) px-2.5 py-1.5 text-sm text-(--dahlia-text) transition-colors hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong)"
+            data-dahlia-dropdown-close
+            data-dahlia-page-action={action.type}
+            data-dahlia-page-action-href-template={action.hrefTemplate}
+            href={action.href}
+            rel={action.external ? 'noreferrer' : undefined}
+            target={action.external ? '_blank' : undefined}
+          >
+            <Icon aria-hidden="true" class="h-3.5 w-3.5 text-(--dahlia-text-muted)" name={action.icon} />
+            <span>{action.label}</span>
+          </a>
+        )
+      ))}
+    </Dropdown>
+  </div>
+)}
+
+<script>
+  import '../../client/page-actions';
+</script>

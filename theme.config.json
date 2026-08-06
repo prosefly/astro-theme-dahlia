@@ -1,0 +1,199 @@
+{
+  "$schema": "https://astro-theme-dahlia.prosefly.dev/schema.json",
+  "name": "Dahlia",
+  "description": "A documentation theme for Astro.",
+  "favicon": "/favicon.svg",
+  "logo": "/images/dahlia-mark.svg",
+  "docsBase": "/docs",
+  "siteNav": [
+    {
+      "label": "Docs",
+      "href": "/docs/"
+    },
+    {
+      "label": "Pricing",
+      "href": "/pricing/"
+    },
+    {
+      "label": "Sponsors",
+      "href": "/sponsors/"
+    },
+    {
+      "label": "Source",
+      "href": "https://github.com/prosefly/astro-theme-dahlia",
+      "variant": "solid",
+      "trailingIcon": "lucide:chevron-right"
+    }
+  ],
+  "socials": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/prosefly/astro-theme-dahlia",
+      "external": true,
+      "icon": "github"
+    },
+    {
+      "label": "X",
+      "href": "https://x.com/prosefly",
+      "external": true,
+      "icon": "x"
+    }
+  ],
+  "contributors": {
+    "max": 6,
+    "exclude": ["github-actions[bot]"]
+  },
+  "source": {
+    "github": "prosefly/astro-theme-dahlia",
+    "branch": "main"
+  },
+  "editLink": true,
+  "locales": {
+    "root": {
+      "label": "English",
+      "lang": "en",
+      "directory": "en"
+    },
+    "zh-cn": {
+      "label": "简体中文",
+      "lang": "zh-CN",
+      "directory": "zh-cn"
+    }
+  },
+  "docsNav": [
+    {
+      "slug": "guides",
+      "label": "Guides",
+      "translations": {
+        "zh-cn": "指南"
+      },
+      "icon": "lucide:rocket",
+      "items": [
+        "overview",
+        "installation",
+        {
+          "label": "Essentials",
+          "translations": {
+            "zh-cn": "基础"
+          },
+          "items": [
+            "essentials/project-structure",
+            "essentials/frontmatter",
+            "essentials/markdown-syntax",
+            "essentials/admonitions",
+            "essentials/images",
+            "essentials/code-blocks"
+          ]
+        },
+        "deployment",
+        "changelog",
+        "troubleshooting"
+      ]
+    },
+    {
+      "slug": "configuration",
+      "label": "Configuration",
+      "translations": {
+        "zh-cn": "配置"
+      },
+      "icon": "lucide:settings-2",
+      "items": [
+        "configuration/project",
+        "configuration/content-routing",
+        "configuration/i18n",
+        "configuration/appearance",
+        "configuration/navbar",
+        "configuration/docs-nav",
+        "configuration/footer",
+        "configuration/page-actions",
+        "configuration/search",
+        "configuration/source",
+        "configuration/assistant",
+        "configuration/integrations"
+      ]
+    },
+    {
+      "slug": "customization",
+      "label": "Customization",
+      "translations": {
+        "zh-cn": "自定义"
+      },
+      "icon": "lucide:palette",
+      "items": [
+        {
+          "label": "Customize",
+          "translations": {
+            "zh-cn": "自定义"
+          },
+          "items": [
+            "customization/css-styling",
+            "customization/theme-components",
+            "customization/overriding-components",
+            "customization/page-layouts"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "references",
+      "label": "References",
+      "translations": {
+        "zh-cn": "参考"
+      },
+      "icon": "lucide:book-open",
+      "items": [
+        "references/configuration",
+        "references/theme-tokens",
+        "references/expressive-code"
+      ]
+    }
+  ],
+  "footer": {
+    "copyright": "Copyright © 2026 Prosefly.",
+    "sections": [
+      {
+        "title": "Tools",
+        "links": [
+          {
+            "label": "Appearance",
+            "href": "/docs/configuration/appearance/"
+          }
+        ]
+      },
+      {
+        "title": "Projects",
+        "links": [
+          {
+            "label": "Astro Components",
+            "href": "https://astro-components.prosefly.dev",
+            "external": true
+          }
+        ]
+      },
+      {
+        "title": "Community",
+        "links": [
+          {
+            "label": "GitHub",
+            "href": "https://github.com/prosefly/astro-theme-dahlia",
+            "external": true
+          },
+          {
+            "label": "X (Twitter)",
+            "href": "https://x.com/prosefly",
+            "external": true
+          },
+          {
+            "label": "Sponsors",
+            "href": "/sponsors/"
+          },
+          {
+            "label": "Sponsor Prosefly",
+            "href": "https://github.com/sponsors/prosefly",
+            "external": true
+          }
+        ]
+      }
+    ]
+  }
+}

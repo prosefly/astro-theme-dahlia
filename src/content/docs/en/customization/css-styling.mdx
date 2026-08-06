@@ -1,0 +1,46 @@
+---
+title: CSS & Styling
+description: Customize Dahlia with semantic tokens and scoped CSS.
+
+---
+
+Dahlia styles are built on Tailwind utilities and semantic CSS variables. The
+theme exposes `--dahlia-*` tokens for layout and shell styling, while shared MDX
+components consume portable `--pf-*` variables.
+
+## Theme tokens
+
+Use `appearance` for normal color and radius customization:
+
+```ts
+appearance: {
+  accent: 'blue',
+  gray: 'neutral',
+  radius: 'medium',
+}
+```
+
+Use semantic tokens only when a project needs lower-level CSS overrides for
+surfaces, text, or component geometry.
+
+```css
+:root {
+  --dahlia-surface: color-mix(in oklab, var(--dahlia-gray-100) 70%, white);
+  --dahlia-radius-md: 0.5rem;
+}
+```
+
+## Component bridge
+
+Dahlia maps component package variables to theme variables:
+
+```css
+--pf-text-strong: var(--dahlia-text-strong);
+--pf-text: var(--dahlia-text);
+--pf-text-muted: var(--dahlia-text-muted);
+--pf-background: var(--dahlia-background);
+--pf-accent: var(--dahlia-accent);
+```
+
+This keeps `@prosefly/astro-components` portable while letting Dahlia own the
+site palette.

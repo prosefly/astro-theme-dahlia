@@ -1,0 +1,16 @@
+---
+import rawThemeConfig from 'virtual:prosefly/dahlia/config';
+import DocSearchDialogContent from './DocSearchDialogContent.astro';
+import LocalSearchDialogContent from './LocalSearchDialogContent.astro';
+import type { DahliaThemeConfig } from '../../lib/theme';
+
+const themeConfig = rawThemeConfig as DahliaThemeConfig;
+const searchConfig = themeConfig.search === false ? undefined : themeConfig.search;
+const searchProvider = searchConfig?.provider ?? 'local';
+---
+
+{searchConfig && (
+  searchProvider === 'docsearch'
+    ? <DocSearchDialogContent />
+    : <LocalSearchDialogContent />
+)}

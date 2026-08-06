@@ -1,0 +1,153 @@
+function initMobileDocsNav(): void {
+  const drawer = document.querySelector<HTMLElement>('[data-dahlia-mobile-sidebar]');
+  const openButtons = Array.from(document.querySelectorAll('[data-dahlia-mobile-sidebar-open]'));
+  const closeButtons = drawer
+    ? Array.from(drawer.querySelectorAll('[data-dahlia-mobile-sidebar-close]'))
+    : [];
+  const sectionSwitch = document.querySelector<HTMLDetailsElement>('[data-dahlia-section-switch]');
+  const sectionOptions = Array.from(document.querySelectorAll<HTMLElement>('[data-dahlia-section-option]'));
+  const sectionPanels = Array.from(document.querySelectorAll<HTMLElement>('[data-dahlia-section-panel]'));
+  const summaryLabel = document.querySelector('[data-dahlia-section-summary-label]');
+  const summaryCount = document.querySelector('[data-dahlia-section-summary-count]');
+  const summaryIcons = Array.from(document.querySelectorAll<HTMLElement>('[data-dahlia-section-summary-icon]'));
+
+  if (!drawer || !openButtons.length || drawer.dataset.dahliaMobileDocsNavReady) {
+    return;
+  }
+
+  drawer.dataset.dahliaMobileDocsNavReady = 'true';
+
+  let closeTimer: number | undefined;
+  let previousOverflow = '';
+  let previousFocus: HTMLElement | null = null;
+
+  const getFocusableElements = () => Array.from(
+    drawer.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), summary, [tabindex]:not([tabindex="-1"])',
+    ),
+  ).filter((element) => !element.hasAttribute('hidden') && !element.closest('[hidden]'));
+
+  const setOpenButtonState = (open: boolean) => {
+    openButtons.forEach((button) => {
+      button.setAttribute('aria-expanded', String(open));
+    });
+  };
+
+  const openDrawer = () => {
+    window.clearTimeout(closeTimer);
+    previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    drawer.hidden = false;
+    drawer.removeAttribute('inert');
+    setOpenButtonState(true);
+    previousOverflow = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = 'hidden';
+    window.requestAnimationFrame(() => {
+      drawer.setAttribute('data-open', '');
+      getFocusableElements()[0]?.focus({ preventScroll: true });
+    });
+  };
+
+  const closeDrawer = () => {
+    if (drawer.hidden) {
+      return;
+    }
+
+    drawer.removeAttribute('data-open');
+    document.documentElement.style.overflow = previousOverflow;
+    setOpenButtonState(false);
+    previousFocus?.focus({ preventScroll: true });
+    drawer.setAttribute('inert', '');
+    closeTimer = window.setTimeout(() => {
+      drawer.hidden = true;
+    }, 180);
+  };
+
+  openButtons.forEach((button) => {
+    button.addEventListener('click', openDrawer);
+  });
+
+  closeButtons.forEach((button) => {
+    button.addEventListener('click', closeDrawer);
+  });
+
+  drawer.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeDrawer);
+  });
+
+  sectionOptions.forEach((option) => {
+    option.addEventListener('click', () => {
+      const slug = option.getAttribute('data-dahlia-section-option');
+
+      if (!slug) {
+        return;
+      }
+
+      sectionOptions.forEach((item) => {
+        const active = item.getAttribute('data-dahlia-section-option') === slug;
+        item.toggleAttribute('data-active', active);
+
+        if (active) {
+          item.setAttribute('aria-current', 'page');
+        } else {
+          item.removeAttribute('aria-current');
+        }
+      });
+
+      sectionPanels.forEach((panel) => {
+        panel.hidden = panel.getAttribute('data-dahlia-section-panel') !== slug;
+      });
+      window.dispatchEvent(new Event('resize'));
+
+      summaryIcons.forEach((icon) => {
+        icon.hidden = icon.getAttribute('data-dahlia-section-summary-icon') !== slug;
+      });
+
+      if (summaryLabel) {
+        summaryLabel.textContent = option.getAttribute('data-dahlia-section-label') ?? '';
+      }
+
+      if (summaryCount) {
+        summaryCount.textContent = option.getAttribute('data-dahlia-section-count') ?? '';
+      }
+
+      sectionSwitch?.removeAttribute('open');
+    });
+  });
+
+  window.addEventListener('keydown', (event) => {
+    if (drawer.hidden) {
+      return;
+    }
+
+    if (event.key === 'Escape') {
+      closeDrawer();
+      return;
+    }
+
+    if (event.key !== 'Tab') {
+      return;
+    }
+
+    const focusableElements = getFocusableElements();
+    const first = focusableElements[0];
+    const last = focusableElements[focusableElements.length - 1];
+
+    if (!first || !last) {
+      event.preventDefault();
+      return;
+    }
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+      return;
+    }
+
+    if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+}
+
+initMobileDocsNav();

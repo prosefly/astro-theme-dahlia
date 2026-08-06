@@ -1,0 +1,179 @@
+---
+import type { DocsNavDisplayMode, DocsSectionNav, DocsSidebarNav } from '../lib/docs';
+import BaseLayout from './BaseLayout.astro';
+import Footer from '../components/layout/Footer.astro';
+import HeaderNavbar from 'virtual:prosefly/dahlia/components/HeaderNavbar';
+import HeaderSocialIcons from 'virtual:prosefly/dahlia/components/HeaderSocialIcons';
+import LanguageSelect from '../components/theme/LanguageSelect.astro';
+import MobileDocsNav from '../components/layout/MobileDocsNav.astro';
+import SearchDialog from 'virtual:prosefly/dahlia/components/SearchDialog';
+import Sidebar from '../components/theme/Sidebar.astro';
+import SiteBrand from 'virtual:prosefly/dahlia/components/SiteBrand';
+import ThemeModeSegmentedControl from '../components/theme/ThemeModeSegmentedControl.astro';
+import { Icon } from '@prosefly/astro-components';
+import Dropdown from '../components/ui/Dropdown.astro';
+import { resolveIconName } from '../lib/icons';
+import { getDefaultLocale, getLocales, type NormalizedLocale } from '../lib/i18n';
+import type { HeadConfig } from '../lib/page/head';
+import type { JsonLdNode } from '../lib/page/schema';
+import rawThemeConfig from 'virtual:prosefly/dahlia/config';
+import { isPagefindSearchEnabled } from '../lib/search';
+import type { DahliaThemeConfig } from '../lib/theme';
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  head?: HeadConfig;
+  jsonLd?: JsonLdNode | JsonLdNode[];
+  locale?: NormalizedLocale;
+  currentPath?: string;
+  docsNavMode?: DocsNavDisplayMode;
+  sectionTitle?: string;
+  headings?: Heading[];
+  pagefind?: boolean;
+  subnav: DocsSectionNav[];
+  sidebar: DocsSidebarNav;
+  sidebars?: Record<string, DocsSidebarNav>;
+}
+
+const {
+  title,
+  description,
+  head,
+  jsonLd,
+  locale,
+  currentPath = Astro.url.pathname,
+  docsNavMode = 'subnav',
+  sectionTitle,
+  headings = [],
+  pagefind = true,
+  subnav,
+  sidebar,
+  sidebars = {},
+} = Astro.props;
+const themeConfig = rawThemeConfig as DahliaThemeConfig;
+const currentLocale = locale ?? getDefaultLocale(themeConfig);
+const hasSiteNav = (themeConfig.siteNav?.length ?? 0) > 0;
+const hasSocials = (themeConfig.socials?.length ?? 0) > 0;
+const hasLanguageSelect = getLocales(themeConfig).length > 1;
+const hasDesktopHead = hasSiteNav || hasSocials;
+const pagefindEnabled = isPagefindSearchEnabled(themeConfig);
+const pagefindAttrs = pagefindEnabled
+  ? pagefind
+    ? { 'data-pagefind-body': true }
+    : { 'data-pagefind-ignore': true }
+  : {};
+const pagefindIgnoreAttrs = pagefindEnabled ? { 'data-pagefind-ignore': true } : {};
+const activeSection = subnav.find((section) => section.active) ?? subnav[0];
+---
+
+<BaseLayout title={title} description={description} head={head} jsonLd={jsonLd} locale={currentLocale}>
+  <div class="min-h-screen lg:grid lg:grid-cols-[var(--dahlia-sidebar-width)_minmax(0,1fr)]">
+    <aside class="dahlia-docs-rail dahlia-border-subtle hidden border-e lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col">
+      <div class="dahlia-border-subtle flex h-16 shrink-0 items-center border-b px-5">
+        <SiteBrand fetchPriority="high" markIdPrefix="dahlia-rail-brand" />
+      </div>
+
+      <div class="shrink-0 px-3 pt-3">
+        <SearchDialog variant="rail" />
+      </div>
+
+      {docsNavMode === 'subnav' && activeSection && (
+        <Dropdown
+          class="mx-3 mt-3 shrink-0"
+          contentClass="dahlia-border-muted absolute start-0 end-0 top-[calc(100%+0.5rem)] z-30 max-h-[min(24rem,calc(100vh-10rem))] overflow-y-auto rounded-[min(var(--dahlia-radius-lg),1rem)] border bg-(--dahlia-background) p-1 shadow-lg"
+          triggerClass="dahlia-focus-ring dahlia-border-muted flex min-h-11 w-full cursor-pointer items-center gap-3 rounded-(--dahlia-radius-md) border bg-(--dahlia-surface) px-3 py-2 text-start text-(--dahlia-text-strong) transition-colors hover:border-(--dahlia-accent) hover:bg-(--dahlia-accent-soft)"
+          triggerLabel="Documentation sections"
+        >
+          <Fragment slot="trigger">
+            {activeSection.icon && <Icon aria-hidden="true" class="h-5 w-5 shrink-0 text-(--dahlia-accent)" name={resolveIconName(activeSection.icon)} />}
+            <span class="min-w-0 flex-1 truncate text-sm font-semibold">{activeSection.label}</span>
+            <Icon aria-hidden="true" class="h-4 w-4 shrink-0 text-(--dahlia-text-muted)" name="lucide:chevrons-up-down" />
+          </Fragment>
+
+          <nav aria-label="Documentation sections" class="space-y-0.5">
+            {subnav.map((section) => (
+              <a
+                aria-current={section.active ? 'page' : undefined}
+                class:list={[
+                  'dahlia-focus-ring flex min-h-10 items-center gap-2 rounded-(--dahlia-radius-md) px-3 py-2 text-sm transition-colors',
+                  section.active
+                    ? 'bg-(--dahlia-accent-soft) font-medium text-(--dahlia-accent)'
+                    : 'text-(--dahlia-text-muted) hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong)',
+                ]}
+                data-dahlia-dropdown-close
+                href={section.href}
+              >
+                {section.icon && <Icon aria-hidden="true" class="h-4 w-4" name={resolveIconName(section.icon)} />}
+                <span class="truncate">{section.label}</span>
+              </a>
+            ))}
+          </nav>
+        </Dropdown>
+      )}
+
+      <div class="min-h-0 flex-1 ps-3 pe-0">
+        {(sidebar.links.length > 0 || sidebar.groups.length > 0) && (
+          <Sidebar currentPath={currentPath} maxHeight="100%" sidebar={sidebar} />
+        )}
+      </div>
+
+      <div class="dahlia-border-subtle flex shrink-0 items-center justify-between gap-3 border-t px-4 py-3">
+        {hasLanguageSelect && <LanguageSelect dropup />}
+        <ThemeModeSegmentedControl />
+      </div>
+
+    </aside>
+
+    <div class="min-w-0">
+      <MobileDocsNav
+        currentPath={currentPath}
+        headings={headings}
+        sectionTitle={sectionTitle}
+        sections={subnav}
+        sidebar={sidebar}
+        sidebars={sidebars}
+        displayMode={docsNavMode}
+        title={title}
+      />
+
+      {hasDesktopHead && (
+        <div class="dahlia-border-subtle sticky top-0 z-30 hidden h-16 border-b bg-(--dahlia-background)/95 backdrop-blur lg:block">
+          <div class="mx-auto flex h-full max-w-screen-2xl items-center justify-end gap-4 px-5 sm:px-6 lg:px-10">
+            {hasSiteNav && <HeaderNavbar currentPath={currentPath} />}
+            {hasSiteNav && hasSocials && <div class="dahlia-border-subtle h-5 border-s" />}
+            {hasSocials && <HeaderSocialIcons />}
+          </div>
+        </div>
+      )}
+
+      <main class="pb-16">
+        <div class="mx-auto grid max-w-screen-2xl grid-cols-1 px-5 sm:px-6 lg:px-10 xl:grid-cols-[minmax(0,1fr)_var(--dahlia-toc-width)] xl:gap-x-12">
+          <article class="mx-auto w-full min-w-0 max-w-4xl pt-12 pb-10" {...pagefindAttrs}>
+            <slot />
+          </article>
+
+          <aside class="hidden xl:block" {...pagefindIgnoreAttrs}>
+            <div class:list={[hasDesktopHead ? 'sticky top-(--dahlia-header-height)' : 'sticky top-6', 'pt-8 pb-8']}>
+              <slot name="aside" />
+            </div>
+          </aside>
+        </div>
+      </main>
+
+      <Footer showThemeMode={false} />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .dahlia-docs-rail {
+    background: color-mix(in oklab, var(--dahlia-surface) 34%, var(--dahlia-background));
+  }
+</style>

@@ -1,0 +1,97 @@
+---
+import HeaderNavbar from 'virtual:prosefly/dahlia/components/HeaderNavbar';
+import HeaderSocialIcons from 'virtual:prosefly/dahlia/components/HeaderSocialIcons';
+import LanguageSelect from '../theme/LanguageSelect.astro';
+import SearchDialog from 'virtual:prosefly/dahlia/components/SearchDialog';
+import AssistantTrigger from '../theme/AssistantTrigger.astro';
+import SiteBrand from 'virtual:prosefly/dahlia/components/SiteBrand';
+import Dropdown from '../ui/Dropdown.astro';
+import { Icon } from '@prosefly/astro-components';
+import rawThemeConfig from 'virtual:prosefly/dahlia/config';
+import { isPagefindSearchEnabled } from '../../lib/search';
+import type { DahliaThemeConfig } from '../../lib/theme';
+
+interface Props {
+  assistant?: boolean;
+  currentPath?: string;
+  search?: boolean;
+  showLanguage?: boolean;
+  showSocials?: boolean;
+  surface?: boolean;
+}
+
+const {
+  assistant = true,
+  currentPath,
+  search = true,
+  showLanguage = true,
+  showSocials = true,
+  surface = true,
+} = Astro.props as Props;
+const t = Astro.locals.t;
+const themeConfig = rawThemeConfig as DahliaThemeConfig;
+const searchEnabled = search && themeConfig.search !== false;
+const assistantEnabled = assistant && Boolean(themeConfig.assistant);
+const hasDesktopControls = showSocials || showLanguage;
+const hasMobileControls = showSocials || showLanguage;
+const hasMobileMenu = (themeConfig.siteNav?.length ?? 0) > 0 || hasMobileControls;
+const mobileMenuClass = searchEnabled || assistantEnabled ? undefined : 'ms-auto';
+const pagefindIgnoreAttrs = isPagefindSearchEnabled(themeConfig)
+  ? { 'data-pagefind-ignore': true }
+  : {};
+---
+
+<header
+  class:list={[
+    'relative z-40 sticky top-0 h-(--dahlia-header-height)',
+    surface && 'dahlia-border-subtle border-b bg-(--dahlia-background)/95 backdrop-blur',
+  ]}
+  {...pagefindIgnoreAttrs}
+>
+  <div class="mx-auto flex h-full max-w-screen-2xl items-center gap-2 px-4 sm:gap-4 sm:px-6">
+    <SiteBrand fetchPriority="high" markIdPrefix="dahlia-site-header-brand" />
+
+    <div class="ms-auto hidden min-w-0 items-center gap-4 lg:flex">
+      {searchEnabled ? <SearchDialog /> : assistantEnabled ? <AssistantTrigger /> : null}
+      <HeaderNavbar currentPath={currentPath} />
+
+      {hasDesktopControls && (
+        <div class="flex items-center gap-2">
+          <div class="dahlia-border-subtle h-5 border-s"></div>
+          {showSocials && <HeaderSocialIcons />}
+          {showLanguage && <LanguageSelect />}
+        </div>
+      )}
+    </div>
+
+    <div class="ms-auto flex items-center gap-1 lg:hidden">
+      {searchEnabled ? <SearchDialog /> : assistantEnabled ? <AssistantTrigger /> : null}
+      {showLanguage && <LanguageSelect />}
+    </div>
+
+    {hasMobileMenu && (
+      <Dropdown
+        class:list={[mobileMenuClass, 'lg:hidden']}
+        contentClass="dahlia-border-muted absolute end-0 top-[calc(100%+0.75rem)] z-50 w-72 rounded-[min(var(--dahlia-radius-lg),1rem)] border bg-(--dahlia-background) p-4 shadow-lg shadow-black/5"
+        triggerClass="dahlia-focus-ring flex h-10 w-10 cursor-pointer items-center justify-center rounded-(--dahlia-radius-md) text-(--dahlia-text-muted) transition-colors hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong)"
+      >
+        <Fragment slot="trigger">
+          <Icon aria-hidden="true" class="h-5 w-5" name="lucide:ellipsis-vertical" />
+          <span class="sr-only">{t('menuButton.label')}</span>
+        </Fragment>
+
+        <nav aria-label={t('navbar.primary')} class="space-y-4">
+          <HeaderNavbar currentPath={currentPath} mobile />
+
+          {hasMobileControls && (
+            <div class="dahlia-border-subtle flex items-center justify-between gap-3 border-t pt-4">
+              <div class="flex items-center gap-1">
+                {showSocials && <HeaderSocialIcons mobile />}
+              </div>
+            </div>
+          )}
+        </nav>
+      </Dropdown>
+    )}
+  </div>
+</header>

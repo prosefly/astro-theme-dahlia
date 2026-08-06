@@ -1,0 +1,37 @@
+---
+import { Icon } from '@prosefly/astro-components';
+import rawThemeConfig from 'virtual:prosefly/dahlia/config';
+import { resolveIconName } from '../../lib/icons';
+import { translateLabel } from '../../lib/i18n';
+import type { DahliaThemeConfig } from '../../lib/theme';
+
+interface Props {
+  mobile?: boolean;
+}
+
+const { mobile = false } = Astro.props;
+const themeConfig = rawThemeConfig as DahliaThemeConfig;
+const socials = themeConfig.socials ?? [];
+const currentLocale = Astro.locals.t.locale();
+
+function getActionLabel(label: string, icon?: string): string {
+  return icon ? `${label} (${icon})` : label;
+}
+---
+
+{socials.map((social) => {
+  const label = translateLabel(social.label, social.translations, currentLocale.key);
+
+  return (
+    <a
+      aria-label={mobile ? label : getActionLabel(label, social.icon)}
+      class="dahlia-focus-ring inline-flex h-9 w-9 items-center justify-center rounded-(--dahlia-radius-md) text-(--dahlia-text-muted) transition-colors hover:text-(--dahlia-text-strong)"
+      data-dahlia-dropdown-close={mobile ? true : undefined}
+      href={social.href}
+      rel={social.external ? 'noreferrer' : undefined}
+      target={social.external ? '_blank' : undefined}
+    >
+      <Icon name={resolveIconName(social.icon)} />
+    </a>
+  );
+})}

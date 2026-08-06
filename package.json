@@ -1,0 +1,32 @@
+{
+  "name": "astro-theme-dahlia",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "BSD-3-Clause",
+  "scripts": {
+    "sync:schema": "node tools/sync-schema.mjs",
+    "predev": "node tools/sync-schema.mjs",
+    "dev": "astro dev",
+    "prebuild": "node tools/sync-schema.mjs",
+    "build": "astro build",
+    "preview": "astro preview",
+    "precheck": "node tools/sync-schema.mjs",
+    "check": "astro check",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@astrojs/check": "latest",
+    "@astrojs/mdx": "latest",
+    "@prosefly/astro-theme-dahlia": "workspace:*",
+    "@tailwindcss/vite": "latest",
+    "@types/node": "latest",
+    "astro": "^7.1.6",
+    "tailwindcss": "latest",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@prosefly/astro-components": "^0.5.0",
+    "vitest": "^4.1.10"
+  }
+}

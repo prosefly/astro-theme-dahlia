@@ -1,0 +1,56 @@
+.dahlia-prose :where(blockquote) {
+  border-inline-start: 0.25rem solid var(--dahlia-prose-border);
+  color: var(--dahlia-text-muted);
+  padding-inline-start: 1rem;
+}
+
+.dahlia-prose :where(blockquote p) {
+  color: inherit;
+}
+
+.dahlia-prose :where(hr) {
+  border: 0;
+  border-block-start: 1px solid var(--dahlia-prose-border);
+  margin-block-start: 3em;
+}
+
+.dahlia-prose :where(table) {
+  border-collapse: collapse;
+  display: table;
+  font-size: 0.875em;
+  line-height: 1.7142857;
+  max-width: 100%;
+  table-layout: auto;
+  width: 100%;
+}
+
+.dahlia-prose :where(thead) {
+  border-block-end: 2px solid var(--dahlia-prose-border);
+}
+
+.dahlia-prose :where(tr) {
+  border-block-end: 1px solid var(--dahlia-prose-border);
+}
+
+.dahlia-prose :where(th, td) {
+  padding: 0.5714286em 0.5714286em;
+  text-align: start;
+  vertical-align: top;
+}
+
+.dahlia-prose :where(th:first-child, td:first-child) {
+  padding-inline-start: 0;
+}
+
+.dahlia-prose :where(th:last-child, td:last-child) {
+  padding-inline-end: 0;
+}
+
+.dahlia-prose :where(th) {
+  color: var(--dahlia-text-strong);
+  font-weight: 600;
+}
+
+.dahlia-prose :where(td) {
+  color: var(--dahlia-text-muted);
+}

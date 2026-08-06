@@ -1,0 +1,90 @@
+---
+import 'virtual:prosefly/dahlia/styles.css';
+import { getThemeAttributes } from '../lib/appearance';
+import { createHead, type HeadConfig } from '../lib/page/head';
+import { stringifyJsonLd, type JsonLdNode } from '../lib/page/schema';
+import rawThemeConfig from 'virtual:prosefly/dahlia/config';
+import Assistant from 'virtual:prosefly/dahlia/components/Assistant';
+import { getDefaultLocale, type NormalizedLocale } from '../lib/i18n';
+import type { DahliaThemeConfig } from '../lib/theme';
+import packageJson from '../../package.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+  head?: HeadConfig;
+  jsonLd?: JsonLdNode | JsonLdNode[];
+  locale?: NormalizedLocale;
+}
+
+const themeConfig = rawThemeConfig as DahliaThemeConfig;
+const { title, description = themeConfig.description, head, jsonLd, locale = getDefaultLocale(themeConfig) } = Astro.props;
+const themeAttrs = getThemeAttributes();
+const pageTitle = title
+  ? `${title} - ${themeConfig.name}`
+  : themeConfig.name;
+const generator = `Dahlia (${packageJson.version}) by Prosefly`;
+const jsonLdContent = jsonLd ? stringifyJsonLd(jsonLd) : undefined;
+const faviconLinks = normalizeFaviconLinks(themeConfig.favicon);
+const headEntries = createHead(
+  [
+    { tag: 'meta', attrs: { charset: 'utf-8' } },
+    { tag: 'meta', attrs: { name: 'viewport', content: 'width=device-width, initial-scale=1' } },
+    { tag: 'title', content: pageTitle },
+    ...(description ? [{ tag: 'meta', attrs: { name: 'description', content: description } }] : []),
+    { tag: 'meta', attrs: { name: 'generator', content: generator } },
+    ...faviconLinks.map((link) => ({ tag: 'link', attrs: link })),
+    ...(jsonLdContent
+      ? [{ tag: 'script', attrs: { type: 'application/ld+json' }, content: jsonLdContent }]
+      : []),
+  ],
+  head,
+);
+const themeInitScript = `
+(() => {
+  try {
+    const savedTheme = window.localStorage.getItem('dahlia-theme');
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      document.documentElement.dataset.theme = savedTheme;
+    }
+  } catch {}
+})();
+`;
+
+function normalizeFaviconLinks(favicon: DahliaThemeConfig['favicon']) {
+  if (!favicon) {
+    return [];
+  }
+
+  const links = Array.isArray(favicon) ? favicon : [favicon];
+
+  return links.map((link) => {
+    if (typeof link === 'string') {
+      return {
+        href: link,
+        rel: 'icon',
+      };
+    }
+
+    return {
+      rel: link.rel ?? 'icon',
+      href: link.href,
+      type: link.type,
+      sizes: link.sizes,
+      media: link.media,
+      color: link.color,
+    };
+  });
+}
+---
+
+<html dir={locale.dir} lang={locale.lang} {...themeAttrs}>
+  <head>
+    <script is:inline set:html={themeInitScript}></script>
+    {headEntries.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}
+  </head>
+  <body class="min-h-screen bg-(--dahlia-background) text-(--dahlia-text)">
+    <slot />
+    <Assistant />
+  </body>
+</html>

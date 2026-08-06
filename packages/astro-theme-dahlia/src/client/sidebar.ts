@@ -1,0 +1,36 @@
+function initDahliaSidebarScroll(): void {
+  const containers = Array.from(document.querySelectorAll('[data-dahlia-sidebar-scroll]'));
+
+  for (const container of containers) {
+    if (!(container instanceof HTMLElement) || container.dataset.dahliaSidebarReady) {
+      continue;
+    }
+
+    container.dataset.dahliaSidebarReady = 'true';
+
+    const scrollArea = container.querySelector<HTMLElement>('[data-dahlia-sidebar-scroll-area]');
+    const topFade = container.querySelector<HTMLElement>('[data-dahlia-sidebar-fade-top]');
+    const bottomFade = container.querySelector<HTMLElement>('[data-dahlia-sidebar-fade-bottom]');
+
+    if (!scrollArea || !topFade || !bottomFade) {
+      continue;
+    }
+
+    const updateFades = () => {
+      const overflow = scrollArea.scrollHeight > scrollArea.clientHeight + 1;
+      const atTop = scrollArea.scrollTop <= 1;
+      const atBottom =
+        scrollArea.scrollTop + scrollArea.clientHeight >= scrollArea.scrollHeight - 1;
+
+      topFade.toggleAttribute('data-visible', overflow && !atTop);
+      bottomFade.toggleAttribute('data-visible', overflow && !atBottom);
+    };
+
+    scrollArea.addEventListener('scroll', updateFades, { passive: true });
+    window.addEventListener('resize', updateFades);
+    updateFades();
+  }
+}
+
+initDahliaSidebarScroll();
+document.addEventListener('astro:page-load', initDahliaSidebarScroll);

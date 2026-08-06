@@ -1,0 +1,141 @@
+---
+import { accentScales } from '../../lib/colors';
+
+const grayScales = ['slate', 'zinc', 'neutral', 'stone'] as const;
+const radiusScales = ['none', 'small', 'medium', 'large', 'full'] as const;
+const t = Astro.locals.t;
+---
+
+<div class="space-y-4" data-dahlia-appearance-palette>
+  <div>
+    <div class="mb-2 flex items-center justify-between gap-3">
+      <p class="text-xs font-medium text-(--dahlia-text-strong)">{t('appearance.accent')}</p>
+      <button
+        class="dahlia-focus-ring rounded-(--dahlia-radius-sm) px-1.5 py-0.5 text-xs font-medium text-(--dahlia-text-muted) transition-colors hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong)"
+        data-appearance-reset
+        type="button"
+      >
+        {t('appearance.reset')}
+      </button>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      {accentScales.map((accent) => (
+        <button
+          aria-label={`${accent} accent`}
+          class="dahlia-appearance-swatch dahlia-focus-ring flex h-6 w-6 items-center justify-center rounded-(--dahlia-radius-md) transition-transform hover:scale-105"
+          data-appearance-key="accent"
+          data-appearance-value={accent}
+          style={`--dahlia-appearance-swatch: var(--dahlia-color-${accent}-600)`}
+          title={`${accent} accent`}
+          type="button"
+        >
+          <span class="sr-only">{accent}</span>
+        </button>
+      ))}
+      <label
+        class="dahlia-appearance-custom-swatch dahlia-focus-ring flex h-6 w-6 cursor-pointer items-center justify-center rounded-(--dahlia-radius-md)"
+        title={t('appearance.customAccent')}
+      >
+        <input
+          aria-label={t('appearance.customAccent')}
+          class="sr-only"
+          data-appearance-custom-accent
+          type="color"
+          value="#4f46e5"
+        />
+        <span class="sr-only">{t('appearance.customAccent')}</span>
+      </label>
+    </div>
+  </div>
+
+  <div>
+    <p class="mb-2 text-xs font-medium text-(--dahlia-text-strong)">{t('appearance.gray')}</p>
+    <div class="grid grid-cols-4 gap-1.5">
+      {grayScales.map((gray) => (
+        <button
+          class="dahlia-focus-ring inline-flex h-7 items-center justify-center rounded-(--dahlia-radius-md) px-2 text-xs font-medium text-(--dahlia-text-muted) ring-1 ring-(--dahlia-border-subtle) transition-colors hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong) data-active:bg-(--dahlia-surface) data-active:text-(--dahlia-text-strong)"
+          data-appearance-key="gray"
+          data-appearance-value={gray}
+          type="button"
+        >
+          {gray}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div>
+    <p class="mb-2 text-xs font-medium text-(--dahlia-text-strong)">{t('appearance.radius')}</p>
+    <div class="grid grid-cols-5 gap-1.5">
+      {radiusScales.map((radius) => (
+        <button
+          class="dahlia-focus-ring inline-flex h-7 items-center justify-center px-2 text-xs font-medium text-(--dahlia-text-muted) ring-1 ring-(--dahlia-border-subtle) transition-colors hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong) data-active:bg-(--dahlia-surface) data-active:text-(--dahlia-text-strong)"
+          data-appearance-key="radius"
+          data-appearance-value={radius}
+          style={`border-radius: ${
+            radius === 'none'
+              ? '0'
+              : radius === 'small'
+                ? '0.25rem'
+                : radius === 'medium'
+                  ? '0.5rem'
+                  : radius === 'large'
+                    ? '0.75rem'
+                    : '999px'
+          }`}
+          type="button"
+        >
+          {radius}
+        </button>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  import '../../client/appearance-palette';
+</script>
+<style>
+  .dahlia-appearance-swatch {
+    background: var(--dahlia-appearance-swatch);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--dahlia-background) 22%, transparent);
+    outline: 0 solid transparent;
+    outline-offset: 2px;
+  }
+
+  .dahlia-appearance-swatch[data-active] {
+    outline-color: var(--dahlia-appearance-swatch);
+    outline-width: 2px;
+  }
+
+  .dahlia-appearance-custom-swatch {
+    background:
+      linear-gradient(var(--dahlia-background), var(--dahlia-background)) padding-box,
+      conic-gradient(
+        from 90deg,
+        var(--dahlia-color-red-600),
+        var(--dahlia-color-yellow-600),
+        var(--dahlia-color-green-600),
+        var(--dahlia-color-cyan-600),
+        var(--dahlia-color-blue-600),
+        var(--dahlia-color-purple-600),
+        var(--dahlia-color-red-600)
+      ) border-box;
+    border: 2px solid transparent;
+    outline: 0 solid transparent;
+    outline-offset: 2px;
+  }
+
+  .dahlia-appearance-custom-swatch::before {
+    background: var(--dahlia-accent);
+    border-radius: calc(var(--dahlia-radius-md) - 2px);
+    content: "";
+    height: 0.875rem;
+    width: 0.875rem;
+  }
+
+  .dahlia-appearance-custom-swatch:has(input[data-active]) {
+    outline-color: var(--dahlia-accent);
+    outline-width: 2px;
+  }
+</style>

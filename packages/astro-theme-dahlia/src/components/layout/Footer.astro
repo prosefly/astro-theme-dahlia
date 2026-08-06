@@ -1,0 +1,43 @@
+---
+import rawThemeConfig from 'virtual:prosefly/dahlia/config';
+import FooterLinks from 'virtual:prosefly/dahlia/components/FooterLinks';
+import SiteBrand from 'virtual:prosefly/dahlia/components/SiteBrand';
+import Credits from '../theme/Credits.astro';
+import LanguageSelect from '../theme/LanguageSelect.astro';
+import ThemeModeSegmentedControl from '../theme/ThemeModeSegmentedControl.astro';
+import { isPagefindSearchEnabled } from '../../lib/search';
+import type { DahliaThemeConfig } from '../../lib/theme';
+
+const themeConfig = rawThemeConfig as DahliaThemeConfig;
+const {
+  showLanguage = false,
+  showThemeMode = true,
+} = Astro.props as {
+  showLanguage?: boolean;
+  showThemeMode?: boolean;
+};
+const pagefindIgnoreAttrs = isPagefindSearchEnabled(themeConfig)
+  ? { 'data-pagefind-ignore': true }
+  : {};
+---
+
+<footer class="dahlia-border-subtle border-t bg-(--dahlia-background)" {...pagefindIgnoreAttrs}>
+  <div class="mx-auto flex flex-col justify-between lg:flex-row max-w-screen-2xl gap-10 px-4 py-10 sm:px-6">
+    <div class="space-y-4">
+      <SiteBrand class="inline-flex" markIdPrefix="dahlia-footer-brand" textClass="text-sm font-semibold sm:text-base" />
+      {themeConfig.footer.copyright && (
+        <p class="max-w-sm text-sm leading-6 text-(--dahlia-text-muted)">
+          {themeConfig.footer.copyright}
+        </p>
+      )}
+      {themeConfig.credits && <Credits />}
+      {(showLanguage || showThemeMode) && (
+        <div class="flex items-center gap-3">
+          {showThemeMode && <ThemeModeSegmentedControl />}
+          {showLanguage && <LanguageSelect dropup showOnNonDocs />}
+        </div>
+      )}
+    </div>
+    <FooterLinks />
+  </div>
+</footer>

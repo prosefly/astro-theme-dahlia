@@ -1,0 +1,41 @@
+---
+import {
+  BaseLayout,
+  SiteFooter,
+  SiteHeader,
+} from '@prosefly/astro-theme-dahlia/layouts';
+import HomeFeatureRow from '../components/home/HomeFeatureRow.astro';
+import HomeFinalCta from '../components/home/HomeFinalCta.astro';
+import HomeHero from '../components/home/HomeHero.astro';
+
+const title = 'Astro Theme Dahlia';
+const description = 'Build Astro documentation with generated routes, responsive navigation, local search, MDX components, and configurable design tokens.';
+const siteUrl = 'https://astro-theme-dahlia.prosefly.dev';
+const ogImage = `${siteUrl}/images/og.png`;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  head={[
+    { tag: 'meta', attrs: { property: 'og:type', content: 'website' } },
+    { tag: 'meta', attrs: { property: 'og:url', content: siteUrl } },
+    { tag: 'meta', attrs: { property: 'og:title', content: title } },
+    { tag: 'meta', attrs: { property: 'og:description', content: description } },
+    { tag: 'meta', attrs: { property: 'og:image', content: ogImage } },
+    { tag: 'meta', attrs: { property: 'og:image:width', content: '1200' } },
+    { tag: 'meta', attrs: { property: 'og:image:height', content: '630' } },
+    { tag: 'meta', attrs: { name: 'twitter:card', content: 'summary_large_image' } },
+    { tag: 'meta', attrs: { name: 'twitter:title', content: title } },
+    { tag: 'meta', attrs: { name: 'twitter:description', content: description } },
+    { tag: 'meta', attrs: { name: 'twitter:image', content: ogImage } },
+  ]}
+>
+  <SiteHeader currentPath="/" surface />
+  <main>
+    <HomeHero />
+    <HomeFeatureRow />
+    <HomeFinalCta />
+  </main>
+  <SiteFooter />
+</BaseLayout>

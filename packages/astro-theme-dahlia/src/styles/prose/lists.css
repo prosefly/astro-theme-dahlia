@@ -1,0 +1,78 @@
+.dahlia-prose :where(ul, ol) {
+  padding-inline-start: 1.625em;
+}
+
+.dahlia-prose :where(ul) {
+  list-style-type: disc;
+}
+
+.dahlia-prose :where(ol) {
+  list-style-type: decimal;
+}
+
+.dahlia-prose :where(li) {
+  padding-inline-start: 0.375em;
+}
+
+.dahlia-prose :where(li)::marker {
+  color: var(--dahlia-prose-marker);
+  font-weight: 400;
+}
+
+.dahlia-prose :where(li + li, li > p + p) {
+  margin-block-start: 0.5em;
+}
+
+.dahlia-prose :where(li > ul, li > ol) {
+  margin-block-start: 0.75em;
+}
+
+.dahlia-prose :where(ul.contains-task-list) {
+  list-style: none;
+  padding-inline-start: 0;
+}
+
+.dahlia-prose :where(li.task-list-item) {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.625em;
+  padding-inline-start: 0;
+}
+
+.dahlia-prose :where(li.task-list-item + li.task-list-item) {
+  margin-block-start: 0.5em;
+}
+
+.dahlia-prose :where(li.task-list-item > input[type="checkbox"]) {
+  appearance: none;
+  background: var(--dahlia-background);
+  border: 1px solid var(--dahlia-border-hover);
+  border-radius: var(--dahlia-radius-sm);
+  color: var(--dahlia-accent);
+  display: inline-grid;
+  flex: 0 0 auto;
+  height: 1em;
+  margin: 0.375em 0 0;
+  place-content: center;
+  width: 1em;
+}
+
+.dahlia-prose :where(li.task-list-item > input[type="checkbox"])::before {
+  background: currentColor;
+  clip-path: polygon(14% 44%, 0 59%, 39% 100%, 100% 19%, 84% 6%, 37% 70%);
+  content: "";
+  height: 0.625em;
+  transform: scale(0);
+  transform-origin: center;
+  transition: transform 120ms ease;
+  width: 0.625em;
+}
+
+.dahlia-prose :where(li.task-list-item > input[type="checkbox"]:checked) {
+  background: var(--dahlia-accent-soft);
+  border-color: color-mix(in oklab, var(--dahlia-accent) 52%, transparent);
+}
+
+.dahlia-prose :where(li.task-list-item > input[type="checkbox"]:checked)::before {
+  transform: scale(1);
+}

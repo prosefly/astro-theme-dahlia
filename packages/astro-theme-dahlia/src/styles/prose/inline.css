@@ -1,0 +1,179 @@
+.dahlia-prose :where(a) {
+  color: var(--dahlia-accent);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--dahlia-accent) 38%, transparent);
+  text-underline-offset: 0.18em;
+}
+
+.dahlia-prose :where(a:hover) {
+  text-decoration-color: var(--dahlia-accent);
+}
+
+.dahlia-prose :where(a:focus-visible) {
+  border-radius: var(--dahlia-radius-sm);
+  outline: 2px solid var(--dahlia-accent);
+  outline-offset: 0.15em;
+}
+
+.dahlia-prose :where(h1, h2, h3, h4, h5, h6) :where(a) {
+  color: inherit;
+  font-weight: inherit;
+  text-decoration-color: color-mix(in oklab, currentColor 28%, transparent);
+}
+
+.dahlia-prose :where(h1, h2, h3, h4, h5, h6) :where(a:hover) {
+  text-decoration-color: currentColor;
+}
+
+.dahlia-prose :where(h2, h3, h4) > :where(a.dahlia-heading-anchor) {
+  position: absolute;
+  inset-block-start: 0.2em;
+  inset-inline-start: -1.45em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 0.95em;
+  block-size: 0.95em;
+  border: 1px solid var(--dahlia-border-subtle);
+  border-radius: var(--dahlia-radius-sm);
+  color: var(--dahlia-text-subtle);
+  opacity: 0;
+  text-decoration: none;
+  transition:
+    border-color 150ms ease,
+    color 150ms ease,
+    opacity 150ms ease;
+}
+
+.dahlia-prose :where(h4) > :where(a.dahlia-heading-anchor) {
+  inset-block-start: 0.14em;
+}
+
+.dahlia-prose :where(h2, h3, h4):hover > :where(a.dahlia-heading-anchor),
+.dahlia-prose :where(h2, h3, h4) > :where(a.dahlia-heading-anchor:focus-visible) {
+  color: var(--dahlia-text);
+  opacity: 1;
+}
+
+.dahlia-prose :where(a.dahlia-heading-anchor:hover) {
+  border-color: var(--dahlia-border-hover);
+  color: var(--dahlia-accent);
+  text-decoration: none;
+}
+
+.dahlia-prose :where(a.dahlia-heading-anchor) :where(svg) {
+  inline-size: 0.58em;
+  block-size: 0.58em;
+}
+
+@media (max-width: 1023px) {
+  .dahlia-prose :where(h2, h3, h4) > :where(a.dahlia-heading-anchor) {
+    display: none;
+  }
+}
+
+.dahlia-prose :where(strong) {
+  color: var(--dahlia-text-strong);
+  font-weight: 700;
+}
+
+.dahlia-prose :where(mark) {
+  background: color-mix(
+    in oklab,
+    var(--dahlia-color-yellow-400, oklch(0.852 0.199 91.936)) 34%,
+    transparent
+  );
+  border-radius: var(--dahlia-radius-sm);
+  color: var(--dahlia-text-strong);
+  padding: 0.075em 0.25em;
+}
+
+.dahlia-prose :where(kbd) {
+  background: var(--dahlia-surface);
+  border: 1px solid var(--dahlia-border-muted);
+  border-block-end-color: var(--dahlia-border-hover);
+  border-radius: var(--dahlia-radius-sm);
+  box-shadow: inset 0 -1px 0 var(--dahlia-border-subtle);
+  color: var(--dahlia-text-strong);
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--dahlia-prose-font-mono);
+  font-size: 0.8125em;
+  font-weight: 600;
+  line-height: 1.2;
+  min-height: 1.55em;
+  padding: 0.1em 0.45em;
+  vertical-align: 0.05em;
+}
+
+.dahlia-prose :where(code, kbd, pre, samp) {
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+}
+
+.dahlia-prose :where(abbr[title]) {
+  cursor: help;
+  text-decoration: underline dotted var(--dahlia-border-hover);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+.dahlia-prose :where(small) {
+  color: var(--dahlia-text-muted);
+  font-size: 0.875em;
+}
+
+.dahlia-prose :where(del, s) {
+  color: var(--dahlia-text-muted);
+  text-decoration-color: var(--dahlia-border-hover);
+}
+
+.dahlia-prose :where(ins) {
+  background: var(--dahlia-accent-soft);
+  border-radius: var(--dahlia-radius-sm);
+  color: var(--dahlia-text-strong);
+  padding: 0.075em 0.2em;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--dahlia-accent) 48%, transparent);
+  text-underline-offset: 0.18em;
+}
+
+.dahlia-prose :where(sub, sup:not(:has(a[data-footnote-ref]))) {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.dahlia-prose :where(sub) {
+  inset-block-end: -0.25em;
+}
+
+.dahlia-prose :where(sup:not(:has(a[data-footnote-ref]))) {
+  inset-block-start: -0.5em;
+}
+
+.dahlia-prose :where(samp, var) {
+  font-family: var(--dahlia-prose-font-mono);
+  font-size: 0.875em;
+}
+
+.dahlia-prose :where(samp) {
+  color: var(--dahlia-text-strong);
+}
+
+.dahlia-prose :where(var) {
+  color: var(--dahlia-accent);
+  font-style: italic;
+}
+
+.dahlia-prose :where(q) {
+  color: var(--dahlia-text-strong);
+}
+
+.dahlia-prose :where(cite) {
+  color: var(--dahlia-text-muted);
+  font-style: italic;
+}
