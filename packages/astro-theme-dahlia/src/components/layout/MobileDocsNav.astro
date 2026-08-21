@@ -35,11 +35,9 @@ const {
   currentPath,
   displayMode = 'subnav',
   headings = [],
-  sectionTitle,
   sections,
   sidebar,
   sidebars = {},
-  title,
 } = Astro.props;
 const t = Astro.locals.t;
 const themeConfig = rawThemeConfig as DahliaThemeConfig;
@@ -67,67 +65,99 @@ function getHeadingIndent(depth: number): string {
 }
 ---
 
-<div class="lg:hidden">
-  <div class="dahlia-border-subtle flex h-(--dahlia-subnav-height) items-center gap-3 border-t px-2 sm:px-4">
-    <button
-      aria-controls="dahlia-mobile-sidebar"
-      aria-expanded="false"
-      aria-label={t('mobileDocs.openMenu')}
-      class="dahlia-focus-ring flex h-9 min-w-0 flex-1 items-center gap-3 rounded-(--dahlia-radius-md) text-start text-(--dahlia-text-muted) transition-colors hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong)"
-      data-mobile-sidebar-open
-      type="button"
-    >
-      <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center">
-        <Icon aria-hidden="true" class="h-5 w-5" name="lucide:menu" />
-      </span>
-      <span class="flex min-w-0 flex-1 items-center gap-2 text-sm leading-5">
-        {sectionTitle ? (
-          <>
-            <span class="truncate font-medium text-(--dahlia-text-strong)">{sectionTitle}</span>
-            <span aria-hidden="true" class="shrink-0 text-(--dahlia-text-muted)">›</span>
-            <span class="truncate text-(--dahlia-text-muted)">{title}</span>
-          </>
-        ) : (
-          <span class="truncate font-medium text-(--dahlia-text-strong)">{title}</span>
-        )}
-      </span>
-    </button>
+<div class="sticky top-0 z-40 lg:hidden">
+  <header class="dahlia-border-subtle border-b bg-(--dahlia-background)/95 backdrop-blur">
+    <div class="flex h-(--dahlia-header-height) items-center gap-2 px-4">
+      <SiteBrand fetchPriority="high" markIdPrefix="dahlia-mobile-header-brand" textClass="truncate text-sm font-semibold" />
 
-    {visibleHeadings.length > 0 && (
-      <Dropdown
-        class="shrink-0"
-        contentClass="dahlia-border-subtle absolute end-0 top-11 z-50 max-h-[min(22rem,calc(100vh-var(--dahlia-docs-chrome-height)-1rem))] w-64 overflow-y-auto rounded-[min(var(--dahlia-radius-lg),1rem)] border bg-(--dahlia-background) p-3 shadow-xl"
-        triggerClass="dahlia-focus-ring flex h-9 cursor-pointer items-center rounded-(--dahlia-radius-md) px-2.5 text-sm font-medium text-(--dahlia-text-muted) transition-colors hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong)"
-        triggerLabel={t('tableOfContents.onThisPage')}
-      >
-        <Fragment slot="trigger">
-          {t('tableOfContents.onThisPage')}
-        </Fragment>
+      <div class="ms-auto flex items-center gap-1">
+        <SearchDialog content={false} />
 
-        <nav aria-label={t('tableOfContents.onThisPage')}>
-          <ul class="dahlia-border-subtle dahlia-toc-list relative space-y-0.5 border-s" data-toc-list>
-            <li aria-hidden="true" class="dahlia-toc-indicator"></li>
-            {visibleHeadings.map((heading) => (
-              <li>
-                <a
+        {(hasSiteNav || hasSocials) && (
+          <Dropdown
+            contentClass="dahlia-border-subtle absolute end-0 top-[calc(100%+0.5rem)] z-50 w-[min(18rem,calc(100vw-2rem))] rounded-[min(var(--dahlia-radius-lg),1rem)] border bg-(--dahlia-background) p-2 shadow-xl shadow-black/10"
+            triggerClass="dahlia-focus-ring inline-flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-(--dahlia-radius-md) text-(--dahlia-text-muted) transition-colors hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong)"
+            triggerLabel={t('menuButton.label')}
+          >
+            <Fragment slot="trigger">
+              <Icon aria-hidden="true" class="h-5 w-5" name="lucide:ellipsis-vertical" />
+            </Fragment>
+
+            <div class="space-y-3">
+              {hasSiteNav && <HeaderNavbar currentPath={currentPath} mobile />}
+
+              {hasSocials && (
+                <div
                   class:list={[
-                    'dahlia-focus-ring dahlia-toc-link block py-1.5 pe-2 text-sm leading-5 transition-colors',
-                    getHeadingIndent(heading.depth),
-                    'text-(--dahlia-text-muted) hover:text-(--dahlia-text-strong)',
+                    hasSiteNav && 'dahlia-border-subtle border-t pt-3',
+                    'flex items-center gap-1 px-1',
                   ]}
-                  data-dropdown-close
-                  data-toc-link={heading.slug}
-                  href={`#${heading.slug}`}
                 >
-                  {heading.text}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </Dropdown>
-    )}
-  </div>
+                  <HeaderSocialIcons mobile />
+                </div>
+              )}
+            </div>
+          </Dropdown>
+        )}
+      </div>
+    </div>
+
+    <div class="dahlia-border-subtle flex h-(--dahlia-mobile-context-height) items-center justify-between border-t px-4">
+      <button
+        aria-controls="dahlia-mobile-sidebar"
+        aria-expanded="false"
+        aria-label={t('mobileDocs.openMenu')}
+        class="dahlia-focus-ring -ms-2 inline-flex h-9 items-center gap-2 rounded-(--dahlia-radius-md) px-2 text-sm font-medium text-(--dahlia-text) transition-colors hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong)"
+        data-mobile-sidebar-open
+        type="button"
+      >
+        <Icon aria-hidden="true" class="h-4 w-4" name="lucide:menu" />
+        <span>{t('menuButton.label')}</span>
+      </button>
+
+      {visibleHeadings.length > 0 && (
+        <Dropdown
+          contentClass="dahlia-border-subtle absolute end-0 top-[calc(100%+0.5rem)] z-50 w-[min(20rem,calc(100vw-2rem))] max-h-[min(22rem,calc(100dvh-var(--dahlia-mobile-docs-chrome-height)-1rem))] overflow-y-auto rounded-[min(var(--dahlia-radius-lg),1rem)] border bg-(--dahlia-background) p-3 shadow-xl shadow-black/10"
+          triggerClass="dahlia-focus-ring -me-2 inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-(--dahlia-radius-md) px-2 text-sm font-medium text-(--dahlia-text) transition-colors hover:bg-(--dahlia-surface) hover:text-(--dahlia-text-strong)"
+          triggerLabel={t('tableOfContents.onThisPage')}
+        >
+          <Fragment slot="trigger">
+            <span>{t('tableOfContents.onThisPage')}</span>
+            <Icon
+              aria-hidden="true"
+              class="h-4 w-4 text-(--dahlia-text-muted) transition-transform group-open/dropdown:rotate-90"
+              name="lucide:chevron-right"
+            />
+          </Fragment>
+
+          <nav aria-label={t('tableOfContents.onThisPage')}>
+            <p class="mb-2 px-3 text-xs font-semibold text-(--dahlia-text-strong)">
+              {t('tableOfContents.onThisPage')}
+            </p>
+            <ul class="dahlia-border-subtle dahlia-toc-list relative space-y-0.5 border-s" data-toc-list>
+              <li aria-hidden="true" class="dahlia-toc-indicator"></li>
+              {visibleHeadings.map((heading) => (
+                <li>
+                  <a
+                    class:list={[
+                      'dahlia-focus-ring dahlia-toc-link block py-1.5 pe-2 text-sm leading-5 transition-colors',
+                      getHeadingIndent(heading.depth),
+                      'text-(--dahlia-text-muted) hover:text-(--dahlia-text-strong)',
+                    ]}
+                    data-dropdown-close
+                    data-toc-link={heading.slug}
+                    href={`#${heading.slug}`}
+                  >
+                    {heading.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </Dropdown>
+      )}
+    </div>
+  </header>
 
   <div
     class="dahlia-mobile-sidebar fixed h-screen inset-0 z-50 lg:hidden"
@@ -160,26 +190,6 @@ function getHeadingIndent(depth: number): string {
             <Icon aria-hidden="true" class="h-5 w-5" name="lucide:x" />
           </button>
         </div>
-      </div>
-
-      {(hasSiteNav || hasSocials) && (
-        <div class="dahlia-border-subtle shrink-0 border-b px-4 py-3">
-          {hasSiteNav && <HeaderNavbar currentPath={currentPath} mobile />}
-          {hasSocials && (
-            <div
-              class:list={[
-                hasSiteNav && 'dahlia-border-subtle mt-3 border-t pt-3',
-                'flex items-center gap-2',
-              ]}
-            >
-              {hasSocials && <HeaderSocialIcons mobile />}
-            </div>
-          )}
-        </div>
-      )}
-
-      <div class="shrink-0 px-4 pt-4">
-        <SearchDialog variant="rail" />
       </div>
 
       {displayMode === 'subnav' && <div class="shrink-0 p-4">

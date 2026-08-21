@@ -10,6 +10,8 @@
 
   --dahlia-header-height: 4rem;
   --dahlia-subnav-height: 3rem;
+  --dahlia-mobile-context-height: 3rem;
+  --dahlia-mobile-docs-chrome-height: calc(var(--dahlia-header-height) + var(--dahlia-mobile-context-height));
   --dahlia-docs-chrome-height: 0px;
   --dahlia-sidebar-width: 17rem;
   --dahlia-toc-width: 14rem;
@@ -26,6 +28,12 @@
   --pf-radius-lg: var(--dahlia-radius-lg);
   --pf-radius-full: var(--dahlia-radius-full);
   --pf-badge-radius: var(--dahlia-radius-md);
+}
+
+@media (width < 64rem) {
+  :root {
+    --dahlia-docs-chrome-height: var(--dahlia-mobile-docs-chrome-height);
+  }
 }
 
 [data-radius="none"] {

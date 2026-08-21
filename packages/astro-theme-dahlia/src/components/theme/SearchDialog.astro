@@ -10,24 +10,28 @@ const searchEnabled = themeConfig.search !== false;
 const assistantEnabled = Boolean(themeConfig.assistant);
 
 interface Props {
+  content?: boolean;
+  trigger?: boolean;
   variant?: 'default' | 'rail';
 }
 
-const { variant = 'default' } = Astro.props;
+const { content = true, trigger = true, variant = 'default' } = Astro.props;
 ---
 
 {(searchEnabled || assistantEnabled) && (
   <>
-    <div
-      class:list={[
-        variant === 'rail'
-          ? 'flex w-full min-w-0 items-center gap-1'
-          : 'ms-auto flex min-w-0 items-center gap-1 lg:ms-0',
-      ]}
-    >
-      {searchEnabled && <SearchDialogTrigger hasAssistant={assistantEnabled} variant={variant} />}
-      {assistantEnabled && variant === 'default' && <AssistantTrigger />}
-    </div>
-    {searchEnabled && <SearchDialogContent />}
+    {trigger && (
+      <div
+        class:list={[
+          variant === 'rail'
+            ? 'flex w-full min-w-0 items-center gap-1'
+            : 'ms-auto flex min-w-0 items-center gap-1 lg:ms-0',
+        ]}
+      >
+        {searchEnabled && <SearchDialogTrigger hasAssistant={assistantEnabled} variant={variant} />}
+        {assistantEnabled && variant === 'default' && <AssistantTrigger />}
+      </div>
+    )}
+    {content && searchEnabled && <SearchDialogContent />}
   </>
 )}
