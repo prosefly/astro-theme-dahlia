@@ -110,15 +110,17 @@ docs collection 中的 `index` entry 总是渲染到当前 `docsBase`。默认 `
 自定义 marketing homepage 应放在 docs collection 外，并使用 Astro 正常的
 file-based routing 创建。
 
-```txt
-src/
-  pages/
-    index.astro          -> /
-  content/
-    docs/
-      index.mdx          -> /docs/
-      installation.mdx   -> /docs/installation/
-```
+<FileTree iconSet="vscode-icons">
+
+- src/
+  - pages/
+    - index.astro          -> /
+  - content/
+    - docs/
+      - index.mdx          -> /docs/
+      - installation.mdx   -> /docs/installation/
+
+</FileTree>
 
 你也可以在自定义页面上复用 Dahlia page primitives：
 
@@ -145,13 +147,6 @@ import {
 
 对于纯文档站点，保留默认 `docsBase: '/'`，并将文档首页放在
 `src/content/docs/index.mdx`。
-
-```txt
-src/content/
-  docs/
-    index.mdx            -> /
-    installation.mdx     -> /installation/
-```
 
 <FileTree>
 

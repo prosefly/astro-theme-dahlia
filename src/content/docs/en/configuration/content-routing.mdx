@@ -141,15 +141,17 @@ homepage. With `docsBase: '/docs'`, the same entry renders at `/docs/`.
 For a custom marketing homepage, keep the site homepage outside the docs
 collection and create it with Astro's normal file-based routing.
 
-```txt
-src/
-  pages/
-    index.astro          -> /
-  content/
-    docs/
-      index.mdx          -> /docs/
-      installation.mdx   -> /docs/installation/
-```
+<FileTree iconSet="vscode-icons">
+
+- src/
+  - pages/
+    - index.astro          -> /
+  - content/
+    - docs/
+      - index.mdx          -> /docs/
+      - installation.mdx   -> /docs/installation/
+
+</FileTree>
 
 You can reuse Dahlia page primitives on custom pages:
 
@@ -176,13 +178,6 @@ import {
 
 For a docs-only site, keep the default `docsBase: '/'` and put the docs
 homepage at `src/content/docs/index.mdx`.
-
-```txt
-src/content/
-  docs/
-    index.mdx            -> /
-    installation.mdx     -> /installation/
-```
 
 <FileTree>
 
