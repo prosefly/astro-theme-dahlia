@@ -146,8 +146,7 @@ export type OverrideComponentName =
   | 'PageMeta'
   | 'PageNavigation'
   | 'SearchDialog'
-  | 'SiteBrand'
-  | 'ThemeSwitch';
+  | 'SiteBrand';
 
 export type OverrideComponentsConfig = Partial<Record<OverrideComponentName, string>>;
 

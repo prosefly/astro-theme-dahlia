@@ -241,37 +241,19 @@ ${lines.join('\n')}
     return themeModes.includes(value ?? '');
   }
 
-  function getThemeLabel(switcher: HTMLElement, mode: ThemeMode): string {
-    const labelKey = `themeLabel${mode[0].toUpperCase()}${mode.slice(1)}`;
-
-    return switcher.dataset[labelKey] || mode[0].toUpperCase() + mode.slice(1);
-  }
-
-  function syncThemeSwitchControls(mode: ThemeMode) {
-    document.querySelectorAll<HTMLElement>('[data-theme-switch]').forEach((switcher) => {
-      switcher.querySelectorAll('[data-theme-mode]').forEach((control) => {
+  function syncThemeModeControls(mode: ThemeMode) {
+    document.querySelectorAll<HTMLElement>('[data-theme-switch]').forEach((controlGroup) => {
+      controlGroup.querySelectorAll('[data-theme-mode]').forEach((control) => {
         const active = control.getAttribute('data-theme-mode') === mode;
         control.setAttribute('aria-pressed', active ? 'true' : 'false');
         control.toggleAttribute('data-active', active);
-      });
-
-      switcher.querySelectorAll<HTMLSelectElement>('[data-theme-select]').forEach((select) => {
-        select.value = mode;
-      });
-
-      switcher.querySelectorAll('[data-theme-current]').forEach((label) => {
-        label.textContent = getThemeLabel(switcher, mode);
-      });
-
-      switcher.querySelectorAll<HTMLElement>('[data-theme-mode-icon]').forEach((icon) => {
-        icon.hidden = icon.getAttribute('data-theme-mode-icon') !== mode;
       });
     });
   }
 
   function setTemporaryTheme(mode: ThemeMode) {
     document.documentElement.dataset.theme = mode;
-    syncThemeSwitchControls(mode);
+    syncThemeModeControls(mode);
   }
 
   function restoreTheme(demo: HTMLElement) {
@@ -279,7 +261,7 @@ ${lines.join('\n')}
     const mode = isThemeMode(originalTheme) ? originalTheme : 'system';
 
     document.documentElement.dataset.theme = mode;
-    syncThemeSwitchControls(mode);
+    syncThemeModeControls(mode);
   }
 
   function applyCssTokens(target: HTMLElement, tokens: CssToken[]) {

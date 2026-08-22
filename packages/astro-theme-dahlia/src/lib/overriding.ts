@@ -17,7 +17,6 @@ const defaultOverrideComponents = {
   PageNavigation: new URL('../components/defaults/PageNavigation.astro', import.meta.url),
   SearchDialog: new URL('../components/defaults/SearchDialog.astro', import.meta.url),
   SiteBrand: new URL('../components/defaults/SiteBrand.astro', import.meta.url),
-  ThemeSwitch: new URL('../components/defaults/ThemeSwitch.astro', import.meta.url),
 } satisfies Record<OverrideComponentName, URL>;
 
 const overrideComponentNames = Object.keys(

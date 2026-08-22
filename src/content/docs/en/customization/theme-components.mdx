@@ -47,10 +47,7 @@ the shell slot is `HeaderNavbar`, while the reusable public component is
 | `SearchDialogTrigger` | Search trigger buttons. |
 | `SiteBrand` | Brand logo link. |
 | `SocialIcons` | Social icon list. |
-| `ThemeModeButton` | Icon button for cycling or selecting theme mode. |
 | `ThemeModeSegmentedControl` | Segmented light, dark, and system control. |
-| `ThemeModeSelect` | Select control for theme mode. |
-| `ThemeModeSwitch` | Two-option light/dark theme control for custom placements. |
 
 These exports are package-level building blocks. The theme shell imports
 override points through internal virtual modules, so importing public components
@@ -155,19 +152,14 @@ export default {
 
 ```astro
 ---
-import {
-  ThemeModeButton,
-  ThemeModeSegmentedControl,
-  ThemeModeSelect,
-  ThemeModeSwitch,
-} from '@prosefly/astro-theme-dahlia/components';
+import { ThemeModeSegmentedControl } from '@prosefly/astro-theme-dahlia/components';
 ---
 
 <ThemeModeSegmentedControl />
 ```
 
-All theme mode controls use the same `dahlia-theme` local storage key and update
-the document `data-theme` attribute.
+The theme mode control uses the `dahlia-theme` local storage key and updates the
+document `data-theme` attribute.
 
 ## Pair With Overrides
 

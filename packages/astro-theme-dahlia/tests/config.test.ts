@@ -167,7 +167,7 @@ describe('Dahlia config', () => {
     expect('sidebars' in options).toBe(false);
   });
 
-  it('uses a fixed theme mode button without a theme mode control option', () => {
+  it('uses a fixed theme mode control without a theme mode control option', () => {
     expect('themeModeControl' in resolveDahliaConfig({})).toBe(false);
   });
 

@@ -89,10 +89,3 @@ declare module 'virtual:prosefly/dahlia/components/SiteBrand' {
   const component: AstroComponentFactory;
   export default component;
 }
-
-declare module 'virtual:prosefly/dahlia/components/ThemeSwitch' {
-  import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
-
-  const component: AstroComponentFactory;
-  export default component;
-}
