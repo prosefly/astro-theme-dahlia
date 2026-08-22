@@ -52,7 +52,7 @@ const pagefindIgnoreAttrs = isPagefindSearchEnabled(themeConfig)
     <SiteBrand fetchPriority="high" markIdPrefix="dahlia-site-header-brand" />
 
     <div class="ms-auto hidden min-w-0 items-center gap-4 lg:flex">
-      {searchEnabled ? <SearchDialog /> : assistantEnabled ? <AssistantTrigger /> : null}
+      {searchEnabled ? <SearchDialog content={false} /> : assistantEnabled ? <AssistantTrigger /> : null}
       <HeaderNavbar currentPath={currentPath} />
 
       {hasDesktopControls && (
@@ -65,7 +65,7 @@ const pagefindIgnoreAttrs = isPagefindSearchEnabled(themeConfig)
     </div>
 
     <div class="ms-auto flex items-center gap-1 lg:hidden">
-      {searchEnabled ? <SearchDialog /> : assistantEnabled ? <AssistantTrigger /> : null}
+      {searchEnabled ? <SearchDialog content={false} /> : assistantEnabled ? <AssistantTrigger /> : null}
       {showLanguage && <LanguageSelect />}
     </div>
 
@@ -94,4 +94,6 @@ const pagefindIgnoreAttrs = isPagefindSearchEnabled(themeConfig)
       </Dropdown>
     )}
   </div>
+
+  {searchEnabled && <SearchDialog trigger={false} />}
 </header>
