@@ -164,6 +164,11 @@
         "title": "Projects",
         "links": [
           {
+            "label": "Astro Lotus Theme",
+            "href": "https://astro-theme-lotus.prosefly.dev",
+            "external": true
+          },
+          {
             "label": "Astro Components",
             "href": "https://astro-components.prosefly.dev",
             "external": true
