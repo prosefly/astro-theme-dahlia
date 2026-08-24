@@ -72,7 +72,7 @@ Create `theme.config.json` in the project root. Options passed to
 
 ```json
 {
-  "$schema": "https://astro-theme-dahlia.prosefly.dev/schema.json",
+  "$schema": "https://prosefly.dev/schema/dahlia.json",
   "name": "Acme Docs",
   "description": "Documentation for Acme.",
   "logo": "/images/logo.svg",

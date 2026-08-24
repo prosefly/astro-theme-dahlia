@@ -40,7 +40,7 @@ export default defineConfig({
 
 ```json
 {
-  "$schema": "https://astro-theme-dahlia.prosefly.dev/schema.json",
+  "$schema": "https://prosefly.dev/schema/dahlia.json",
   "name": "My Docs",
   "description": "Documentation for my project.",
   "siteNav": [

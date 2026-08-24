@@ -59,7 +59,7 @@ describe('Dahlia config', () => {
 
     try {
       writeFileSync(join(root, 'theme.config.json'), JSON.stringify({
-        $schema: 'https://astro-theme-dahlia.prosefly.dev/schema.json',
+        $schema: 'https://prosefly.dev/schema/dahlia.json',
         name: 'JSON Docs',
         docsBase: 'docs',
         appearance: {
