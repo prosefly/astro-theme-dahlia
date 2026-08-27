@@ -1,4 +1,4 @@
-function initMobileDocsNav(): void {
+function initMobileDocsNav(): (() => void) | undefined {
   const drawer = document.querySelector<HTMLElement>('[data-mobile-sidebar]');
   const openButtons = Array.from(document.querySelectorAll('[data-mobile-sidebar-open]'));
   const closeButtons = drawer
@@ -16,9 +16,19 @@ function initMobileDocsNav(): void {
   }
 
   drawer.dataset.mobileDocsNavReady = 'true';
+  const cleanupCallbacks: Array<() => void> = [];
+  const addListener = (
+    target: EventTarget,
+    type: string,
+    listener: EventListener,
+    options?: AddEventListenerOptions,
+  ) => {
+    target.addEventListener(type, listener, options);
+    cleanupCallbacks.push(() => target.removeEventListener(type, listener, options));
+  };
 
   let closeTimer: number | undefined;
-  let previousOverflow = '';
+  let previousOverflow: string | undefined;
   let previousFocus: HTMLElement | null = null;
 
   const getFocusableElements = () => Array.from(
@@ -39,7 +49,7 @@ function initMobileDocsNav(): void {
     drawer.hidden = false;
     drawer.removeAttribute('inert');
     setOpenButtonState(true);
-    previousOverflow = document.documentElement.style.overflow;
+    previousOverflow ??= document.documentElement.style.overflow;
     document.documentElement.style.overflow = 'hidden';
     window.requestAnimationFrame(() => {
       drawer.setAttribute('data-open', '');
@@ -53,7 +63,10 @@ function initMobileDocsNav(): void {
     }
 
     drawer.removeAttribute('data-open');
-    document.documentElement.style.overflow = previousOverflow;
+    if (previousOverflow !== undefined) {
+      document.documentElement.style.overflow = previousOverflow;
+      previousOverflow = undefined;
+    }
     setOpenButtonState(false);
     previousFocus?.focus({ preventScroll: true });
     drawer.setAttribute('inert', '');
@@ -62,20 +75,12 @@ function initMobileDocsNav(): void {
     }, 180);
   };
 
-  openButtons.forEach((button) => {
-    button.addEventListener('click', openDrawer);
-  });
-
-  closeButtons.forEach((button) => {
-    button.addEventListener('click', closeDrawer);
-  });
-
-  drawer.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', closeDrawer);
-  });
+  openButtons.forEach((button) => addListener(button, 'click', openDrawer));
+  closeButtons.forEach((button) => addListener(button, 'click', closeDrawer));
+  drawer.querySelectorAll('a').forEach((link) => addListener(link, 'click', closeDrawer));
 
   sectionOptions.forEach((option) => {
-    option.addEventListener('click', () => {
+    const handleSectionOptionClick = () => {
       const slug = option.getAttribute('data-section-option');
 
       if (!slug) {
@@ -111,10 +116,12 @@ function initMobileDocsNav(): void {
       }
 
       sectionSwitch?.removeAttribute('open');
-    });
+    };
+
+    addListener(option, 'click', handleSectionOptionClick);
   });
 
-  window.addEventListener('keydown', (event) => {
+  const handleKeydown = (event: KeyboardEvent) => {
     if (drawer.hidden) {
       return;
     }
@@ -147,7 +154,29 @@ function initMobileDocsNav(): void {
       event.preventDefault();
       first.focus();
     }
-  });
+  };
+  addListener(window, 'keydown', handleKeydown as EventListener);
+
+  return () => {
+    window.clearTimeout(closeTimer);
+    if (previousOverflow !== undefined) {
+      document.documentElement.style.overflow = previousOverflow;
+    }
+    cleanupCallbacks.forEach((cleanup) => cleanup());
+    delete drawer.dataset.mobileDocsNavReady;
+  };
 }
 
-initMobileDocsNav();
+let cleanupMobileDocsNav: (() => void) | undefined;
+
+const initializeMobileDocsNav = () => {
+  cleanupMobileDocsNav?.();
+  cleanupMobileDocsNav = initMobileDocsNav();
+};
+
+document.addEventListener('astro:before-swap', () => {
+  cleanupMobileDocsNav?.();
+  cleanupMobileDocsNav = undefined;
+});
+document.addEventListener('astro:page-load', initializeMobileDocsNav);
+initializeMobileDocsNav();

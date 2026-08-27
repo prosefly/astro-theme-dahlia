@@ -12,6 +12,7 @@ import PageNavigation from 'virtual:prosefly/dahlia/components/PageNavigation';
 import { getEntryContributors } from '../lib/contributors';
 import {
   getDocsContext,
+  getDocsNavigationHandoff,
   getEntrySectionFromContext,
   getEntrySlug,
   getSidebarPagination,
@@ -70,6 +71,10 @@ export async function getStaticPaths() {
           entry,
           currentLocale,
           currentSection: getEntrySectionFromContext(docsContext, entry),
+          docsNavigation: getDocsNavigationHandoff(
+            docsContext,
+            getEntrySectionFromContext(docsContext, entry),
+          ),
         },
       };
     });
@@ -78,7 +83,7 @@ export async function getStaticPaths() {
   return paths.flat();
 }
 
-const { entry, currentLocale, currentSection } = Astro.props;
+const { entry, currentLocale, currentSection, docsNavigation } = Astro.props;
 const { Content, headings } = await render(entry);
 const tocHeadings = getTableOfContentsHeadings(
   headings as MarkdownHeading[],
@@ -86,9 +91,8 @@ const tocHeadings = getTableOfContentsHeadings(
 );
 const isTextTemplate = entry.data.template === 'text';
 const isSplashTemplate = entry.data.template === 'splash';
-const docsContext = await getDocsContext(currentSection, currentLocale.key);
-const subnav = docsContext.sections;
-const sidebars = docsContext.sidebars;
+const subnav = docsNavigation.sections;
+const sidebars = docsNavigation.sidebars;
 const sidebar = currentSection ? sidebars[currentSection] ?? { links: [], groups: [] } : { links: [], groups: [] };
 const entrySlug = getEntrySlug(entry);
 const sectionTitle = getSidebarSectionTitle(sidebar, entrySlug);
@@ -183,6 +187,7 @@ const jsonLd = createDocsJsonLd({
     currentPath={currentPath}
     currentSection={currentSection}
     currentSlug={entrySlug}
+    navigation={docsNavigation}
     pagefind={entry.data.pagefind}
     headings={tocHeadings}
   >

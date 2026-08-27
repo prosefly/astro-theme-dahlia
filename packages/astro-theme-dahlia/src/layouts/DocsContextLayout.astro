@@ -1,5 +1,11 @@
 ---
-import { getDocsContext, getFlatSidebarNavigation, getSidebarSectionTitle } from '../lib/docs';
+import {
+  getDocsContext,
+  getDocsNavigationHandoff,
+  getFlatSidebarNavigation,
+  getSidebarSectionTitle,
+} from '../lib/docs';
+import type { DocsNavigationHandoff } from '../lib/docs';
 import type { NormalizedLocale } from '../lib/i18n';
 import type { HeadConfig } from '../lib/page/head';
 import type { JsonLdNode } from '../lib/page/schema';
@@ -22,14 +28,19 @@ interface Props {
   currentSlug?: string;
   headings?: Heading[];
   pagefind?: boolean;
+  navigation?: DocsNavigationHandoff;
 }
 
 const props = Astro.props;
-const docsContext = await getDocsContext(props.currentSection, props.locale?.key);
-const sidebars = docsContext.sidebars;
-const sidebar = props.currentSection ? sidebars[props.currentSection] ?? { links: [], groups: [] } : { links: [], groups: [] };
-const displaySidebar = docsContext.displayMode === 'flat'
-  ? getFlatSidebarNavigation(docsContext.sections, sidebars)
+const navigation = props.navigation ?? getDocsNavigationHandoff(
+  await getDocsContext(props.currentSection, props.locale?.key),
+  props.currentSection,
+);
+const currentSection = props.currentSection ?? navigation.currentSection;
+const sidebars = navigation.sidebars;
+const sidebar = currentSection ? sidebars[currentSection] ?? { links: [], groups: [] } : { links: [], groups: [] };
+const displaySidebar = navigation.displayMode === 'flat'
+  ? getFlatSidebarNavigation(navigation.sections, sidebars)
   : sidebar;
 const sectionTitle = props.currentSlug ? getSidebarSectionTitle(sidebar, props.currentSlug) : undefined;
 ---
@@ -39,13 +50,13 @@ const sectionTitle = props.currentSlug ? getSidebarSectionTitle(sidebar, props.c
   description={props.description}
   head={props.head}
   jsonLd={props.jsonLd}
-  locale={props.locale}
+  locale={props.locale ?? navigation.locale}
   currentPath={props.currentPath}
   sectionTitle={sectionTitle}
-  docsNavMode={docsContext.displayMode}
+  docsNavMode={navigation.displayMode}
   headings={props.headings}
   pagefind={props.pagefind}
-  subnav={docsContext.sections}
+  subnav={navigation.sections}
   sidebar={displaySidebar}
   sidebars={sidebars}
 >

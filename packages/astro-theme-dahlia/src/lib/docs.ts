@@ -54,6 +54,30 @@ export interface DocsNavigationContext {
   displayMode: DocsNavDisplayMode;
 }
 
+export interface DocsNavigationHandoff {
+  locale: NormalizedLocale;
+  currentSection?: string;
+  sections: DocsSectionNav[];
+  sidebars: Record<string, DocsSidebarNav>;
+  displayMode: DocsNavDisplayMode;
+}
+
+export function getDocsNavigationHandoff(
+  context: DocsNavigationContext,
+  currentSection?: string,
+): DocsNavigationHandoff {
+  return {
+    locale: context.locale,
+    currentSection,
+    sections: context.sections.map((section) => ({
+      ...section,
+      active: section.slug === currentSection,
+    })),
+    sidebars: context.sidebars,
+    displayMode: context.displayMode,
+  };
+}
+
 export function getDocsNavDisplayMode(config: DahliaThemeConfig): DocsNavDisplayMode {
   const sections = config.docsNav;
   const hasOuterIcons = sections.length > 0 && sections.every((section) => Boolean(section.icon));

@@ -12,6 +12,10 @@ declare global {
   }
 }
 
+export function isCurrentSearchRequest(requestVersion: number, currentVersion: number): boolean {
+  return requestVersion === currentVersion;
+}
+
 function initSearchDialog(): void {
   const dialog = document.querySelector('[data-search-dialog]');
   const input = dialog?.querySelector<HTMLInputElement>('[data-search-input]');
@@ -32,6 +36,7 @@ function initSearchDialog(): void {
   let activeResults: SearchResult[] = [];
   let selectedIndex = -1;
   let providerReady = false;
+  let searchRequestVersion = 0;
 
   const setMessage = (message: string) => {
     activeResults = [];
@@ -81,6 +86,7 @@ function initSearchDialog(): void {
   };
 
   const renderResults = async () => {
+    const requestVersion = ++searchRequestVersion;
     const query = input.value.trim();
 
     if (!query) {
@@ -93,9 +99,19 @@ function initSearchDialog(): void {
     }
 
     try {
-      activeResults = await provider.search(query);
+      const nextResults = await provider.search(query);
+
+      if (!isCurrentSearchRequest(requestVersion, searchRequestVersion)) {
+        return;
+      }
+
+      activeResults = nextResults;
       providerReady = true;
     } catch {
+      if (!isCurrentSearchRequest(requestVersion, searchRequestVersion)) {
+        return;
+      }
+
       setMessage(messages.unavailable);
       return;
     }
@@ -191,7 +207,7 @@ function initSearchDialog(): void {
   });
 }
 
-if (!window.__dahliaSearchDialogReady) {
+if (typeof window !== 'undefined' && typeof document !== 'undefined' && !window.__dahliaSearchDialogReady) {
   window.__dahliaSearchDialogReady = true;
 
   if (document.readyState === 'loading') {

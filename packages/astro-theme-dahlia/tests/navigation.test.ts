@@ -44,6 +44,29 @@ const sidebarEntries: SidebarContentEntry[] = [
 ];
 
 describe('localized navigation', () => {
+  it('uses en for a root locale without lang while preserving explicit and non-root fallbacks', () => {
+    const rootWithoutLang = resolveDahliaConfig({
+      locales: {
+        root: { label: 'English', directory: 'en' },
+      },
+    });
+    const rootWithLang = resolveDahliaConfig({
+      locales: {
+        root: { label: 'English', lang: 'en-GB', directory: 'en' },
+      },
+    });
+    const nonRootWithoutLang = resolveDahliaConfig({
+      locales: {
+        root: { label: 'English', directory: 'en' },
+        fr: { label: 'Français', directory: 'fr' },
+      },
+    });
+
+    expect(getDefaultLocale(rootWithoutLang).lang).toBe('en');
+    expect(getDefaultLocale(rootWithLang).lang).toBe('en-GB');
+    expect(getLocales(nonRootWithoutLang).find((locale) => locale.key === 'fr')?.lang).toBe('fr');
+  });
+
   it('normalizes root and prefixed locales', () => {
     expect(getDefaultLocale(localizedConfig)).toMatchObject({
       key: 'root',
