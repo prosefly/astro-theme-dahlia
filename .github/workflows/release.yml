@@ -26,7 +26,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 12
+          version: 11.24
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
@@ -36,7 +36,7 @@ jobs:
           registry-url: https://registry.npmjs.org
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Verify tag version
         if: github.event_name == 'push'
