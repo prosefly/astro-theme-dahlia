@@ -1,7 +1,7 @@
 export { defaultConfig } from './defaults';
 export { resolveExpressiveCodeOptions } from './expressive-code';
 export { resolveLlmsConfig } from './llms';
-export { resolveMarkdownConfig } from './markdown';
+export { resolveMarkdownConfig, resolveMarkdownExtensions } from './markdown';
 export { defineDahliaConfig } from './options';
 export {
   loadDahliaConfigFile,

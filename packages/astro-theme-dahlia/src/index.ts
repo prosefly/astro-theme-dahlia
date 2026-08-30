@@ -1,5 +1,5 @@
 import mdx from '@astrojs/mdx';
-import proseflyIcon from '@prosefly/astro-components/icon';
+import proseflyComponents from '@prosefly/astro-components/integration';
 import tailwindcss from '@tailwindcss/vite';
 import astroExpressiveCode from 'astro-expressive-code';
 import type { AstroIntegration } from 'astro';
@@ -14,6 +14,7 @@ import {
   resolveLocalAssetConfig,
   resolveDahliaConfig,
   resolveMarkdownConfig,
+  resolveMarkdownExtensions,
   type DahliaIntegrationOptions,
 } from './lib/config/index';
 import { componentOverridePlugin } from './lib/overriding';
@@ -60,16 +61,33 @@ export default function dahlia(options: DahliaIntegrationOptions = {}): AstroInt
         updateConfig({
           markdown: resolveMarkdownConfig(mergedOptions, astroConfig.markdown),
           integrations: [
+            proseflyComponents({
+              icons: {
+                apiBase: config.iconify?.apiBase,
+                preload: getIconPreloadNames(config),
+                scan: config.iconify?.scan,
+              },
+              markdown: {
+                calloutDirectives: mergedOptions.markdown?.calloutDirectives,
+                packageManagerTabs: mergedOptions.markdown?.packageManagerTabs,
+                imageGallery: mergedOptions.markdown?.imageGallery,
+                ...resolveMarkdownExtensions(mergedOptions, astroConfig.markdown),
+              },
+            }),
             ...(expressiveCodeOptions === false
               ? []
               : [astroExpressiveCode(expressiveCodeOptions)]),
             mdx(),
-            proseflyIcon({
-              apiBase: config.iconify?.apiBase,
-              preload: getIconPreloadNames(config),
-              scan: config.iconify?.scan,
-            }),
           ],
+          ...(expressiveCodeOptions === false
+            ? {
+                markdown: {
+                  shikiConfig: {
+                    themes: { light: 'github-light', dark: 'github-dark' },
+                  },
+                },
+              }
+            : {}),
           vite: {
             plugins: [
               dahliaConfigPlugin(config),
