@@ -21,7 +21,7 @@
     "@prosefly/astro-theme-dahlia": "workspace:*",
     "@tailwindcss/vite": "latest",
     "@types/node": "latest",
-    "astro": "^7.2.6",
+    "astro": "^7.2.9",
     "tailwindcss": "latest",
     "typescript": "^6.0.3"
   },
