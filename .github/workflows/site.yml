@@ -36,8 +36,7 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
-          registry-url: https://npm.pkg.github.com
-          scope: "@prosefly"
+          registry-url: https://registry.npmjs.org
 
       - name: Setup Pages
         uses: actions/configure-pages@v6
