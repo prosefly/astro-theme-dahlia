@@ -55,6 +55,17 @@ describe('Dahlia config', () => {
     expect(resolveDahliaConfig({ pageActions: [] }).pageActions).toEqual([]);
   });
 
+  it('includes all built-in page actions by default', () => {
+    expect(defaultConfig.pageActions.map((action) => action.type)).toEqual([
+      'copy-page',
+      'view-markdown',
+      'open-chatgpt',
+      'open-claude',
+      'open-grok',
+      'open-perplexity',
+    ]);
+  });
+
   it('loads theme.config.json and strips schema metadata', () => {
     const root = mkdtempSync(join(tmpdir(), 'dahlia-config-'));
 

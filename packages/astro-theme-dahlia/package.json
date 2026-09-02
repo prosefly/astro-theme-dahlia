@@ -42,7 +42,7 @@
     "src"
   ],
   "peerDependencies": {
-    "@prosefly/astro-components": "^0.6.0",
+    "@prosefly/astro-components": "^0.6.1",
     "pagefind": "^1.5.2",
     "astro": "^7.0.0"
   },
@@ -55,7 +55,6 @@
     "@astrojs/markdown-remark": "^7.2.2",
     "@astrojs/mdx": "7.0.8",
     "@expressive-code/plugin-line-numbers": "^0.44.0",
-    "@prosefly/astro-components": "^0.6.0",
     "@tailwindcss/vite": "4.3.3",
     "astro-expressive-code": "^0.44.0",
     "github-slugger": "^2.0.0",
@@ -65,8 +64,5 @@
     "remark-cjk-friendly-gfm-strikethrough": "^2.3.1",
     "shiki": "^4.3.1",
     "vite": "^8.2.0"
-  },
-  "devDependencies": {
-    "astro": "^7.2.9"
   }
 }
