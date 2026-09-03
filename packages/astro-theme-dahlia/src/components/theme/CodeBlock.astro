@@ -1,5 +1,8 @@
 ---
-import { codeToHtml } from 'shiki';
+import Code from 'astro/components/Code.astro';
+
+type CodeTheme = string | Record<string, unknown>;
+type CodeThemes = Record<string, CodeTheme>;
 
 interface Props {
   code: string;
@@ -7,47 +10,35 @@ interface Props {
   title?: string;
   class?: string;
   trim?: boolean;
+  theme?: CodeTheme;
+  themes?: CodeThemes;
 }
 
 const {
   code,
-  lang = 'text',
+  lang,
   title,
   class: className,
-  trim = true,
+  trim,
+  theme,
+  themes = {
+    light: 'github-light',
+    dark: 'github-dark',
+  },
 } = Astro.props;
 const highlightedCode = trim ? code.trim() : code;
-
-async function highlightCode(source: string, language: string): Promise<string> {
-  try {
-    return await codeToHtml(source, {
-      lang: language,
-      themes: {
-        light: 'github-light',
-        dark: 'github-dark',
-      },
-    });
-  } catch (error) {
-    if (language === 'text') {
-      throw error;
-    }
-
-    return codeToHtml(source, {
-      lang: 'text',
-      themes: {
-        light: 'github-light',
-        dark: 'github-dark',
-      },
-    });
-  }
-}
-
-const html = await highlightCode(highlightedCode, lang);
 ---
 
 <figure class:list={['dahlia-code-block', title && 'dahlia-code-block--framed', className]}>
   {title && <figcaption class="dahlia-code-block__header">{title}</figcaption>}
-  <div class="dahlia-code-block__body" set:html={html} />
+  <div class="dahlia-code-block__body">
+    <Code
+      code={highlightedCode}
+      lang={lang as never}
+      theme={theme as never}
+      themes={theme ? undefined : themes as never}
+    />
+  </div>
 </figure>
 
 <style is:global>
@@ -90,7 +81,7 @@ const html = await highlightCode(highlightedCode, lang);
     border-radius: 0;
   }
 
-  .dahlia-code-block .shiki {
+  .dahlia-code-block .astro-code {
     background: transparent !important;
     color: var(--dahlia-text);
     font-family: var(--dahlia-font-mono);
@@ -102,13 +93,13 @@ const html = await highlightCode(highlightedCode, lang);
     padding: 0.8571429rem 1rem;
   }
 
-  .dahlia-code-block .shiki code {
+  .dahlia-code-block .astro-code code {
     display: block;
     min-width: max-content;
   }
 
-  :root[data-theme="dark"] .dahlia-code-block .shiki,
-  :root[data-theme="dark"] .dahlia-code-block .shiki span {
+  :root[data-theme="dark"] .dahlia-code-block .astro-code,
+  :root[data-theme="dark"] .dahlia-code-block .astro-code span {
     color: var(--shiki-dark) !important;
     font-style: var(--shiki-dark-font-style) !important;
     font-weight: var(--shiki-dark-font-weight) !important;
@@ -116,8 +107,8 @@ const html = await highlightCode(highlightedCode, lang);
   }
 
   @media (prefers-color-scheme: dark) {
-    :root[data-theme="system"] .dahlia-code-block .shiki,
-    :root[data-theme="system"] .dahlia-code-block .shiki span {
+    :root[data-theme="system"] .dahlia-code-block .astro-code,
+    :root[data-theme="system"] .dahlia-code-block .astro-code span {
       color: var(--shiki-dark) !important;
       font-style: var(--shiki-dark-font-style) !important;
       font-weight: var(--shiki-dark-font-weight) !important;
