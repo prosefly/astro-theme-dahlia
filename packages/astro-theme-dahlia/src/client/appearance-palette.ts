@@ -15,11 +15,8 @@ type InitialAppearance = {
   accentDark: string;
 };
 
-declare global {
-  interface Window {
-    __dahliaAppearanceInitial?: InitialAppearance;
-  }
-}
+const prosefly = window.__prosefly ??= {};
+const proseflyDahlia = (prosefly.dahlia ??= {});
 
 const hexColorPattern = /^#(?:[\da-f]{3}|[\da-f]{6})$/i;
 
@@ -28,10 +25,10 @@ function getAppearanceRoot(): HTMLElement {
 }
 
 function getInitialAppearance(): InitialAppearance {
-  if (!window.__dahliaAppearanceInitial) {
+  if (!proseflyDahlia.appearanceInitial) {
     const root = getAppearanceRoot();
 
-    window.__dahliaAppearanceInitial = {
+    proseflyDahlia.appearanceInitial = {
       accent: root.dataset.accent ?? '',
       gray: root.dataset.gray ?? '',
       radius: root.dataset.radius ?? '',
@@ -40,7 +37,7 @@ function getInitialAppearance(): InitialAppearance {
     };
   }
 
-  return window.__dahliaAppearanceInitial;
+  return proseflyDahlia.appearanceInitial;
 }
 
 function setAppearanceValue(key: AppearanceKey, value: string): void {
@@ -216,5 +213,8 @@ function initDahliaAppearancePalette(): void {
   });
 }
 
-initDahliaAppearancePalette();
-document.addEventListener('astro:page-load', initDahliaAppearancePalette);
+proseflyDahlia.initAppearancePalette = initDahliaAppearancePalette;
+document.addEventListener('astro:page-load', () => {
+  proseflyDahlia.initAppearancePalette?.();
+});
+proseflyDahlia.initAppearancePalette?.();

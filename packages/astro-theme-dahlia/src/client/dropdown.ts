@@ -1,3 +1,8 @@
+export {};
+
+const prosefly = window.__prosefly ??= {};
+const proseflyDahlia = (prosefly.dahlia ??= {});
+
 let dahliaDropdownContentId = 0;
 
 function initDahliaDropdowns(): (() => void) | undefined {
@@ -88,9 +93,13 @@ const initializeDahliaDropdowns = () => {
   cleanupDahliaDropdowns = initDahliaDropdowns();
 };
 
+proseflyDahlia.initDropdowns = initializeDahliaDropdowns;
+
 document.addEventListener('astro:before-swap', () => {
   cleanupDahliaDropdowns?.();
   cleanupDahliaDropdowns = undefined;
 });
-document.addEventListener('astro:page-load', initializeDahliaDropdowns);
-initializeDahliaDropdowns();
+document.addEventListener('astro:page-load', () => {
+  proseflyDahlia.initDropdowns?.();
+});
+proseflyDahlia.initDropdowns?.();

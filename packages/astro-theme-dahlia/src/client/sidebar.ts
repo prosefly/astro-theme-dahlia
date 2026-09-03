@@ -1,3 +1,8 @@
+export {};
+
+const prosefly = window.__prosefly ??= {};
+const proseflyDahlia = (prosefly.dahlia ??= {});
+
 function initDahliaSidebarScroll(): (() => void) | undefined {
   const containers = Array.from(document.querySelectorAll('[data-sidebar-scroll]'));
   const cleanupCallbacks: Array<() => void> = [];
@@ -47,9 +52,13 @@ const initializeDahliaSidebarScroll = () => {
   cleanupDahliaSidebarScroll = initDahliaSidebarScroll();
 };
 
+proseflyDahlia.initSidebarScroll = initializeDahliaSidebarScroll;
+
 document.addEventListener('astro:before-swap', () => {
   cleanupDahliaSidebarScroll?.();
   cleanupDahliaSidebarScroll = undefined;
 });
-document.addEventListener('astro:page-load', initializeDahliaSidebarScroll);
-initializeDahliaSidebarScroll();
+document.addEventListener('astro:page-load', () => {
+  proseflyDahlia.initSidebarScroll?.();
+});
+proseflyDahlia.initSidebarScroll?.();

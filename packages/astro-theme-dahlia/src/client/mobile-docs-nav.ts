@@ -1,3 +1,8 @@
+export {};
+
+const prosefly = window.__prosefly ??= {};
+const proseflyDahlia = (prosefly.dahlia ??= {});
+
 function initMobileDocsNav(): (() => void) | undefined {
   const drawer = document.querySelector<HTMLElement>('[data-mobile-sidebar]');
   const openButtons = Array.from(document.querySelectorAll('[data-mobile-sidebar-open]'));
@@ -174,9 +179,13 @@ const initializeMobileDocsNav = () => {
   cleanupMobileDocsNav = initMobileDocsNav();
 };
 
+proseflyDahlia.initMobileDocsNav = initializeMobileDocsNav;
+
 document.addEventListener('astro:before-swap', () => {
   cleanupMobileDocsNav?.();
   cleanupMobileDocsNav = undefined;
 });
-document.addEventListener('astro:page-load', initializeMobileDocsNav);
-initializeMobileDocsNav();
+document.addEventListener('astro:page-load', () => {
+  proseflyDahlia.initMobileDocsNav?.();
+});
+proseflyDahlia.initMobileDocsNav?.();

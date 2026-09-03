@@ -1,10 +1,7 @@
-declare global {
-  interface Window {
-    __dahliaThemeModeControlReady?: boolean;
-  }
-}
-
 export {};
+
+const prosefly = window.__prosefly ??= {};
+const proseflyDahlia = (prosefly.dahlia ??= {});
 
 const storageKey = 'dahlia-theme';
 const root = document.documentElement;
@@ -66,14 +63,19 @@ function initThemeModeControls(): void {
   });
 }
 
-if (!window.__dahliaThemeModeControlReady) {
-  window.__dahliaThemeModeControlReady = true;
+if (!proseflyDahlia.themeModeControlReady) {
+  proseflyDahlia.themeModeControlReady = true;
+  proseflyDahlia.initThemeModeControls = initThemeModeControls;
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initThemeModeControls, { once: true });
+    document.addEventListener('DOMContentLoaded', () => {
+      proseflyDahlia.initThemeModeControls?.();
+    }, { once: true });
   } else {
-    initThemeModeControls();
+    proseflyDahlia.initThemeModeControls?.();
   }
 
-  document.addEventListener('astro:page-load', initThemeModeControls);
+  document.addEventListener('astro:page-load', () => {
+    proseflyDahlia.initThemeModeControls?.();
+  });
 }

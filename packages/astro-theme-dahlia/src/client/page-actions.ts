@@ -1,3 +1,8 @@
+export {};
+
+const prosefly = window.__prosefly ??= {};
+const proseflyDahlia = (prosefly.dahlia ??= {});
+
 async function getDahliaCopyText(root: HTMLElement): Promise<string> {
   const markdownUrl = root.dataset.pageMarkdownUrl;
 
@@ -186,5 +191,9 @@ function initDahliaPageActions(): void {
   });
 }
 
-initDahliaPageActions();
-document.addEventListener('astro:page-load', initDahliaPageActions);
+proseflyDahlia.initPageActions = initDahliaPageActions;
+document.addEventListener('astro:page-load', () => {
+  proseflyDahlia.initPageActions?.();
+});
+
+proseflyDahlia.initPageActions?.();

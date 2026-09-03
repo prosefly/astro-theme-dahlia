@@ -1,8 +1,10 @@
 export {};
 
+const prosefly = window.__prosefly ??= {};
+const proseflyDahlia = (prosefly.dahlia ??= {});
+
 declare global {
   interface Window {
-    __dahliaDocSearchReady?: boolean;
     docsearch?: (props: DocSearchProps) => DocSearchInstance;
   }
 }
@@ -210,14 +212,15 @@ async function initDocSearch(): Promise<void> {
   });
 }
 
-if (!window.__dahliaDocSearchReady) {
-  window.__dahliaDocSearchReady = true;
+if (!proseflyDahlia.docSearchReady) {
+  proseflyDahlia.docSearchReady = true;
+  proseflyDahlia.initDocSearch = initDocSearch;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-      void initDocSearch();
+      void proseflyDahlia.initDocSearch?.();
     }, { once: true });
   } else {
-    void initDocSearch();
+    void proseflyDahlia.initDocSearch?.();
   }
 }

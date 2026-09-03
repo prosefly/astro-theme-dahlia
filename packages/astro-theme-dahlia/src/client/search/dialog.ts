@@ -6,11 +6,8 @@ import type { SearchResult } from './types';
 
 export {};
 
-declare global {
-  interface Window {
-    __dahliaSearchDialogReady?: boolean;
-  }
-}
+const prosefly = window.__prosefly ??= {};
+const proseflyDahlia = (prosefly.dahlia ??= {});
 
 export function isCurrentSearchRequest(requestVersion: number, currentVersion: number): boolean {
   return requestVersion === currentVersion;
@@ -207,12 +204,15 @@ function initSearchDialog(): void {
   });
 }
 
-if (typeof window !== 'undefined' && typeof document !== 'undefined' && !window.__dahliaSearchDialogReady) {
-  window.__dahliaSearchDialogReady = true;
+if (typeof window !== 'undefined' && typeof document !== 'undefined' && !proseflyDahlia.searchDialogReady) {
+  proseflyDahlia.searchDialogReady = true;
+  proseflyDahlia.initSearchDialog = initSearchDialog;
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSearchDialog, { once: true });
+    document.addEventListener('DOMContentLoaded', () => {
+      proseflyDahlia.initSearchDialog?.();
+    }, { once: true });
   } else {
-    initSearchDialog();
+    proseflyDahlia.initSearchDialog?.();
   }
 }

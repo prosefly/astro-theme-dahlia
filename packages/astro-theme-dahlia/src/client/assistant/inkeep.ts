@@ -1,8 +1,10 @@
 export {};
 
+const prosefly = window.__prosefly ??= {};
+const proseflyDahlia = (prosefly.dahlia ??= {});
+
 declare global {
   interface Window {
-    __dahliaInkeepAssistantReady?: boolean;
     Inkeep?: {
       ModalSearchAndChat(settings: InkeepSettings): unknown;
     };
@@ -111,14 +113,15 @@ async function initInkeepAssistant(): Promise<void> {
   window.Inkeep.ModalSearchAndChat(withDahliaColorMode(settings));
 }
 
-if (!window.__dahliaInkeepAssistantReady) {
-  window.__dahliaInkeepAssistantReady = true;
+if (!proseflyDahlia.inkeepAssistantReady) {
+  proseflyDahlia.inkeepAssistantReady = true;
+  proseflyDahlia.initInkeepAssistant = initInkeepAssistant;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-      void initInkeepAssistant();
+      void proseflyDahlia.initInkeepAssistant?.();
     }, { once: true });
   } else {
-    void initInkeepAssistant();
+    void proseflyDahlia.initInkeepAssistant?.();
   }
 }

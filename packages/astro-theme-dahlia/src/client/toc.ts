@@ -1,3 +1,8 @@
+export {};
+
+const prosefly = window.__prosefly ??= {};
+const proseflyDahlia = (prosefly.dahlia ??= {});
+
 interface HeadingTarget {
   heading: HTMLElement;
   slug: string;
@@ -196,9 +201,13 @@ const initializeTableOfContents = () => {
   cleanupTableOfContents = initTableOfContents();
 };
 
+proseflyDahlia.initTableOfContents = initializeTableOfContents;
+
 document.addEventListener('astro:before-swap', () => {
   cleanupTableOfContents?.();
   cleanupTableOfContents = undefined;
 });
-document.addEventListener('astro:page-load', initializeTableOfContents);
-initializeTableOfContents();
+document.addEventListener('astro:page-load', () => {
+  proseflyDahlia.initTableOfContents?.();
+});
+proseflyDahlia.initTableOfContents?.();
