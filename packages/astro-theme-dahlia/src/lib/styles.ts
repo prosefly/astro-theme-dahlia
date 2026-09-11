@@ -1,9 +1,11 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { dirname, join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Plugin } from 'vite';
 
 const virtualStylesModuleId = 'virtual:prosefly/dahlia/styles.css';
+const typographyPluginFile = createRequire(import.meta.url).resolve('@tailwindcss/typography');
 const styleFileUrls = [
   new URL('../styles/colors.css', import.meta.url),
   new URL('../styles/tokens.css', import.meta.url),
@@ -11,7 +13,6 @@ const styleFileUrls = [
   new URL('../styles/prose/inline.css', import.meta.url),
   new URL('../styles/prose/lists.css', import.meta.url),
   new URL('../styles/prose/footnotes.css', import.meta.url),
-  new URL('../styles/prose/blocks.css', import.meta.url),
   new URL('../styles/prose/code.css', import.meta.url),
   new URL('../styles/prose/expressive-code.css', import.meta.url),
   new URL('../styles/prose/media.css', import.meta.url),
@@ -64,11 +65,13 @@ function writeDahliaStylesFile(
   dahliaSourcePath: string,
 ) {
   mkdirSync(dirname(file), { recursive: true });
+  const typographyPluginPath = toCssSourcePath(relative(dirname(file), typographyPluginFile));
 
   writeFileSync(
     file,
     [
       `@import "tailwindcss" source("${projectSourcePath}");`,
+      `@plugin "${typographyPluginPath}";`,
       `@source "${dahliaSourcePath}";`,
       ...styleFileUrls.map((url) => readFileSync(fileURLToPath(url), 'utf8')),
       baseCss,
