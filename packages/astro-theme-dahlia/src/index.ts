@@ -59,7 +59,7 @@ export default function dahlia(options: DahliaIntegrationOptions = {}): AstroInt
           entrypoint: new URL('./middleware.ts', import.meta.url),
         });
 
-        updateConfig({
+        const configUpdate = {
           markdown: resolveMarkdownConfig(mergedOptions, astroConfig.markdown),
           integrations: [
             proseflyComponents({
@@ -97,7 +97,9 @@ export default function dahlia(options: DahliaIntegrationOptions = {}): AstroInt
               tailwindcss(),
             ],
           },
-        });
+        } as Parameters<typeof updateConfig>[0];
+
+        updateConfig(configUpdate);
       },
       'astro:build:done': async ({ dir, logger }) => {
         await buildPagefindIndex(config, dir, logger);
