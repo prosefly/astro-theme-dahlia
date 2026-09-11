@@ -1,6 +1,8 @@
 ---
 title: Overview
 description: Learn what Dahlia provides and how the documentation theme is organized.
+sidebar:
+  icon: "lucide:map"
 
 ---
 
@@ -30,9 +32,9 @@ rebuilding the chrome from scratch.
     Configure accent colors, gray scales, radius, color mode, fonts, and lower
     level CSS tokens for deeper styling control.
   </Card>
-  <Card icon="lucide:panel-left" title="Dahlia layout" href="/docs/customization/page-layouts/">
-    Use Dahlia's left navigation, centered article column, sticky table of
-    contents, splash pages, and standalone text pages.
+  <Card icon="lucide:blocks" title="MDX components" href="/docs/components/callout/">
+    Compose pages with callouts, cards, steps, tabs, accordions, file trees,
+    badges, media, embeds, and Iconify icons.
   </Card>
   <Card icon="lucide:replace" title="Overrides" href="/docs/customization/overriding-components/">
     Replace shell slots such as search, navbar, page header, page actions,
@@ -41,11 +43,17 @@ rebuilding the chrome from scratch.
   </Card>
 </CardGrid>
 
-## How the docs tree works
+## The four parts of a Dahlia site
 
-Dahlia reads MDX entries from the `docs` content collection, then injects page,
-Markdown source, and search routes under `docsBase`. With the default
-`docsBase: '/'`, Dahlia generates:
+1. `astro.config.ts` registers the Dahlia integration.
+2. `src/content.config.ts` defines a `docs` collection with Dahlia's loader and
+   schema.
+3. `theme.config.json` controls identity, routes, navigation, search, source
+   links, appearance, and component overrides.
+4. `src/content/docs/**/*.mdx` contains the documentation pages.
+
+Dahlia reads the collection and injects page, Markdown source, and search routes
+under `docsBase`. With the default `docsBase: '/'`, it generates:
 
 - `/` and nested docs pages
 - `/*.md` Markdown source routes

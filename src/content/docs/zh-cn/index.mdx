@@ -1,49 +1,62 @@
 ---
-title: 开始使用 Dahlia
-description: 安装 Dahlia、配置文档外壳，并开始编写 Astro 文档。
+title: Dahlia 文档
+description: 使用 Dahlia 构建和维护 Astro 文档站点。
 template: splash
 tableOfContents: false
 hero:
-  title: 开始使用 Dahlia
-  tagline: 选择适合当前项目的路径，然后配置文档外壳并开始编写内容。
+  title: 使用 Dahlia 构建文档
+  tagline: 从模板创建项目，或将 Dahlia 加到已有 Astro 项目，然后配置外壳并编写 MDX。
   actions:
-    - text: 使用 starter
-      link: /docs/zh-cn/installation/
+    - text: 从 starter 创建
+      link: /docs/zh-cn/installation/#starter-template
       variant: primary
       icon: lucide:sparkles
-    - text: 阅读概览
-      link: /docs/zh-cn/overview/
+    - text: 手动安装
+      link: /docs/zh-cn/installation/#manual-setup
       variant: secondary
-
+      icon: lucide:wrench
 ---
 
 import { Card, CardGrid } from '@prosefly/astro-components';
 
-## 选择路径
+## 从可运行站点开始
 
 <CardGrid>
-  <Card icon="lucide:sparkles" title="新文档站点" href="/docs/zh-cn/installation/#starter-template">
-    从 Dahlia starter template 开始，快速得到一个已经接好主题的 Astro 文档站点。
+  <Card icon="lucide:rocket" title="新建文档站点" href="/docs/zh-cn/installation/#starter-template">
+    从维护中的 starter template 创建完整 Dahlia 项目，然后替换示例配置和内容。
   </Card>
-  <Card icon="lucide:wrench" title="已有 Astro 项目" href="/docs/zh-cn/installation/#manual-setup">
-    手动安装 Dahlia、注册 integration，并接入你的 docs content collection。
-  </Card>
-  <Card icon="lucide:settings-2" title="配置 Dahlia" href="/docs/zh-cn/configuration/project/">
-    设置项目身份、docs routing、导航、docs navigation、footer、搜索、源码链接和 page actions。
-  </Card>
-  <Card icon="lucide:file-text" title="编写文档内容" href="/docs/zh-cn/essentials/frontmatter/">
-    学习 Dahlia 页面所需的 frontmatter、Markdown、图片、代码块和 MDX 写法。
-  </Card>
-  <Card icon="lucide:palette" title="自定义 UI" href="/docs/zh-cn/customization/css-styling/">
-    调整外观、CSS tokens、布局，以及配置不够用时的外壳组件覆盖。
-  </Card>
-  <Card icon="lucide:book-open" title="参考" href="/docs/references/configuration/">
-    查看完整配置项、theme tokens，以及 Expressive Code 集成细节。
+  <Card icon="lucide:package-plus" title="已有 Astro 项目" href="/docs/zh-cn/installation/#manual-setup">
+    按可直接复制的步骤添加 integration、content collection、主题配置和第一篇文档。
   </Card>
 </CardGrid>
 
-## 参考链接
+## 完成常见任务
 
-- 阅读 [概览](/docs/zh-cn/overview/) 了解高层模型。
-- 查看 [项目结构](/docs/zh-cn/essentials/project-structure/) 了解任务导向的设置方式。
-- 升级 Dahlia 前查看 [更新日志](/docs/zh-cn/changelog/)。
+<CardGrid>
+  <Card icon="lucide:file-pen-line" title="编写内容" href="/docs/zh-cn/essentials/frontmatter/">
+    使用 frontmatter、Markdown、MDX、图片、代码块、callout 和 Mermaid 图表。
+  </Card>
+  <Card icon="lucide:panel-left" title="配置导航" href="/docs/zh-cn/configuration/docs-nav/">
+    将 content entry ID 组织成 section、嵌套分组和自动生成的目录列表。
+  </Card>
+  <Card icon="lucide:blocks" title="使用 MDX 组件" href="/docs/zh-cn/components/callout/">
+    复制 callout、card、steps、tabs、accordion、file tree、media、embed、badge
+    和 icon 的可运行示例。
+  </Card>
+  <Card icon="lucide:palette" title="自定义 Dahlia" href="/docs/zh-cn/customization/css-styling/">
+    从 appearance 和 CSS tokens 开始；只有配置不够用时才覆盖外壳组件。
+  </Card>
+  <Card icon="lucide:languages" title="添加语言" href="/docs/zh-cn/configuration/i18n/">
+    将 locale 目录映射到 URL，并处理 fallback content、翻译后的导航、edit link 和搜索索引。
+  </Card>
+  <Card icon="lucide:cloud-upload" title="构建与部署" href="/docs/zh-cn/deployment/">
+    验证项目、构建静态输出、检查搜索，然后发布生成的 `dist/` 目录。
+  </Card>
+</CardGrid>
+
+## 常用参考
+
+- [配置参考](/docs/zh-cn/references/configuration/) 列出全部 `theme.config.json` 选项。
+- [主题 tokens](/docs/zh-cn/references/theme-tokens/) 列出公开 CSS variables。
+- [故障排查](/docs/zh-cn/troubleshooting/) 按症状提供具体检查方式。
+- [更新日志](/docs/zh-cn/changelog/) 说明版本之间的行为变化。

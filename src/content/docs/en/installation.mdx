@@ -1,17 +1,17 @@
 ---
-title: Installation
-description: Start a Dahlia documentation site from the starter template or add Dahlia to an existing Astro project.
-
+title: Install Dahlia
+description: Add Dahlia to an Astro project and publish your first documentation page.
+sidebar:
+  icon: "lucide:package-plus"
 ---
 
-import { Steps } from '@prosefly/astro-components';
+import { Callout, Steps } from '@prosefly/astro-components';
 
-Start from the Dahlia starter template for a new documentation site, or install
-Dahlia manually when you already have an Astro project.
+Use the starter template for a new documentation site. Follow the manual setup
+when adding Dahlia to an existing Astro project or when you want to understand
+every required file.
 
-## Starter Template
-
-Use the starter when you want the fastest path to a working site.
+## Starter template {#starter-template}
 
 ```sh
 pnpm create astro@latest my-docs --template prosefly/astro-template-dahlia-starter
@@ -19,39 +19,38 @@ cd my-docs
 pnpm dev
 ```
 
-The template source is available at
+The template is maintained at
 [prosefly/astro-template-dahlia-starter](https://github.com/prosefly/astro-template-dahlia-starter).
+After it starts, update `theme.config.json` and replace the example files under
+`src/content/docs`.
 
-After the site is running, replace the example content and update the Dahlia
-theme config with your project name, navigation, sidebar structure, appearance,
-footer, and source repository.
+## Manual setup {#manual-setup}
 
-## Manual Setup
+This path starts with an Astro project and ends with a working Dahlia site at
+`http://localhost:4321/`. If you do not have an Astro project yet, create one:
 
-Use manual setup when your project already exists or when you want to introduce
-Dahlia one piece at a time.
+```sh
+pnpm create astro@latest my-docs
+cd my-docs
+```
 
 <Steps>
 
 1. **Install Dahlia.**
 
-   Add the theme package to your Astro project.
-
    ```sh
    pnpm add @prosefly/astro-theme-dahlia
    ```
 
-   Install `@prosefly/astro-components` directly when your own MDX or Astro
-   files import shared components such as cards, steps, tabs, callouts, badges,
-   or file trees.
+   Dahlia includes the integrations it needs. Install
+   `@prosefly/astro-components` separately only when your own MDX files import
+   components such as `Callout`, `Card`, `Steps`, or `Tabs`.
 
    ```sh
    pnpm add @prosefly/astro-components
    ```
 
 2. **Register the integration.**
-
-   Configure Astro with the Dahlia integration.
 
    ```ts title="astro.config.ts"
    import { defineConfig } from 'astro/config';
@@ -62,36 +61,9 @@ Dahlia one piece at a time.
    });
    ```
 
-3. **Create the theme config.**
+3. **Register the docs collection.**
 
-   Start with project identity and a minimal sidebar.
-
-   ```json title="theme.config.json"
-   {
-     "$schema": "https://prosefly.dev/schema/dahlia.json",
-     "name": "My Docs",
-     "description": "Documentation for my project.",
-     "siteNav": [{ "label": "Docs", "href": "/" }],
-     "docsNav": [
-       {
-         "label": "Guides",
-         "icon": "lucide:rocket",
-         "items": ["index"]
-       }
-     ]
-   }
-   ```
-
-   Set `docsBase: '/docs'` when the Astro project already has a site home page
-   and docs should live under `/docs/`.
-
-   Pass options directly to `dahlia({...})` in `astro.config.ts` when you need
-   TypeScript, imports, or dynamic values. Those options override values from
-   `theme.config.json`.
-
-4. **Register the docs collection.**
-
-   Create `src/content.config.ts` and use the loader and schema from Dahlia.
+   Create `src/content.config.ts`:
 
    ```ts title="src/content.config.ts"
    import { defineCollection } from 'astro:content';
@@ -105,32 +77,108 @@ Dahlia one piece at a time.
    export const collections = { docs };
    ```
 
-5. **Add the first docs page.**
+4. **Add a minimal theme config.**
 
-   Dahlia reads from `src/content/docs` by default.
+   Create `theme.config.json` in the project root:
+
+   ```json title="theme.config.json"
+   {
+     "$schema": "https://prosefly.dev/schema/dahlia.json",
+     "name": "Acme Docs",
+     "description": "Documentation for Acme.",
+     "docsNav": [
+       {
+         "label": "Guide",
+         "icon": "lucide:book-open",
+         "items": ["index"]
+       }
+     ]
+   }
+   ```
+
+5. **Create the first page.**
 
    ```mdx title="src/content/docs/index.mdx"
    ---
    title: Overview
-   description: Start here.
+   description: Learn how to use Acme.
    ---
 
-   Welcome to the docs.
+   Welcome to the Acme documentation.
    ```
 
-6. **Start development.**
+6. **Start the development server.**
 
    ```sh
    pnpm dev
    ```
 
+   Open `http://localhost:4321/`. You should see the Overview page and a Guide
+   section in the sidebar.
+
 </Steps>
 
-## Next Steps
+<Callout type="tip" title="Run the same checks as CI">
+  Use `pnpm check` to validate Astro, TypeScript, content schemas, and MDX before
+  building the site.
+</Callout>
 
-- Review [Project Configuration](/docs/configuration/project/) to define the
-  site identity, navigation, docs navigation, footer, and source repository.
-- Review [Content Routing](/docs/configuration/content-routing/) before moving
-  docs under a route prefix or changing the docs loader base.
-- Run `pnpm check` before shipping changes. It validates content collections,
-  MDX imports, Astro components, and TypeScript.
+## Add another page
+
+Create `src/content/docs/getting-started.mdx`:
+
+```mdx
+---
+title: Getting Started
+sidebar:
+  icon: "lucide:rocket"
+---
+
+Your first task goes here.
+```
+
+Then add its content entry ID to `docsNav`:
+
+```json
+{
+  "label": "Guide",
+  "items": ["index", "getting-started"]
+}
+```
+
+The content entry ID is the path below `src/content/docs` without the `.mdx`
+extension. Nested files use slash-separated IDs such as
+`configuration/authentication`.
+
+## Put docs under `/docs`
+
+The minimal setup serves documentation from `/`. For a product site with a
+separate homepage, set `docsBase` and update the site navigation:
+
+```json title="theme.config.json"
+{
+  "name": "Acme",
+  "docsBase": "/docs",
+  "siteNav": [
+    { "label": "Home", "href": "/" },
+    { "label": "Docs", "href": "/docs/" }
+  ],
+  "docsNav": [
+    { "label": "Guide", "items": ["index", "getting-started"] }
+  ]
+}
+```
+
+Content stays in `src/content/docs`; only the public route changes. The index
+page now renders at `/docs/`.
+
+## Where to go next
+
+- [Project structure](/docs/essentials/project-structure/) explains which files
+  belong to content, configuration, and overrides.
+- [Write content](/docs/essentials/frontmatter/) covers frontmatter, Markdown,
+  code blocks, images, and page templates.
+- [Configure navigation](/docs/configuration/docs-nav/) covers nested groups and
+  autogenerated directories.
+- [Use MDX components](/docs/components/callout/) documents every shared content
+  component with a rendered example and props table.

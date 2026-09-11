@@ -1,17 +1,14 @@
 # Astro Theme Dahlia
 
-Dahlia is an installable documentation theme for Astro v7, Tailwind CSS v4, and
-MDX. It gives your project generated docs routes, responsive navigation, table
-of contents, search, dark mode, i18n, theme tokens, and docs components without
-turning the whole site into a theme fork.
+Dahlia is an installable documentation theme for Astro 7. It provides docs
+routing, navigation, search, i18n, MDX components, Expressive Code, Mermaid,
+dark mode, and a configurable documentation shell.
 
 ![Dahlia documentation theme preview](public/images/og.jpg)
 
-## Quick Start
+## Create a new site
 
-Start from the Dahlia starter template when you want a working documentation site
-with Astro, content collections, theme config, and example docs already wired
-up.
+Use the maintained starter template:
 
 ```sh
 pnpm create astro@latest my-docs --template prosefly/astro-template-dahlia-starter
@@ -19,22 +16,18 @@ cd my-docs
 pnpm dev
 ```
 
-Template source:
+Starter source:
 [prosefly/astro-template-dahlia-starter](https://github.com/prosefly/astro-template-dahlia-starter)
 
-## Add To An Existing Project
+## Add Dahlia to an Astro project
 
-Install Dahlia manually when you already have an Astro project or want to add the
-docs shell one piece at a time.
+Install the theme:
 
 ```sh
-npm install @prosefly/astro-theme-dahlia
+pnpm add @prosefly/astro-theme-dahlia
 ```
 
-Install `@prosefly/astro-components` directly when your own MDX or Astro files
-import shared components such as cards, steps, tabs, or callouts.
-
-Add the integration:
+Register the integration:
 
 ```ts
 // astro.config.ts
@@ -46,7 +39,7 @@ export default defineConfig({
 });
 ```
 
-Register your docs collection:
+Register the docs collection:
 
 ```ts
 // src/content.config.ts
@@ -61,62 +54,56 @@ const docs = defineCollection({
 export const collections = { docs };
 ```
 
-Create docs in `src/content/docs/`. By default, Dahlia renders docs from the
-site root: `src/content/docs/index.mdx` renders at `/`, and
-`src/content/docs/installation.mdx` renders at `/installation/`.
-
-## Configure
-
-Create `theme.config.json` in the project root. Options passed to
-`dahlia({...})` in `astro.config.ts` override values from this JSON file.
+Create `theme.config.json`:
 
 ```json
 {
   "$schema": "https://prosefly.dev/schema/dahlia.json",
   "name": "Acme Docs",
   "description": "Documentation for Acme.",
-  "logo": "/images/logo.svg",
-  "siteNav": [
-    { "label": "Docs", "href": "/" },
-    { "label": "GitHub", "href": "https://github.com/acme/acme", "external": true }
-  ],
   "docsNav": [
     {
-      "label": "Guides",
-      "icon": "lucide:rocket",
-      "items": [
-        "overview",
-        "installation",
-        {
-          "label": "Configuration",
-          "items": [{ "autogenerate": { "directory": "configuration" } }]
-        }
-      ]
+      "label": "Guide",
+      "icon": "lucide:book-open",
+      "items": ["index"]
     }
   ]
 }
 ```
 
-## Features
+Create `src/content/docs/index.mdx`:
 
-- Astro v7 integration for documentation sites
-- MDX content with configurable docs routes
-- Full-height left navigation rail, right-side content with TOC, mobile docs menu, and footer
-- Light, dark, and system theme modes
-- Configurable accent color, gray palette, and radius
-- Local search, Pagefind, and DocSearch providers
-- i18n-aware routes, labels, and sidebar ownership
-- Expressive Code support
-- Iconify-powered icons
-- Component overrides for shell pieces such as search, navigation, footer links,
-  page metadata, and theme switch controls
+```mdx
+---
+title: Overview
+description: Learn how to use Acme.
+---
 
-## Links
+Welcome to the Acme documentation.
+```
 
-- Documentation: <https://astro-theme-dahlia.prosefly.dev/docs/overview/>
-- Starter template:
-  <https://github.com/prosefly/astro-template-dahlia-starter>
-- npm package: <https://www.npmjs.com/package/@prosefly/astro-theme-dahlia>
+Run `pnpm dev` and open `http://localhost:4321/`.
+
+Install `@prosefly/astro-components` directly when your own MDX imports shared
+components such as `Callout`, `Card`, `Steps`, `Tabs`, or `FileTree`.
+
+## Documentation
+
+- [Installation](https://astro-theme-dahlia.prosefly.dev/docs/installation/)
+- [Write content](https://astro-theme-dahlia.prosefly.dev/docs/essentials/frontmatter/)
+- [Configuration](https://astro-theme-dahlia.prosefly.dev/docs/references/configuration/)
+- [MDX components](https://astro-theme-dahlia.prosefly.dev/docs/components/callout/)
+- [Customization](https://astro-theme-dahlia.prosefly.dev/docs/customization/css-styling/)
+- [Deployment](https://astro-theme-dahlia.prosefly.dev/docs/deployment/)
+
+## Package scripts
+
+```sh
+pnpm lint
+pnpm test
+pnpm check
+pnpm build
+```
 
 ## License
 

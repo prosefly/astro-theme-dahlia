@@ -1,6 +1,8 @@
 ---
 title: 概览
 description: 了解 Dahlia 提供了什么，以及文档主题如何组织内容。
+sidebar:
+  icon: "lucide:map"
 
 ---
 
@@ -27,8 +29,9 @@ Dahlia 是一个面向 Astro v7、Tailwind CSS v4 和 MDX 的可安装文档主�
   <Card icon="lucide:palette" title="设计 tokens" href="/docs/zh-cn/configuration/appearance/">
     配置 accent、gray、radius、color mode、字体，以及更底层的 CSS tokens。
   </Card>
-  <Card icon="lucide:panel-left" title="Dahlia 布局" href="/docs/zh-cn/customization/page-layouts/">
-    使用 Dahlia 的左侧导航、居中文章列、sticky 目录、splash 页面和独立 text 页面。
+  <Card icon="lucide:blocks" title="MDX 组件" href="/docs/zh-cn/components/callout/">
+    使用 callout、card、steps、tabs、accordion、file tree、badge、media、embed
+    和 Iconify icon 组织页面。
   </Card>
   <Card icon="lucide:replace" title="组件覆盖" href="/docs/zh-cn/customization/overriding-components/">
     当配置不够用时，替换 search、navbar、page header、page actions、
@@ -36,10 +39,15 @@ Dahlia 是一个面向 Astro v7、Tailwind CSS v4 和 MDX 的可安装文档主�
   </Card>
 </CardGrid>
 
-## 文档树如何工作
+## Dahlia 站点的四个部分
 
-Dahlia 从 `docs` content collection 读取 MDX entry，然后在 `docsBase` 下
-注入页面路由、Markdown 源码路由和搜索路由。默认 `docsBase: '/'` 时，Dahlia 会生成：
+1. `astro.config.ts` 注册 Dahlia integration。
+2. `src/content.config.ts` 使用 Dahlia loader 和 schema 定义 `docs` collection。
+3. `theme.config.json` 配置项目身份、路由、导航、搜索、源码链接、外观和组件覆盖。
+4. `src/content/docs/**/*.mdx` 保存文档页面。
+
+Dahlia 读取 collection，并在 `docsBase` 下注入页面、Markdown 源码和搜索路由。
+默认 `docsBase: '/'` 时会生成：
 
 - `/` 和嵌套文档页面
 - `/*.md` Markdown 源码路由

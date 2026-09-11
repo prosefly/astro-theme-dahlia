@@ -1,16 +1,16 @@
 ---
-title: 安装
-description: 从 starter template 创建 Dahlia 文档站点，或将 Dahlia 加到现有 Astro 项目。
-
+title: 安装 Dahlia
+description: 将 Dahlia 加入 Astro 项目，并发布第一篇可访问的文档。
+sidebar:
+  icon: "lucide:package-plus"
 ---
 
-import { Steps } from '@prosefly/astro-components';
+import { Callout, Steps } from '@prosefly/astro-components';
 
-新建文档站点时，推荐从 Dahlia starter template 开始。已有 Astro 项目时，可以手动安装 Dahlia。
+新建文档站点时使用 starter template。已有 Astro 项目，或者希望了解每个
+必需文件时，使用手动安装流程。
 
-## 使用 Starter 模板 {#starter-template}
-
-如果你想最快得到一个可运行站点，使用 starter。
+## Starter template {#starter-template}
 
 ```sh
 pnpm create astro@latest my-docs --template prosefly/astro-template-dahlia-starter
@@ -18,28 +18,30 @@ cd my-docs
 pnpm dev
 ```
 
-模板源码在
+模板维护在
 [prosefly/astro-template-dahlia-starter](https://github.com/prosefly/astro-template-dahlia-starter)。
+启动后，修改 `theme.config.json`，并替换 `src/content/docs` 下的示例内容。
 
-站点跑起来后，替换示例内容，并在 Dahlia theme config 中更新项目名称、导航、
-sidebar 结构、外观、footer 和源码仓库。
+## 手动安装 {#manual-setup}
 
-## 手动设置 {#manual-setup}
+下面从一个 Astro 项目开始，最终会得到运行在 `http://localhost:4321/`
+的 Dahlia 文档站点。如果还没有 Astro 项目，先创建一个：
 
-当项目已经存在，或你想逐步接入 Dahlia 时，使用手动设置。
+```sh
+pnpm create astro@latest my-docs
+cd my-docs
+```
 
 <Steps>
 
 1. **安装 Dahlia。**
 
-   将主题包加到 Astro 项目。
-
    ```sh
    pnpm add @prosefly/astro-theme-dahlia
    ```
 
-   当你自己的 MDX 或 Astro 文件直接 import cards、steps、tabs、callouts、
-   badges、file trees 等 shared components 时，再直接安装
+   Dahlia 已包含主题运行所需的 integrations。只有当自己的 MDX 文件要
+   import `Callout`、`Card`、`Steps` 或 `Tabs` 等组件时，才需要直接安装
    `@prosefly/astro-components`。
 
    ```sh
@@ -47,8 +49,6 @@ sidebar 结构、外观、footer 和源码仓库。
    ```
 
 2. **注册 integration。**
-
-   在 Astro 配置中接入 Dahlia integration。
 
    ```ts title="astro.config.ts"
    import { defineConfig } from 'astro/config';
@@ -59,35 +59,9 @@ sidebar 结构、外观、footer 和源码仓库。
    });
    ```
 
-3. **创建 theme config。**
+3. **注册 docs collection。**
 
-   先配置项目身份和最小 sidebar。
-
-   ```json title="theme.config.json"
-   {
-     "$schema": "https://prosefly.dev/schema/dahlia.json",
-     "name": "My Docs",
-     "description": "Documentation for my project.",
-     "siteNav": [{ "label": "Docs", "href": "/" }],
-     "docsNav": [
-       {
-         "label": "Guides",
-         "icon": "lucide:rocket",
-         "items": ["index"]
-       }
-     ]
-   }
-   ```
-
-   如果 Astro 项目已经有站点首页，并且文档应该放在 `/docs/` 下，设置
-   `docsBase: '/docs'`。
-
-   当你需要 TypeScript、imports 或动态值时，可以直接在 `astro.config.ts`
-   里传入 `dahlia({...})`。这些选项会覆盖 `theme.config.json` 中的值。
-
-4. **注册 docs collection。**
-
-   创建 `src/content.config.ts`，并使用 Dahlia 提供的 loader 和 schema。
+   创建 `src/content.config.ts`：
 
    ```ts title="src/content.config.ts"
    import { defineCollection } from 'astro:content';
@@ -101,17 +75,34 @@ sidebar 结构、外观、footer 和源码仓库。
    export const collections = { docs };
    ```
 
-5. **添加第一篇文档。**
+4. **添加最小主题配置。**
 
-   Dahlia 默认从 `src/content/docs` 读取文档。
+   在项目根目录创建 `theme.config.json`：
+
+   ```json title="theme.config.json"
+   {
+     "$schema": "https://prosefly.dev/schema/dahlia.json",
+     "name": "Acme 文档",
+     "description": "Acme 项目文档。",
+     "docsNav": [
+       {
+         "label": "指南",
+         "icon": "lucide:book-open",
+         "items": ["index"]
+       }
+     ]
+   }
+   ```
+
+5. **创建第一篇文档。**
 
    ```mdx title="src/content/docs/index.mdx"
    ---
-   title: Overview
-   description: Start here.
+   title: 概览
+   description: 了解如何使用 Acme。
    ---
 
-   Welcome to the docs.
+   欢迎阅读 Acme 文档。
    ```
 
 6. **启动开发服务器。**
@@ -120,10 +111,68 @@ sidebar 结构、外观、footer 和源码仓库。
    pnpm dev
    ```
 
+   打开 `http://localhost:4321/`。页面中应显示“概览”内容和“指南”侧边栏。
+
 </Steps>
+
+<Callout type="tip" title="使用与 CI 相同的检查">
+  构建前运行 `pnpm check`，检查 Astro、TypeScript、content schema 和 MDX。
+</Callout>
+
+## 添加另一篇文档
+
+创建 `src/content/docs/getting-started.mdx`：
+
+```mdx
+---
+title: 快速开始
+sidebar:
+  icon: "lucide:rocket"
+---
+
+在这里编写第一个任务。
+```
+
+然后把 content entry ID 加入 `docsNav`：
+
+```json
+{
+  "label": "指南",
+  "items": ["index", "getting-started"]
+}
+```
+
+Content entry ID 是 `src/content/docs` 下的相对路径，不包含 `.mdx` 扩展名。
+嵌套文件使用 `configuration/authentication` 这样的斜杠路径。
+
+## 将文档放到 `/docs`
+
+最小配置会把文档放在 `/`。如果产品首页和文档需要共存，设置 `docsBase`
+并更新顶部导航：
+
+```json title="theme.config.json"
+{
+  "name": "Acme",
+  "docsBase": "/docs",
+  "siteNav": [
+    { "label": "首页", "href": "/" },
+    { "label": "文档", "href": "/docs/" }
+  ],
+  "docsNav": [
+    { "label": "指南", "items": ["index", "getting-started"] }
+  ]
+}
+```
+
+内容仍保存在 `src/content/docs`，只有公开 URL 改变。Index 页面会渲染到
+`/docs/`。
 
 ## 下一步
 
-- 查看 [项目配置](/docs/zh-cn/configuration/project/)，设置站点身份、导航、docs navigation、footer 和源码仓库。
-- 在移动文档路径或修改 docs loader base 前，先阅读 [内容路由](/docs/zh-cn/configuration/content-routing/)。
-- 发布前运行 `pnpm check`，验证 content collections、MDX imports、Astro 组件和 TypeScript。
+- [项目结构](/docs/zh-cn/essentials/project-structure/) 解释内容、配置和 overrides
+  分别应该放在哪里。
+- [编写内容](/docs/zh-cn/essentials/frontmatter/) 介绍 frontmatter、Markdown、
+  代码块、图片和页面模板。
+- [配置导航](/docs/zh-cn/configuration/docs-nav/) 介绍嵌套分组和目录自动生成。
+- [使用 MDX 组件](/docs/zh-cn/components/callout/) 提供每个共享内容组件的示例
+  和 props 表格。
