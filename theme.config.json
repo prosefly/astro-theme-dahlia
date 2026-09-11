@@ -69,15 +69,23 @@
       },
       "icon": "lucide:rocket",
       "items": [
-        "overview",
-        "installation",
         {
-          "label": "Essentials",
+          "label": "Getting Started",
           "translations": {
-            "zh-cn": "基础"
+            "zh-cn": "入门"
           },
           "items": [
-            "essentials/project-structure",
+            "overview",
+            "installation",
+            "essentials/project-structure"
+          ]
+        },
+        {
+          "label": "Write Content",
+          "translations": {
+            "zh-cn": "编写内容"
+          },
+          "items": [
             "essentials/frontmatter",
             "essentials/markdown-syntax",
             "essentials/admonitions",
@@ -86,41 +94,26 @@
             "essentials/mermaid"
           ]
         },
-        "deployment",
-        "changelog",
-        "troubleshooting"
-      ]
-    },
-    {
-      "slug": "configuration",
-      "label": "Configuration",
-      "translations": {
-        "zh-cn": "配置"
-      },
-      "icon": "lucide:settings-2",
-      "items": [
-        "configuration/project",
-        "configuration/content-routing",
-        "configuration/i18n",
-        "configuration/appearance",
-        "configuration/navbar",
-        "configuration/docs-nav",
-        "configuration/footer",
-        "configuration/page-actions",
-        "configuration/search",
-        "configuration/source",
-        "configuration/assistant",
-        "configuration/integrations"
-      ]
-    },
-    {
-      "slug": "customization",
-      "label": "Customization",
-      "translations": {
-        "zh-cn": "自定义"
-      },
-      "icon": "lucide:palette",
-      "items": [
+        {
+          "label": "Configure",
+          "translations": {
+            "zh-cn": "配置"
+          },
+          "items": [
+            "configuration/project",
+            "configuration/content-routing",
+            "configuration/i18n",
+            "configuration/appearance",
+            "configuration/navbar",
+            "configuration/docs-nav",
+            "configuration/footer",
+            "configuration/page-actions",
+            "configuration/search",
+            "configuration/source",
+            "configuration/assistant",
+            "configuration/integrations"
+          ]
+        },
         {
           "label": "Customize",
           "translations": {
@@ -132,7 +125,38 @@
             "customization/overriding-components",
             "customization/page-layouts"
           ]
+        },
+        {
+          "label": "Ship and Maintain",
+          "translations": {
+            "zh-cn": "发布与维护"
+          },
+          "items": [
+            "deployment",
+            "troubleshooting",
+            "changelog"
+          ]
         }
+      ]
+    },
+    {
+      "slug": "components",
+      "label": "Components",
+      "translations": {
+        "zh-cn": "组件"
+      },
+      "icon": "lucide:blocks",
+      "items": [
+        "components/icon",
+        "components/badge",
+        "components/callout",
+        "components/cards",
+        "components/steps",
+        "components/tabs",
+        "components/accordion",
+        "components/file-tree",
+        "components/audio-player",
+        "components/embed"
       ]
     },
     {
