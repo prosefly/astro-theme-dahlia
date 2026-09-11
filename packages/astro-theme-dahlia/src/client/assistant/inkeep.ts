@@ -3,14 +3,6 @@ export {};
 const prosefly = window.__prosefly ??= {};
 const proseflyDahlia = (prosefly.dahlia ??= {});
 
-declare global {
-  interface Window {
-    Inkeep?: {
-      ModalSearchAndChat(settings: InkeepSettings): unknown;
-    };
-  }
-}
-
 interface InkeepSettings {
   defaultView?: string;
   baseSettings: Record<string, unknown>;

@@ -26,4 +26,37 @@ interface ProseflyNamespace {
 
 interface Window {
   __prosefly?: ProseflyNamespace;
+  docsearch?: (props: DocSearchProps) => DocSearchInstance;
+  Inkeep?: {
+    ModalSearchAndChat(settings: InkeepSettings): unknown;
+  };
+}
+
+interface DocSearchInstance {
+  open(): void;
+}
+
+interface DocSearchProps {
+  container: HTMLElement;
+  appId: string;
+  apiKey: string;
+  indexName: string;
+  askAi?: string;
+  disableUserPersonalization?: boolean;
+  insights?: boolean;
+  maxResultsPerGroup?: number;
+  placeholder?: string;
+  searchParameters?: Record<string, unknown>;
+  keyboardShortcuts?: {
+    'Ctrl/Cmd+K'?: boolean;
+    '/'?: boolean;
+  };
+}
+
+interface InkeepSettings {
+  defaultView?: string;
+  baseSettings: Record<string, unknown>;
+  modalSettings?: Record<string, unknown>;
+  searchSettings?: Record<string, unknown>;
+  aiChatSettings?: Record<string, unknown>;
 }
