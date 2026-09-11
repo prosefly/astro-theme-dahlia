@@ -66,10 +66,12 @@ describe('Dahlia config', () => {
     ]);
   });
 
-  it('loads theme.config.json and strips schema metadata', () => {
+  it('loads and watches theme.config.json while stripping schema metadata', () => {
     const root = mkdtempSync(join(tmpdir(), 'dahlia-config-'));
 
     try {
+      const rootUrl = pathToFileURL(`${root}/`);
+      const watchedFiles: Array<URL | string> = [];
       writeFileSync(join(root, 'theme.config.json'), JSON.stringify({
         $schema: 'https://prosefly.dev/schema/dahlia.json',
         name: 'JSON Docs',
@@ -79,7 +81,7 @@ describe('Dahlia config', () => {
         },
       }));
 
-      const fileOptions = loadDahliaConfigFile(pathToFileURL(`${root}/`));
+      const fileOptions = loadDahliaConfigFile(rootUrl, (file) => watchedFiles.push(file));
 
       expect(fileOptions).toEqual({
         name: 'JSON Docs',
@@ -88,6 +90,7 @@ describe('Dahlia config', () => {
           accent: 'emerald',
         },
       });
+      expect(watchedFiles).toEqual([new URL('theme.config.json', rootUrl)]);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }

@@ -31,12 +31,13 @@ export default function dahlia(options: DahliaIntegrationOptions = {}): AstroInt
     hooks: {
       'astro:config:setup': async ({
         addMiddleware,
+        addWatchFile,
         config: astroConfig,
         injectRoute,
         logger,
         updateConfig,
       }) => {
-        const fileOptions = loadDahliaConfigFile(astroConfig.root);
+        const fileOptions = loadDahliaConfigFile(astroConfig.root, addWatchFile);
         const mergedOptions = normalizeLegacyDahliaConfigOptions(
           mergeDahliaConfigOptions(fileOptions, options),
           (message) => logger.warn(message),

@@ -59,8 +59,13 @@ export function resolveDahliaConfig(options: DahliaIntegrationOptions): DahliaTh
   };
 }
 
-export function loadDahliaConfigFile(root: URL): DahliaIntegrationOptions {
+export function loadDahliaConfigFile(
+  root: URL,
+  addWatchFile?: (path: URL | string) => void,
+): DahliaIntegrationOptions {
   const configUrl = new URL(DAHLIA_CONFIG_FILE, root);
+  addWatchFile?.(configUrl);
+
   if (!existsSync(configUrl)) {
     return {};
   }
@@ -74,7 +79,7 @@ export function loadDahliaConfigFile(root: URL): DahliaIntegrationOptions {
     return options;
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    throw new Error(`Failed to read ${configPath}: ${message}`);
+    throw new Error(`Failed to read ${configPath}: ${message}`, { cause: error });
   }
 }
 
