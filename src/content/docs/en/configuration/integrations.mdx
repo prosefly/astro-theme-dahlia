@@ -1,13 +1,14 @@
 ---
 title: Integrations
-description: Configure Iconify preloading, Expressive Code, callout directives, CJK Markdown, and package manager tabs.
+description: Configure Iconify, Expressive Code, Mermaid, callout directives, CJK Markdown, and package manager tabs.
 
 ---
 
 import { Card, CardGrid } from '@prosefly/astro-components';
 
-Dahlia includes integrations for icons, syntax highlighting, callout directives,
-CJK-friendly Markdown, image galleries, and package-manager command tabs.
+Dahlia includes integrations for icons, syntax highlighting, Mermaid diagrams,
+callout directives, CJK-friendly Markdown, image galleries, and package-manager
+command tabs.
 
 <CardGrid>
   <Card icon="lucide:sparkles" title="Iconify" href="#iconify">
@@ -31,6 +32,9 @@ CJK-friendly Markdown, image galleries, and package-manager command tabs.
   </Card>
   <Card icon="lucide:images" title="Image Galleries" href="#image-galleries">
     Transform Markdown image-only paragraphs into responsive gallery figures.
+  </Card>
+  <Card icon="lucide:workflow" title="Mermaid" href="#mermaid">
+    Render fenced Mermaid diagrams with theme-aware client-side output.
   </Card>
 </CardGrid>
 
@@ -153,6 +157,24 @@ normal Markdown output.
 dahlia({
   markdown: {
     imageGallery: false,
+  },
+})
+```
+
+## Mermaid
+
+Mermaid rendering is enabled by default through the shared Astro Components
+integration. Write a fenced `mermaid` code block to render a diagram; Dahlia
+also excludes Mermaid source from Shiki syntax highlighting.
+
+See [Mermaid Diagrams](/docs/essentials/mermaid/) for syntax and examples.
+
+Disable the transform when Mermaid source should remain a normal code block.
+
+```ts
+dahlia({
+  markdown: {
+    mermaid: false,
   },
 })
 ```

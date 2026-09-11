@@ -15,6 +15,7 @@ export interface DahliaMarkdownOptions {
   cjkFriendly?: boolean | 'auto';
   packageManagerTabs?: false;
   imageGallery?: false;
+  mermaid?: false;
 }
 
 export interface DahliaIntegrationOptions {

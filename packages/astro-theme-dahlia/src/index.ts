@@ -72,6 +72,7 @@ export default function dahlia(options: DahliaIntegrationOptions = {}): AstroInt
                 calloutDirectives: mergedOptions.markdown?.calloutDirectives,
                 packageManagerTabs: mergedOptions.markdown?.packageManagerTabs,
                 imageGallery: mergedOptions.markdown?.imageGallery,
+                mermaid: mergedOptions.markdown?.mermaid,
                 ...resolveMarkdownExtensions(mergedOptions, astroConfig.markdown),
               },
             }),
