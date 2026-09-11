@@ -194,7 +194,7 @@ function getHeadingIndent(depth: number): string {
 
       {displayMode === 'subnav' && <div class="shrink-0 p-4">
         {activeSection ? (
-          <details class="group/dahlia-section-switch relative" data-section-switch>
+          <details class="group/dahlia-section-switch relative z-20" data-section-switch>
         <summary class="dahlia-focus-ring dahlia-border-muted flex min-h-12 cursor-pointer list-none items-center gap-3 rounded-(--dahlia-radius-md) border bg-(--dahlia-surface) px-3 py-2 text-(--dahlia-text-strong) marker:hidden transition-colors hover:border-(--dahlia-accent) hover:bg-(--dahlia-accent-soft)">
               <span class="relative h-5 w-5 shrink-0">
                 {sections.map((section) => (
@@ -227,7 +227,7 @@ function getHeadingIndent(depth: number): string {
                 name="lucide:chevrons-up-down"
               />
             </summary>
-            <div class="dahlia-border-subtle absolute start-0 end-0 top-[calc(100%+0.5rem)] z-20 space-y-1 rounded-[min(var(--dahlia-radius-lg),1rem)] border bg-(--dahlia-background) p-1.5 shadow-lg">
+            <div class="dahlia-border-subtle absolute start-0 end-0 top-[calc(100%+0.5rem)] z-50 space-y-1 rounded-[min(var(--dahlia-radius-lg),1rem)] border bg-(--dahlia-background) p-1.5 shadow-lg">
               {sections.map((section) => (
                 <button
                   aria-current={section.slug === activeSectionSlug ? 'page' : undefined}
@@ -267,7 +267,7 @@ function getHeadingIndent(depth: number): string {
         )}
       </div>}
 
-      <div class="flex min-h-0 flex-1 flex-col overflow-hidden px-4 pb-3">
+      <div class="dahlia-mobile-sidebar-content relative z-0 flex min-h-0 flex-1 flex-col overflow-hidden">
         {displayMode === 'flat' ? (
           <Sidebar currentPath={currentPath} maxHeight="100%" sidebar={sidebar} />
         ) : (
@@ -299,3 +299,15 @@ function getHeadingIndent(depth: number): string {
 <script>
   import '../../client/mobile-docs-nav';
 </script>
+
+<style is:global>
+  .dahlia-mobile-sidebar-content .dahlia-scrollbar {
+    padding-block: calc(var(--spacing) * 3);
+    padding-inline-start: calc(var(--spacing) * 4);
+    padding-inline-end: calc(var(--spacing) * 4 + env(safe-area-inset-right));
+  }
+
+  [dir="rtl"] .dahlia-mobile-sidebar-content .dahlia-scrollbar {
+    padding-inline-end: calc(var(--spacing) * 4 + env(safe-area-inset-left));
+  }
+</style>
