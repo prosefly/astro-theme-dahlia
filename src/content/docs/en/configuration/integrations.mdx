@@ -34,7 +34,7 @@ command tabs.
     Transform Markdown image-only paragraphs into responsive gallery figures.
   </Card>
   <Card icon="lucide:workflow" title="Mermaid" href="#mermaid">
-    Render fenced Mermaid diagrams with theme-aware client-side output.
+    Render fenced Mermaid diagrams as theme-aware static SVG during the build.
   </Card>
 </CardGrid>
 
@@ -164,10 +164,13 @@ dahlia({
 ## Mermaid
 
 Mermaid rendering is enabled by default through the shared Astro Components
-integration. Write a fenced `mermaid` code block to render a diagram; Dahlia
-also excludes Mermaid source from Shiki syntax highlighting.
+integration. Write a fenced `mermaid` code block to generate a static SVG during
+content processing; Dahlia also excludes Mermaid source from Shiki syntax
+highlighting.
 
-See [Mermaid Diagrams](/docs/essentials/mermaid/) for syntax and examples.
+See the [Mermaid reference](/docs/references/mermaid/) for supported diagram
+types, syntax examples, rendering behavior, accessibility, styling, and
+troubleshooting.
 
 Disable the transform when Mermaid source should remain a normal code block.
 

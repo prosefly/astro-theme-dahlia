@@ -90,8 +90,7 @@
             "essentials/markdown-syntax",
             "essentials/admonitions",
             "essentials/images",
-            "essentials/code-blocks",
-            "essentials/mermaid"
+            "essentials/code-blocks"
           ]
         },
         {
@@ -169,7 +168,8 @@
       "items": [
         "references/configuration",
         "references/theme-tokens",
-        "references/expressive-code"
+        "references/expressive-code",
+        "references/mermaid"
       ]
     }
   ],

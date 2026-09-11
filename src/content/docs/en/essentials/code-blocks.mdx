@@ -26,6 +26,31 @@ export const enabled = true;
 Common language names include `ts`, `tsx`, `js`, `astro`, `css`, `html`, `json`,
 `md`, `mdx`, `sh`, and `bash`.
 
+## Mermaid Diagrams
+
+A fenced block with the `mermaid` language is a diagram, not a highlighted code
+sample. Dahlia renders it to static SVG during the build:
+
+````md
+```mermaid title="Release flow"
+flowchart LR
+  Write[Write docs] --> Check[Run checks]
+  Check --> Build[Build site]
+  Build --> Deploy[Deploy]
+```
+````
+
+```mermaid title="Release flow"
+flowchart LR
+  Write[Write docs] --> Check[Run checks]
+  Check --> Build[Build site]
+  Build --> Deploy[Deploy]
+```
+
+See the [Mermaid reference](/docs/references/mermaid/) for the six supported
+diagram families, full examples, accessibility, styling, configuration, and
+build-error guidance.
+
 ## Titles And Frames
 
 Add `title` to show a file name in an editor-style frame.
