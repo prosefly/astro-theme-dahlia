@@ -1,41 +1,107 @@
 ---
 title: 故障排查
-description: 排查 Dahlia 设置、路由、MDX、搜索、i18n 和组件覆盖中的常见问题。
-
+description: 解决 Dahlia 安装、路由、导航、构建、搜索和 MDX 的常见问题。
+sidebar:
+  icon: "lucide:wrench"
 ---
 
-先运行 `pnpm run check`。它会在生产构建前验证 content collections、MDX imports、
-Astro 组件和 TypeScript。
+先运行：
 
-## 文档页面没有出现在 sidebar 中
+```sh
+pnpm check
+pnpm build
+```
 
-确认页面在 docs collection 中，生产环境下没有设置 `draft: true`，并且被 sidebar
-字符串项或 `autogenerate.directory` 匹配。i18n 项目中，sidebar 值与 locale 无关，
-所以应使用 `configuration/project`，而不是 `en/configuration/project`。
+`check` 会报告 content schema、MDX、Astro 和 TypeScript 错误；`build` 还会
+验证生成路由、icon 加载、embed 和搜索索引。
 
-## 生成的路由不是预期 URL
+## 所有文档路由都返回 404
 
-检查 `docsBase`、locale `directory` 和 frontmatter `slug`。`slug` 会改变公开 URL，
-但 sidebar 归属仍然跟随 content entry ID。
+确认三个设置：
 
-## 搜索索引返回 404
+- `astro.config.ts` 的 `integrations` 包含 `dahlia()`。
+- `src/content.config.ts` 导出名为 `docs` 的 collection，并使用
+  `docsLoader()` 和 `docsSchema()`。
+- 页面使用 `.mdx` 扩展名，并位于 loader base 下；默认目录是
+  `src/content/docs`。
 
-确认 `docsBase` 和当前 locale。默认 `docsBase: '/'` 时，根搜索索引是
-`/search.json`。设置 `docsBase: '/docs'` 时，索引是 `/docs/search.json`；
-本地化索引会包含 locale 前缀，例如 `/docs/zh-cn/search.json`。
+修改 `astro.config.ts` 或 `src/content.config.ts` 后重启开发服务器。
 
-## 图标没有渲染
+## 页面存在，但 sidebar 中没有
 
-使用完整 Iconify 名称，例如 `lucide:search`，或在支持的位置配置别名。如果图标名称
-是动态生成的，需要将它加入 `iconify.preload`，因为静态扫描无法检测动态名称。
+Dahlia 不会自动把所有页面加入导航。把 content entry ID 加入 `docsNav`，
+或者使用 `autogenerate` 包含目录。
+
+```json
+{
+  "label": "指南",
+  "items": [
+    "index",
+    { "autogenerate": { "directory": "guides" } }
+  ]
+}
+```
+
+同时确认生产环境中页面没有设置 `draft: true`，自动生成分组中的页面也没有
+设置 `sidebar.hidden: true`。
+
+## 生成的 URL 与预期不同
+
+分别检查这些设置：
+
+- `docsLoader({ base })` 改变源文件读取目录。
+- `docsBase` 改变公开路由前缀。
+- Locale `directory` 把源目录映射到 locale 路由。
+- Frontmatter `slug` 覆盖单个页面的公开路径。
+
+Navigation string 始终使用 content entry ID，而不是公开 URL。应使用
+`configuration/project`，不要使用 `/docs/configuration/project/` 或
+`en/configuration/project`。
+
+## MDX 组件未定义
+
+安装共享组件包，并在当前 MDX 文件中 import：
+
+```sh
+pnpm add @prosefly/astro-components
+```
+
+```mdx
+import { Callout } from '@prosefly/astro-components';
+
+<Callout type="tip">内容</Callout>
+```
+
+具体 imports 和语法见 [组件](/docs/zh-cn/components/callout/)。
+
+## 生产构建在加载 icons 时失败
+
+Iconify icons 会在开发或构建期间解析。包含 `api.iconify.design`、
+`fetch failed` 或 `ENOTFOUND` 的错误通常表示构建环境无法访问网络。
+
+允许访问配置的 Iconify API，或者将 `iconify.apiBase` 设置为内部兼容 endpoint。
+动态拼接的 icon name 还应加入 `iconify.preload`。
+
+## 部署后本地搜索异常
+
+先运行生产构建再测试搜索。`docsBase: '/'` 对应 `/search.json`；
+`docsBase: '/docs'` 对应 `/docs/search.json`。本地化索引还包含 locale 前缀，
+例如 `/docs/zh-cn/search.json`。
+
+直接打开预期的 index URL，确认托管平台返回 `200` 和 JSON 内容。
 
 ## 组件覆盖没有生效
 
-确认 key 与受支持的 override slot 完全一致，路径是相对于项目根目录的路径，并且在修改
-`theme.config.json` 或 `astro.config.ts` 里的 `dahlia({...})` 选项后重启了
-dev server。
+确认 config key 与支持的 override name 完全一致，并且文件路径相对于项目根目录。
+开发期间会监听 `theme.config.json`；修改 `astro.config.ts` 后仍需重启开发服务器。
 
-## 翻译页面回退到了英文
+## 翻译页面显示默认语言内容
 
-在 locale 目录下添加匹配文件。Fallback 页面会保留目标 locale route，但 edit links
-和 contributors 会指向实际渲染的默认 locale 源文件。
+这是 locale fallback。要替换内容，在 locale 目录下添加对应文件。Fallback 页面
+保留目标 locale URL，但 source 和 contributor metadata 仍指向默认语言 entry。
+
+## 问题仍未解决
+
+提交 issue 时，请包含 Dahlia、Astro 和 Node 版本，`pnpm check` 与
+`pnpm build` 输出，以及最小化后的 `astro.config.ts`、
+`src/content.config.ts` 和 `theme.config.json`。

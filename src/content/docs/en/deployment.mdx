@@ -1,53 +1,80 @@
 ---
-title: Deployment
-description: Deploy Dahlia to any static host supported by Astro output.
-
+title: Build and Deploy
+description: Validate Dahlia, build static output, and configure a static host.
+sidebar:
+  icon: "lucide:cloud-upload"
 ---
 
-import { Steps } from '@prosefly/astro-components';
+import { Callout, Steps } from '@prosefly/astro-components';
 
-Dahlia builds to static output, so deployment works anywhere Astro static sites
-are supported.
+Dahlia produces a static Astro site. A deployment needs a build command, the
+`dist/` output directory, and the correct public site URL.
 
-## Build before deploying
+## Validate a production build
 
 <Steps>
 
-1. **Run a production build locally.**
+1. **Run project checks.**
 
    ```sh
-   npm run build
+   pnpm check
    ```
 
-2. **Verify the generated output.**
+2. **Build the site.**
 
-   Confirm that docs pages, MDX imports, search routes, and localized pages all
-   render cleanly.
+   ```sh
+   pnpm build
+   ```
 
-3. **Publish `dist/`.**
+3. **Preview the generated output.**
 
-   Deploy the generated static output to the host.
+   ```sh
+   pnpm preview
+   ```
+
+   Open several docs pages, search for a page title, switch language when i18n
+   is enabled, and verify that the previous and next links are correct.
 
 </Steps>
 
+<Callout type="warning" title="Builds may need network access">
+  Iconify icons and remote embed metadata can be resolved during the build.
+  Make sure the CI environment can reach those providers, or configure an
+  internal Iconify endpoint and use explicit embed metadata.
+</Callout>
 
-## Common static hosts
+## Host settings
 
-### Vercel
+Use these settings on Vercel, Netlify, Cloudflare Pages, or another static host:
 
-Use the default Astro static build settings. The generated `dist/` directory is
-what Vercel publishes.
+| Setting | Value |
+| --- | --- |
+| Install command | `pnpm install --frozen-lockfile` |
+| Build command | `pnpm build` |
+| Publish directory | `dist` |
 
-### Netlify
+Set Astro's `site` option to the production origin so canonical URLs, metadata,
+and generated links use the final domain:
 
-Point the build command to `npm run build` and publish the `dist/` directory.
+```ts title="astro.config.ts"
+import { defineConfig } from 'astro/config';
+import dahlia from '@prosefly/astro-theme-dahlia';
 
-### Cloudflare Pages
+export default defineConfig({
+  site: 'https://docs.example.com',
+  integrations: [dahlia()],
+});
+```
 
-Use the same static output flow: install dependencies, run `npm run build`, and
-publish `dist/`.
+If the whole site is hosted below a path such as
+`https://example.com/product/`, also set Astro's `base`. `docsBase` is different:
+it places documentation below a route inside the Astro site, such as `/docs`.
 
-### Static host
+## Verify after deployment
 
-If the host can serve files from `dist/`, Dahlia can be deployed there. No
-server-side runtime is required for the first release.
+- Open the docs index and one nested page directly, not only through client
+  navigation.
+- Confirm the active locale's `search.json` URL returns `200`.
+- Open a generated `.md` page when `view-markdown` is enabled.
+- Check source and edit links against the configured repository branch.
+- Confirm the host serves the generated `404.html` page.
