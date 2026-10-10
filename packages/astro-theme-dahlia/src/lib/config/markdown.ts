@@ -1,8 +1,9 @@
-import { isUnifiedProcessor } from '@astrojs/markdown-remark';
 import {
-  resolveMarkdownConfig as resolveSharedMarkdownConfig,
-  type MarkdownOptions,
-} from '@prosefly/astro-components/markdown';
+  isUnifiedProcessor,
+  unified,
+  type RehypePlugins,
+  type RemarkPlugins,
+} from '@astrojs/markdown-remark';
 import type { AstroConfig } from 'astro';
 import remarkCjkFriendly from 'remark-cjk-friendly/parseOnly';
 import remarkCjkFriendlyGfmStrikethrough from 'remark-cjk-friendly-gfm-strikethrough/parseOnly';
@@ -13,6 +14,10 @@ import type { DahliaIntegrationOptions } from './options';
 
 function isCjkLocale(value: string | undefined): boolean {
   return /^(zh|ja|ko)(-|$)/i.test(value ?? '');
+}
+
+function isAstroDefaultProcessor(processor: AstroConfig['markdown']['processor']): boolean {
+  return processor?.name === 'satteri';
 }
 
 function shouldUseCjkFriendly(options: DahliaIntegrationOptions): boolean {
@@ -33,9 +38,28 @@ export function resolveMarkdownConfig(
 ) {
   const markdownOptions = options.markdown ?? {};
   const expressiveCodeOptions = resolveExpressiveCodeOptions(markdownOptions.expressiveCode);
-  const extensions = resolveMarkdownExtensions(options, markdownConfig);
+  const processor = markdownConfig.processor;
+
+  if (processor && !isUnifiedProcessor(processor) && !isAstroDefaultProcessor(processor)) {
+    return markdownConfig;
+  }
+
+  const unifiedOptions = processor && isUnifiedProcessor(processor)
+    ? processor.options
+    : undefined;
+  const existingRemarkPlugins = unifiedOptions?.remarkPlugins ?? markdownConfig.remarkPlugins ?? [];
+  const existingRehypePlugins = unifiedOptions?.rehypePlugins ?? markdownConfig.rehypePlugins ?? [];
+  const { remarkPlugins, rehypePlugins } = resolveDahliaMarkdownPlugins(options, markdownConfig);
 
   return {
+    ...markdownConfig,
+    processor: unified({
+      remarkPlugins: [...remarkPlugins, ...existingRemarkPlugins],
+      rehypePlugins: [...existingRehypePlugins, ...rehypePlugins],
+      remarkRehype: unifiedOptions?.remarkRehype ?? markdownConfig.remarkRehype,
+      gfm: unifiedOptions?.gfm ?? markdownConfig.gfm,
+      smartypants: unifiedOptions?.smartypants ?? markdownConfig.smartypants,
+    }),
     ...(expressiveCodeOptions === false
       ? {
           shikiConfig: {
@@ -46,20 +70,13 @@ export function resolveMarkdownConfig(
           },
         }
       : {}),
-    ...resolveSharedMarkdownConfig({
-      calloutDirectives: markdownOptions.calloutDirectives,
-      packageManagerTabs: markdownOptions.packageManagerTabs,
-      imageGallery: markdownOptions.imageGallery,
-      mermaid: markdownOptions.mermaid,
-      ...extensions,
-    }, markdownConfig),
   };
 }
 
-export function resolveMarkdownExtensions(
+function resolveDahliaMarkdownPlugins(
   options: DahliaIntegrationOptions,
   markdownConfig: AstroConfig['markdown'],
-): Pick<MarkdownOptions, 'remarkPluginsBeforeTransforms' | 'remarkPluginsAfterTransforms' | 'rehypePluginsBeforeTransforms' | 'rehypePluginsAfterTransforms'> {
+): { remarkPlugins: RemarkPlugins; rehypePlugins: RehypePlugins } {
   const markdownProcessor = markdownConfig?.processor;
   const unifiedOptions = markdownProcessor && isUnifiedProcessor(markdownProcessor)
     ? markdownProcessor.options
@@ -70,9 +87,7 @@ export function resolveMarkdownExtensions(
     : [];
 
   return {
-    remarkPluginsBeforeTransforms: [remarkHeadingIds, ...cjkFriendlyPlugins],
-    remarkPluginsAfterTransforms: [],
-    rehypePluginsBeforeTransforms: [],
-    rehypePluginsAfterTransforms: [rehypeHeadingAnchors],
+    remarkPlugins: [remarkHeadingIds, ...cjkFriendlyPlugins],
+    rehypePlugins: [rehypeHeadingAnchors],
   };
 }

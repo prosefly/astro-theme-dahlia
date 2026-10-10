@@ -1,19 +1,21 @@
 ---
 title: Integrations
-description: Configure Iconify, Expressive Code, Mermaid, callout directives, CJK Markdown, and package manager tabs.
-
+description: Configure Astro Components, Iconify, Expressive Code, Mermaid, CJK Markdown, and shared content transforms.
 ---
 
-import { Card, CardGrid } from '@prosefly/astro-components';
+import { Callout, Card, CardGrid } from '@prosefly/astro-components';
 
-Dahlia includes integrations for icons, syntax highlighting, Mermaid diagrams,
-callout directives, CJK-friendly Markdown, image galleries, and package-manager
-command tabs.
+Dahlia includes MDX, Expressive Code, and the shared Astro Components
+integration. It also configures CJK-friendly Markdown and the heading behavior
+required by the theme.
 
 <CardGrid>
+  <Card icon="lucide:blocks" title="Astro Components" href="#astro-components">
+    Use the default shared integration, or register it explicitly to customize
+    icons and content transforms.
+  </Card>
   <Card icon="lucide:sparkles" title="Iconify" href="#iconify">
-    Preload icon data used by the theme, MDX components, theme config, and
-    static `Icon` usage.
+    Preload icons used by components and project content.
   </Card>
   <Card icon="lucide:code-2" title="Expressive Code" href="#expressive-code">
     Render syntax-highlighted code blocks with frames, copy buttons, markers,
@@ -38,15 +40,62 @@ command tabs.
   </Card>
 </CardGrid>
 
+## Astro Components
+
+When the project does not register `@prosefly/astro-components/integration`,
+Dahlia adds it with its default options. The minimal setup therefore remains:
+
+```ts title="astro.config.ts"
+import { defineConfig } from 'astro/config';
+import dahlia from '@prosefly/astro-theme-dahlia';
+
+export default defineConfig({
+  integrations: [dahlia()],
+});
+```
+
+To change Astro Components behavior, install the package directly and register
+its integration yourself. Dahlia detects this registration and does not add or
+configure a second instance:
+
+```ts title="astro.config.ts"
+import { defineConfig } from 'astro/config';
+import proseflyComponents from '@prosefly/astro-components/integration';
+import dahlia from '@prosefly/astro-theme-dahlia';
+
+export default defineConfig({
+  integrations: [
+    proseflyComponents({
+      icons: {
+        preload: ['lucide:sparkles'],
+      },
+      markdown: {
+        mermaid: false,
+      },
+    }),
+    dahlia(),
+  ],
+});
+```
+
+<Callout type="note" title="Configuration ownership">
+  Options for Iconify, callout directives, package-manager tabs, image
+  galleries, and Mermaid belong to `proseflyComponents()`. They are not Dahlia
+  options and cannot be set in `theme.config.json`.
+</Callout>
+
 ## Iconify
 
-Dahlia installs the `@prosefly/astro-components/integration` integration internally.
-It preloads icons used by Dahlia, icons used by Prosefly components, theme config
-icons, and static `<Icon name="...">` usage in Astro and MDX files.
+The default Astro Components integration scans static icon usage under `src`
+and preloads the icons required by its shared components. Icons that are not
+preloaded can still be resolved from the default Iconify API during rendering.
 
-```ts
-dahlia({
-  iconify: {
+Register `proseflyComponents()` explicitly to preload dynamically selected
+icons, disable source scanning, or use another Iconify-compatible endpoint:
+
+```ts title="astro.config.ts"
+proseflyComponents({
+  icons: {
     apiBase: 'https://api.iconify.design',
     preload: ['lucide:sparkles'],
     scan: true,
@@ -54,15 +103,11 @@ dahlia({
 })
 ```
 
-Use `preload` for icons that cannot be detected statically.
-
-Set `scan: false` when a project wants only explicit preload names.
-
 ## Expressive Code
 
-Expressive Code is enabled by default.
+Expressive Code remains a Dahlia integration option and is enabled by default.
 
-```ts
+```ts title="astro.config.ts"
 dahlia({
   markdown: {
     expressiveCode: {
@@ -74,61 +119,49 @@ dahlia({
 })
 ```
 
-Dahlia configures light and dark Shiki themes, line numbers, copy button styling,
-and code frame styling to match the theme tokens.
+Dahlia configures light and dark Shiki themes, line numbers, copy button
+styling, and code frame styling to match the theme tokens.
 
-Disable Expressive Code when a project should use Astro's built-in Shiki
-renderer.
-
-```ts
-dahlia({
-  markdown: {
-    expressiveCode: false,
-  },
-})
-```
+Set `markdown.expressiveCode` to `false` to use Astro's built-in Shiki renderer.
 
 ## Package Manager Tabs
 
-Dahlia enables the Prosefly package-manager tabs remark plugin by default. It
-turns recognized install commands into tabbed command blocks.
+The Astro Components integration turns recognized install commands into tabbed
+command blocks by default. Disable that transform in the explicit integration
+when package-manager commands should remain normal code blocks:
 
-```ts
-dahlia({
+```ts title="astro.config.ts"
+proseflyComponents({
   markdown: {
     packageManagerTabs: false,
   },
 })
 ```
 
-Set `markdown.packageManagerTabs` to `false` to keep package-manager commands
-as normal code blocks.
-
 ## Callout Directives
 
-Dahlia enables the Prosefly callout directive remark plugin by default. This adds
-Starlight-style admonition syntax for `note`, `tip`, `warning`, `caution`, and
-`danger`. See [Admonitions](/docs/essentials/admonitions/) for authoring syntax
-and usage guidance.
+The Astro Components integration supports Starlight-style admonition syntax
+for `note`, `tip`, `warning`, `caution`, and `danger`. See
+[Admonitions](/docs/essentials/admonitions/) for authoring examples.
 
-Set `markdown.calloutDirectives` to `false` to keep Markdown directives
-untouched.
-
-```ts
-dahlia({
+```ts title="astro.config.ts"
+proseflyComponents({
   markdown: {
     calloutDirectives: false,
   },
 })
 ```
 
+Set `markdown.calloutDirectives` to `false` in `proseflyComponents()` to keep
+Markdown directives untouched.
+
 ## CJK-Friendly Markdown
 
-`markdown.cjkFriendly` controls CJK-friendly parsing for emphasis and GFM
-strikethrough. The default is `auto`: Dahlia enables it when `locales` contains a
-Chinese, Japanese, or Korean locale key or `lang` value.
+`markdown.cjkFriendly` is owned by Dahlia. It controls CJK-friendly parsing for
+emphasis and GFM strikethrough. The default is `auto`: Dahlia enables it when
+`locales` contains a Chinese, Japanese, or Korean locale key or `lang` value.
 
-```ts
+```ts title="astro.config.ts"
 dahlia({
   locales: {
     root: { label: 'English', directory: 'en' },
@@ -140,50 +173,48 @@ dahlia({
 })
 ```
 
-Set it to `true` to force the parser support on, or `false` to keep plain
-CommonMark and GFM parsing.
+Set it to `true` to force parser support on, or `false` to keep plain CommonMark
+and GFM parsing.
 
 ## Image Galleries
 
-Dahlia also installs the Prosefly image gallery rehype plugin. Paragraphs that
-contain only Markdown images are transformed into responsive gallery figures.
+The Astro Components integration transforms paragraphs containing only
+Markdown images into responsive gallery figures. See
+[Images](/docs/essentials/images/) for authoring details.
 
-See [Images](/docs/essentials/images/) for authoring details.
-
-Disable the transform when a project wants image-only paragraphs to stay as
-normal Markdown output.
-
-```ts
-dahlia({
+```ts title="astro.config.ts"
+proseflyComponents({
   markdown: {
     imageGallery: false,
   },
 })
 ```
 
+Disable the transform when image-only paragraphs should remain normal Markdown
+output.
+
 ## Mermaid
 
-Mermaid rendering is enabled by default through the shared Astro Components
-integration. Write a fenced `mermaid` code block to generate a static SVG during
-content processing; Dahlia also excludes Mermaid source from Shiki syntax
-highlighting.
+The Astro Components integration renders fenced `mermaid` blocks as static SVG
+during content processing and excludes Mermaid source from syntax highlighting.
 
 See the [Mermaid reference](/docs/references/mermaid/) for supported diagram
 types, syntax examples, rendering behavior, accessibility, styling, and
 troubleshooting.
 
-Disable the transform when Mermaid source should remain a normal code block.
-
-```ts
-dahlia({
+```ts title="astro.config.ts"
+proseflyComponents({
   markdown: {
     mermaid: false,
   },
 })
 ```
 
+Register the integration explicitly and disable this transform when Mermaid
+source should remain a normal code block.
+
 ## Component Overrides
 
-Use `components` to replace selected Dahlia theme components. See
+Use Dahlia's `components` option to replace selected theme components. See
 [Overriding Components](/docs/customization/overriding-components/) for the
 complete override surface and examples.

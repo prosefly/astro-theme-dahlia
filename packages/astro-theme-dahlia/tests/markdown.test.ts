@@ -1,15 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import type { AstroConfig } from 'astro';
 import { isUnifiedProcessor } from '@astrojs/markdown-remark';
-import remarkCjkFriendly from 'remark-cjk-friendly/parseOnly';
-import remarkCjkFriendlyGfmStrikethrough from 'remark-cjk-friendly-gfm-strikethrough/parseOnly';
 import {
   rehypeMermaid,
   remarkCalloutDirectives,
   remarkImageGallery,
   remarkPackageManagerTabs,
+  resolveMarkdownConfig as resolveComponentsMarkdownConfig,
 } from '@prosefly/astro-components/markdown';
-import { resolveMarkdownConfig, resolveMarkdownExtensions } from '../src/lib/config/markdown';
+import remarkCjkFriendly from 'remark-cjk-friendly/parseOnly';
+import remarkCjkFriendlyGfmStrikethrough from 'remark-cjk-friendly-gfm-strikethrough/parseOnly';
+import { resolveMarkdownConfig } from '../src/lib/config/markdown';
 import { remarkHeadingIds } from '../src/lib/markdown/heading-ids';
 
 interface TestNode {
@@ -99,38 +100,33 @@ describe('markdown transforms', () => {
     expect(processorOptions(withoutGfm).remarkPlugins).not.toContain(remarkCjkFriendlyGfmStrikethrough);
   });
 
-  it('maps theme extensions around shared component transforms', () => {
-    const config = resolveMarkdownConfig({
-      markdown: {
-        calloutDirectives: false,
-        packageManagerTabs: false,
-        imageGallery: false,
-        mermaid: false,
-      },
-    }, markdownConfig());
-    const extensions = resolveMarkdownExtensions({}, markdownConfig());
+  it('keeps user plugins while adding Dahlia heading plugins', () => {
+    const userRemarkPlugin = () => {};
+    const userRehypePlugin = () => {};
+    const config = resolveMarkdownConfig({}, markdownConfig({
+      remarkPlugins: [userRemarkPlugin],
+      rehypePlugins: [userRehypePlugin],
+    }));
+    const processor = processorOptions(config);
 
-    expect(processorOptions(config).remarkPlugins).not.toContain(remarkCalloutDirectives);
-    expect(processorOptions(config).remarkPlugins).not.toContain(remarkPackageManagerTabs);
-    expect(processorOptions(config).remarkPlugins).not.toContain(remarkImageGallery);
-    expect(processorOptions(config).rehypePlugins).not.toContain(rehypeMermaid);
-    expect(extensions.remarkPluginsBeforeTransforms?.[0]).toBe(remarkHeadingIds);
-    expect(extensions.rehypePluginsAfterTransforms?.[0]).toBeTypeOf('function');
+    expect(processor.remarkPlugins[0]).toBe(remarkHeadingIds);
+    expect(processor.remarkPlugins).toContain(userRemarkPlugin);
+    expect(processor.rehypePlugins[0]).toBe(userRehypePlugin);
+    expect(processor.rehypePlugins.at(-1)).toBeTypeOf('function');
   });
 
-  it('enables Mermaid rendering and excludes its source from syntax highlighting', () => {
-    const config = resolveMarkdownConfig({}, markdownConfig({
-      syntaxHighlight: {
-        type: 'shiki',
-        excludeLangs: ['math'],
-      },
-    }));
+  it('preserves user-configured Astro Components transforms', () => {
+    const componentsConfig = resolveComponentsMarkdownConfig({
+      packageManagerTabs: false,
+      mermaid: false,
+    }, markdownConfig());
+    const config = resolveMarkdownConfig({}, markdownConfig(componentsConfig));
+    const processor = processorOptions(config);
 
-    expect(processorOptions(config).rehypePlugins).toContain(rehypeMermaid);
-    expect(config.syntaxHighlight).toEqual({
-      type: 'shiki',
-      excludeLangs: ['math', 'mermaid'],
-    });
+    expect(processor.remarkPlugins).toContain(remarkCalloutDirectives);
+    expect(processor.remarkPlugins).toContain(remarkImageGallery);
+    expect(processor.remarkPlugins).not.toContain(remarkPackageManagerTabs);
+    expect(processor.rehypePlugins).not.toContain(rehypeMermaid);
   });
 
   it('generates stable slugs for headings and duplicate headings', () => {

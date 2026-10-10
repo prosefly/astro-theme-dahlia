@@ -40,9 +40,9 @@ cd my-docs
    pnpm add @prosefly/astro-theme-dahlia
    ```
 
-   Dahlia 已包含主题运行所需的 integrations。只有当自己的 MDX 文件要
-   import `Callout`、`Card`、`Steps` 或 `Tabs` 等组件时，才需要直接安装
-   `@prosefly/astro-components`。
+   Dahlia 已包含主题运行所需的 integrations。当自己的 MDX 文件要 import
+   共享组件，或要在 `astro.config.ts` 中自定义 Astro Components integration
+   时，再直接安装 `@prosefly/astro-components`。
 
    ```sh
    pnpm add @prosefly/astro-components

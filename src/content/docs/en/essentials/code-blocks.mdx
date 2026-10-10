@@ -149,13 +149,18 @@ pip install httpx pydantic
 Disable automatic package-manager tabs when you want npm or pip commands to
 render as plain code blocks.
 
-```ts
-dahlia({
+```ts title="astro.config.ts"
+import proseflyComponents from '@prosefly/astro-components/integration';
+
+proseflyComponents({
   markdown: {
     packageManagerTabs: false,
   },
 })
 ```
+
+Add this integration next to `dahlia()`; Dahlia detects it and skips its own
+default Astro Components registration.
 
 ## Word Wrap
 

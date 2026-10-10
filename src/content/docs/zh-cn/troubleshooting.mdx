@@ -79,8 +79,10 @@ import { Callout } from '@prosefly/astro-components';
 Iconify icons 会在开发或构建期间解析。包含 `api.iconify.design`、
 `fetch failed` 或 `ENOTFOUND` 的错误通常表示构建环境无法访问网络。
 
-允许访问配置的 Iconify API，或者将 `iconify.apiBase` 设置为内部兼容 endpoint。
-动态拼接的 icon name 还应加入 `iconify.preload`。
+允许访问配置的 Iconify API，或者显式注册
+`@prosefly/astro-components/integration`，在它的 `icons` 参数中设置内部兼容
+endpoint 和动态拼接的 icon name。配置方法见
+[Integrations](/docs/configuration/integrations/#iconify)。
 
 ## 部署后本地搜索异常
 

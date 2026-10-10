@@ -24,7 +24,6 @@ const mergeableOptionKeys = new Set<keyof DahliaIntegrationOptions>([
   'appearance',
   'components',
   'footer',
-  'iconify',
   'locales',
   'markdown',
   'source',
@@ -34,10 +33,14 @@ const mergeableOptionKeys = new Set<keyof DahliaIntegrationOptions>([
 export function resolveDahliaConfig(options: DahliaIntegrationOptions): DahliaThemeConfig {
   const normalizedOptions = normalizeLegacyDahliaConfigOptions(options);
   const {
+    iconify: _iconify,
     markdown: _markdown,
     themeModeControl: _themeModeControl,
     ...themeOptions
-  } = normalizedOptions as DahliaIntegrationOptions & { themeModeControl?: unknown };
+  } = normalizedOptions as DahliaIntegrationOptions & {
+    iconify?: unknown;
+    themeModeControl?: unknown;
+  };
 
   return {
     ...defaultConfig,
@@ -48,10 +51,6 @@ export function resolveDahliaConfig(options: DahliaIntegrationOptions): DahliaTh
     },
     pageActions: themeOptions.pageActions ?? defaultConfig.pageActions,
     docsBase: normalizeDocsBasePath(themeOptions.docsBase, defaultConfig.docsBase),
-    iconify: {
-      ...defaultConfig.iconify,
-      ...themeOptions.iconify,
-    },
     footer: {
       ...defaultConfig.footer,
       ...themeOptions.footer,

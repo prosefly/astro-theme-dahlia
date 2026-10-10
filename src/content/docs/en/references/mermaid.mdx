@@ -272,32 +272,25 @@ Before inserting rendered SVG, Dahlia:
 
 ## Disable Mermaid rendering
 
-Set `markdown.mermaid` to `false` when Mermaid source should remain a normal
-code block:
+Register the Astro Components integration explicitly and set `markdown.mermaid`
+to `false` when Mermaid source should remain a normal code block. Dahlia
+detects the integration and does not add another instance.
 
 ```ts title="astro.config.ts"
 import { defineConfig } from 'astro/config';
+import proseflyComponents from '@prosefly/astro-components/integration';
 import dahlia from '@prosefly/astro-theme-dahlia';
 
 export default defineConfig({
   integrations: [
-    dahlia({
+    proseflyComponents({
       markdown: {
         mermaid: false,
       },
     }),
+    dahlia(),
   ],
 });
-```
-
-The JSON schema also accepts the equivalent setting in `theme.config.json`:
-
-```json title="theme.config.json"
-{
-  "markdown": {
-    "mermaid": false
-  }
-}
 ```
 
 ## Troubleshooting

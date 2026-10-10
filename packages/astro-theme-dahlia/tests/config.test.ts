@@ -48,7 +48,6 @@ describe('Dahlia config', () => {
       ...defaultConfig.footer,
       copyright: 'Copyright',
     });
-    expect(config.iconify).toEqual(defaultConfig.iconify);
   });
 
   it('keeps explicit empty page actions instead of falling back to defaults', () => {
@@ -184,6 +183,18 @@ describe('Dahlia config', () => {
 
   it('uses a fixed theme mode control without a theme mode control option', () => {
     expect('themeModeControl' in resolveDahliaConfig({})).toBe(false);
+  });
+
+  it('drops removed Astro Components options from resolved theme config', () => {
+    const removedOptions = {
+      name: 'Docs',
+      iconify: {
+        preload: ['lucide:star'],
+      },
+    };
+    const config = resolveDahliaConfig(removedOptions);
+
+    expect('iconify' in config).toBe(false);
   });
 
   it('resolves boolean and full llms settings', () => {

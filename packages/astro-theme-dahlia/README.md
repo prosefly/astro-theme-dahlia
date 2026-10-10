@@ -26,7 +26,8 @@ npm install @prosefly/astro-theme-dahlia
 ```
 
 Install `@prosefly/astro-components` directly when your own MDX or Astro files
-import shared components such as cards, steps, tabs, or callouts.
+import shared components, or when `astro.config.ts` customizes the Astro
+Components integration.
 
 ```ts
 // astro.config.ts
@@ -79,7 +80,9 @@ search, mobile docs menu, and footer. The integration also injects a Markdown so
 search index route at `search.json`.
 
 Common integration options include `docsBase`, `siteNav`, `docsNav`,
-`pageActions`, `footer`, `iconify`, `markdown`, and `components` overrides.
+`pageActions`, `footer`, `markdown`, and `components` overrides. Dahlia adds
+`@prosefly/astro-components/integration` with default options unless the project
+registers that integration itself.
 
 ## Links
 

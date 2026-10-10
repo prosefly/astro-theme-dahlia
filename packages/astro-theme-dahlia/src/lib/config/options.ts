@@ -11,11 +11,7 @@ import type {
 
 export interface DahliaMarkdownOptions {
   expressiveCode?: false | AstroExpressiveCodeOptions;
-  calloutDirectives?: false;
   cjkFriendly?: boolean | 'auto';
-  packageManagerTabs?: false;
-  imageGallery?: false;
-  mermaid?: false;
 }
 
 export interface DahliaIntegrationOptions {
@@ -44,7 +40,6 @@ export interface DahliaIntegrationOptions {
   defaultLocale?: DahliaThemeConfig['defaultLocale'];
   locales?: DahliaThemeConfig['locales'];
   ui?: DahliaThemeConfig['ui'];
-  iconify?: Partial<NonNullable<DahliaThemeConfig['iconify']>>;
   markdown?: DahliaMarkdownOptions;
   footer?: {
     copyright?: string;

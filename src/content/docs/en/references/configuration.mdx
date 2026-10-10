@@ -36,9 +36,9 @@ export default defineConfig({
 ```
 
 Values passed to `dahlia({...})` override `theme.config.json`. Object options
-such as `appearance`, `footer`, `iconify`, `locales`, `markdown`, `source`, and
-`ui` are shallow-merged; arrays such as `siteNav`, `socials`, and `docsNav`
-replace the JSON value when provided.
+such as `appearance`, `footer`, `locales`, `markdown`, `source`, and `ui` are
+shallow-merged; arrays such as `siteNav`, `socials`, and `docsNav` replace the
+JSON value when provided.
 
 Component overrides are integration-only. Configure `components` in
 `astro.config.ts`, not in `theme.config.json`.
@@ -69,8 +69,7 @@ Component overrides are integration-only. Configure `components` in
 | `contributors` | `false` | [Source](/docs/configuration/source/#contributors) |
 | `components` | `{}` in `dahlia({...})` only | [Overriding Components](/docs/customization/overriding-components/) |
 | `credits` | `true` | [Footer](/docs/configuration/footer/#credits) |
-| `iconify` | default Iconify API, scan enabled | [Integrations](/docs/configuration/integrations/#iconify) |
-| `markdown` | all transforms enabled, Expressive Code defaults | [Integrations](/docs/configuration/integrations/) |
+| `markdown` | Expressive Code defaults and automatic CJK support | [Integrations](/docs/configuration/integrations/) |
 
 ## TypeScript Options
 

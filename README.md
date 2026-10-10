@@ -85,7 +85,8 @@ Welcome to the Acme documentation.
 Run `pnpm dev` and open `http://localhost:4321/`.
 
 Install `@prosefly/astro-components` directly when your own MDX imports shared
-components such as `Callout`, `Card`, `Steps`, `Tabs`, or `FileTree`.
+components or when `astro.config.ts` customizes the Astro Components
+integration. Dahlia otherwise registers that integration with default options.
 
 ## Documentation
 

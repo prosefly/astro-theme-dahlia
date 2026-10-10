@@ -1,5 +1,4 @@
 import mdx from '@astrojs/mdx';
-import proseflyComponents from '@prosefly/astro-components/integration';
 import tailwindcss from '@tailwindcss/vite';
 import astroExpressiveCode from 'astro-expressive-code';
 import type { AstroIntegration } from 'astro';
@@ -14,13 +13,12 @@ import {
   resolveLocalAssetConfig,
   resolveDahliaConfig,
   resolveMarkdownConfig,
-  resolveMarkdownExtensions,
   type DahliaIntegrationOptions,
 } from './lib/config/index';
+import { createDefaultComponentsIntegration } from './lib/integrations';
 import { componentOverridePlugin } from './lib/overriding';
 import { getDahliaInjectedRoutes } from './lib/routes';
 import { buildPagefindIndex } from './lib/search/pagefind';
-import { getIconPreloadNames } from './lib/preload-icons';
 import { dahliaStylesPlugin } from './lib/styles';
 
 export default function dahlia(options: DahliaIntegrationOptions = {}): AstroIntegration {
@@ -59,23 +57,13 @@ export default function dahlia(options: DahliaIntegrationOptions = {}): AstroInt
           entrypoint: new URL('./middleware.ts', import.meta.url),
         });
 
+        const componentsIntegration = createDefaultComponentsIntegration(
+          astroConfig.integrations,
+        );
         const configUpdate = {
           markdown: resolveMarkdownConfig(mergedOptions, astroConfig.markdown),
           integrations: [
-            proseflyComponents({
-              icons: {
-                apiBase: config.iconify?.apiBase,
-                preload: getIconPreloadNames(config),
-                scan: config.iconify?.scan,
-              },
-              markdown: {
-                calloutDirectives: mergedOptions.markdown?.calloutDirectives,
-                packageManagerTabs: mergedOptions.markdown?.packageManagerTabs,
-                imageGallery: mergedOptions.markdown?.imageGallery,
-                mermaid: mergedOptions.markdown?.mermaid,
-                ...resolveMarkdownExtensions(mergedOptions, astroConfig.markdown),
-              },
-            }),
+            ...(componentsIntegration ? [componentsIntegration] : []),
             ...(expressiveCodeOptions === false
               ? []
               : [astroExpressiveCode(expressiveCodeOptions)]),

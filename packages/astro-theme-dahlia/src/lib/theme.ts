@@ -300,11 +300,6 @@ export interface DahliaThemeConfig {
   defaultLocale?: string;
   locales?: Record<string, LocaleConfig>;
   ui?: Record<string, Partial<UiTranslations>>;
-  iconify?: {
-    apiBase?: string;
-    preload?: string[];
-    scan?: boolean;
-  };
   footer: {
     copyright: string;
     sections: FooterSection[];

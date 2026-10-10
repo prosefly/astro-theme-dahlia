@@ -81,9 +81,11 @@ Iconify icons are resolved during development or build. An error mentioning
 `api.iconify.design`, `fetch failed`, or `ENOTFOUND` usually means the build
 environment has no network access.
 
-Allow access to the configured Iconify API, set `iconify.apiBase` to an internal
-compatible endpoint, or remove icons that cannot be resolved. Dynamically
-constructed icon names should also be listed in `iconify.preload`.
+Allow access to the configured Iconify API, use an internal compatible
+endpoint, or remove icons that cannot be resolved. Configure the endpoint and
+dynamically constructed icon names by registering
+`@prosefly/astro-components/integration` explicitly; see
+[Integrations](/docs/configuration/integrations/#iconify).
 
 ## Local search works differently after deployment
 

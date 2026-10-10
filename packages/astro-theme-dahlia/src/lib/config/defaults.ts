@@ -35,11 +35,6 @@ export const defaultConfig: DahliaThemeConfig = {
   defaultLocale: undefined,
   locales: undefined,
   ui: undefined,
-  iconify: {
-    apiBase: 'https://api.iconify.design',
-    preload: [],
-    scan: true,
-  },
   footer: {
     copyright: '',
     sections: [],
