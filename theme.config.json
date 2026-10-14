@@ -189,6 +189,11 @@
         "title": "Projects",
         "links": [
           {
+            "label": "Prosefly",
+            "href": "https://prosefly.com",
+            "external": true
+          },
+          {
             "label": "Astro Lotus Theme",
             "href": "https://astro-theme-lotus.prosefly.dev",
             "external": true
